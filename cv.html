@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Curriculum Vitae | Manfred Friscic (Mag.)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -19,7 +17,7 @@
             margin: 0 0 15px 0;
             font-size: 28px;
             color: #5D6D7E;
-            padding-left: 32%;
+            padding-left: 35%;
         }
 
         h2 {
@@ -54,16 +52,16 @@
         }
 
         .col--left .card-body__row--left {
-            width: 32%;
+            width: 35%;
         }
 
         .col--left .card-body__row--right {
-            width: 68%;
+            width: 65%;
         }
 
         .col--right {
             width: 330px;
-            background-color: #E5E7E9;
+            background-color: #eee;
             padding: 20px;
             font-size: small;
             border-radius: 10px;
@@ -71,6 +69,10 @@
 
         .card {
             margin-bottom: 25px;
+        }
+
+        .card:last-child {
+            margin-bottom: 0;
         }
 
         .card-body__row {
@@ -92,8 +94,8 @@
             width: 60%;
         }
 
-        .card-body__row--narrow>.card-body__row--left,
-        .card-body__row--narrow>.card-body__row--right {
+        .card-body__row--narrow .card-body__row--left,
+        .card-body__row--narrow .card-body__row--right {
             margin-bottom: 0;
             line-height: 12px;
         }
@@ -127,11 +129,8 @@
         }
 
         .italic {
-            /* font-style: italic; */
             font-size: 13px;
             line-height: 20px;
-            /* font-weight: bold; */
-            /* opacity: 0.7; */
         }
 
         .link {
@@ -142,42 +141,42 @@
     </style>
 </head>
 
-<body>
+<body onload="translate()">
     <div class="container">
         <div class="row">
             <div class="col col--left">
                 <h1>Curriculum Vitae</h1>
                 <div class="card">
-                    <div class="card-header">Personal Data</div>
+                    <div id="personal-header" class="card-header"></div>
                     <div class="card-body">
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">First name</div>
+                            <div id="personal-first" class="card-body__row card-body__row--left"></div>
                             <div class="card-body__row card-body__row--right">Manfred</div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">Second name</div>
+                            <div id="personal-last" class="card-body__row card-body__row--left"></div>
                             <div class="card-body__row card-body__row--right">Friscic</div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">Date of birth</div>
+                            <div id="personal-dob" class="card-body__row card-body__row--left"></div>
                             <div class="card-body__row card-body__row--right">1979-02-11</div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row--left">Place of birth</div>
+                            <div id="personal-pob" class="card-body__row--left"></div>
                             <div class="card-body__row--right">5400 Hallein, Salzburg</div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Education</div>
+                    <div id="edu-header" class="card-header"></div>
                     <div class="card-body">
                         <div class="card-body__row">
                             <div class="card-body__row--left">Sep 2012 - Jul 2014</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Vienna University of Technology</li>
+                                    <li id="edu-tu" class="bold-small"></li>
                                     <li>Software & Information Engineering</li>
-                                    <li class="italic">(not completed)</li>
+                                    <li id="edu-nd" class="italic"></li>
                                 </ul>
                             </div>
                         </div>
@@ -185,9 +184,9 @@
                             <div class="card-body__row--left">Sep 1998 - May 2005</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Vienna University of Economics & Business</li>
-                                    <li>Business Administration</li>
-                                    <li class="italic">Degree Magister (rer.soc.oec.)</li>
+                                    <li id="edu-wu" class="bold-small"></li>
+                                    <li id="edu-ba"></li>
+                                    <li id="edu-de" class="italic"></li>
                                 </ul>
                             </div>
                         </div>
@@ -197,18 +196,18 @@
                         </div>
                         <div class="card-body__row">
                             <div class="card-body__row--left">Sep 1985 - Jul 1989</div>
-                            <div class="card-body__row--right bold-small">Elementary school Hallein Neualm</div>
+                            <div id="edu-vs" class="card-body__row--right bold-small"></div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Work Experience</div>
+                    <div id="work-header" class="card-header"></div>
                     <div class="card-body">
                         <div class="card-body__row">
-                            <div class="card-body__row--left">since Jun 2013</div>
+                            <div id="work-since" id="work-since" class="card-body__row--left"></div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Software Engineer</li>
+                                    <li id="work-se" class="bold-small"></li>
                                     <li>Entain Group</li>
                                     <li class="italic">Sports Betting</li>
                                     <li class="link">https://entaingroup.com</li>
@@ -231,8 +230,8 @@
                             <div class="card-body__row--right">
                                 <ul>
                                     <li class="bold-small">Freelancer</li>
-                                    <li>(part-time)</li>
-                                    <li class="italic">Web Design & Web Entwicklung</li>
+                                    <li id="work-tz"></li>
+                                    <li id="work-free" class="italic"></li>
                                     <li class="link">http://friscic.com</li>
                                 </ul>
                             </div>
@@ -241,7 +240,7 @@
                             <div class="card-body__row--left">May 2011 - Jun 2012</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Team Leader</li>
+                                    <li id="work-tl" class="bold-small">Team Leader</li>
                                     <li>bwin.party services (Austria) GmbH</li>
                                     <li class="italic">Web Shop Services</li>
                                     <li class="link">http://www.bwinparty.com</li>
@@ -263,7 +262,7 @@
                             <div class="card-body__row--left">May 2006 - Aug 2008</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Project Manager</li>
+                                    <li id="work-pm" class="bold-small">Project Manager</li>
                                     <li>VeriSign Communications GmbH</li>
                                     <li class="italic">Content Portal Services & System Integration</li>
                                     <li class="link">http://www.verisign.com</li>
@@ -274,7 +273,7 @@
                             <div class="card-body__row--left">Jan 2005 - May 2006</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Technical Editor</li>
+                                    <li id="work-te" class="bold-small">Technical Editor</li>
                                     <li>Telekom Austria <small>(via Softcom GmbH)</small></li>
                                     <li class="italic">Internet/Media User Experience</li>
                                     <li class="link">http://www.aon.at</li>
@@ -293,29 +292,33 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Languages</div>
+                    <div id="lang-header" class="card-header">Languages</div>
                     <div class="card-body">
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="75"
+                            <div id="lang-de" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="75"
                                 aria-valuemin="0" aria-valuemax="100">German</div>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="75"
+                            <div id="lang-en" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="75"
                                 aria-valuemin="0" aria-valuemax="100">English</div>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="75"
+                            <div id="lang-fr" class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="75"
                                 aria-valuemin="0" aria-valuemax="100">French</div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Skills</div>
+                    <div id="skills-header" class="card-header"></div>
                     <div class="card-body">
-                        <span class="badge rounded-pill badge--bw">Agile Software Development</span>
-                        <span class="badge rounded-pill badge--bw">Project Management</span>
-                        <span class="badge rounded-pill badge--bw">User Interface Design</span>
+                        <span id="skills-asd" class="badge rounded-pill badge--bw"></span>
+                        <span id="skills-pm" class="badge rounded-pill badge--bw"></span>
+                        <span id="skills-ui" class="badge rounded-pill badge--bw"></span>
+                        <span id="skills-pmgnt" class="badge rounded-pill badge--bw"></span>
+                        <span id="skills-re" class="badge rounded-pill badge--bw"></span>
+                        <span id="skills-sm" class="badge rounded-pill badge--bw"></span>
                         <span class="badge rounded-pill badge--bw">C#</span>
+                        <span class="badge rounded-pill badge--bw">.Net</span>
                         <span class="badge rounded-pill badge--bw">JavaScript</span>
                         <span class="badge rounded-pill badge--bw">Angular</span>
                         <span class="badge rounded-pill badge--bw">React</span>
@@ -326,10 +329,10 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Internships</div>
+                    <div id="internships-header" class="card-header"></div>
                     <div class="card-body">
                         <div class="card-body__row">
-                            <div class="card-body__row--left">May 04 - Nov 05</div>
+                            <div id="internships-from-aon" class="card-body__row--left"></div>
                             <div class="card-body__row--right">
                                 <ul>
                                     <li class="bold-small">Aon MusicDownload</li>
@@ -342,7 +345,7 @@
                             <div class="card-body__row--left">Jul 02 - Aug 02</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Purchase</li>
+                                    <li id="internships-purchase" class="bold-small"></li>
                                     <li>Sony DADC Austria AG</li>
                                     <li class="link">https://www.sonydadc.com</li>
                                 </ul>
@@ -352,7 +355,7 @@
                             <div class="card-body__row--left">Jul 01 - Aug 01</div>
                             <div class="card-body__row--right">
                                 <ul>
-                                    <li class="bold-small">Controlling</li>
+                                    <li id="internships-controlling" class="bold-small"></li>
                                     <li>Sony DADC Austria AG</li>
                                     <li class="link">https://www.sonydadc.com</li>
                                 </ul>
@@ -361,26 +364,26 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header">Contact Details</div>
+                    <div id="contact-details-header" class="card-header"></div>
                     <div class="card-body">
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">Address</div>
+                            <div id="contact-details-address" class="card-body__row card-body__row--left"></div>
                             <div class="card-body__row card-body__row--right">Neustiftgasse 54/2/19</div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">City</div>
-                            <div class="card-body__row card-body__row--right">Vienna, Austria</div>
+                            <div id="contact-details-city" class="card-body__row card-body__row--left"></div>
+                            <div id="contact-details-vienna" class="card-body__row card-body__row--right"></div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">Phone</div>
+                            <div id="contact-details-phone" class="card-body__row card-body__row--left"></div>
                             <div class="card-body__row card-body__row--right">+43 (0)670 2042800</div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row card-body__row--left">Mail</div>
+                            <div id="contact-details-email" class="card-body__row card-body__row--left"></div>
                             <div class="card-body__row card-body__row--right">manfred@friscic.com</div>
                         </div>
                         <div class="card-body__row card-body__row--narrow">
-                            <div class="card-body__row--left">Web</div>
+                            <div id="contact-details-web" class="card-body__row--left"></div>
                             <div class="card-body__row--right link">http://friscic.com</div>
                         </div>
                     </div>
@@ -388,6 +391,86 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var translations = {
+            ['personal']: {
+                ['header']: { en: 'Personal Data', de: 'Persönliche Daten' },
+                ['first']: { en: 'First name', de: 'Vorname' },
+                ['last']: { en: 'Second name', de: 'Nachname' },
+                ['dob']: { en: 'Date of birth', de: 'Geburtsdatum' },
+                ['pob']: { en: 'Place of birth', de: 'Geburtsort' },
+            },
+            ['edu']: {
+                ['header']: { en: 'Education', de: 'Ausbildung' },
+                ['tu']: { en: 'Vienna University of Technology', de: 'Technische Universität Wien' },
+                ['wu']: { en: 'Vienna University of Economics & Business', de: 'Wirtschaftsuniversität Wien' },
+                ['ba']: { en: 'Business Administration', de: 'Betriebswirtschaft' },
+                ['vs']: { en: 'Elementary school Hallein Neualm', de: 'Volksschule Hallein Neualm' },
+                ['nd']: { en: '(not completed)', de: '(nicht abgeschlossen)' },
+                ['de']: { en: 'Degree: Magister (rer.soc.oec.)', de: 'Abschluss: Magister (rer.soc.oec.)' },
+            },
+            ['work']: {
+                ['header']: { en: 'Work Experience', de: 'Berufserfahrung' },
+                ['se']: { en: 'Software Engineer', de: 'Software Entwickler' },
+                ['tl']: { en: 'Team Leader', de: 'Teamleiter' },
+                ['pm']: { en: 'Project Manager', de: 'Projekt Manager' },
+                ['te']: { en: 'Technical Editor', de: 'Technischer Redakteur' },
+                ['free']: { en: 'Web Design & Web Development', de: 'Web Design & Web Entwicklung' },
+                ['tz']: { en: '(part-time)', de: '(Nebenberuflich)' },
+                
+            },
+            ['lang']: {
+                ['header']: { en: 'Languages', de: 'Sprachen' },
+                ['de']: { en: 'German', de: 'Deutsch' },
+                ['en']: { en: 'English', de: 'Englisch' },
+                ['fr']: { en: 'French', de: 'Französisch' },
+            },
+            ['skills']: {
+                ['header']: { en: 'Skills', de: 'Kentnisse' },
+                ['asd']: { en: 'Agile Software Development', de: 'Agile Software Entwicklung' },
+                ['pm']: { en: 'Project Management', de: 'Projektmanagement' },
+                ['ui']: { en: 'User Interface Design', de: 'Interfacedesign' },
+                ['pmgnt']: { en: 'Product Management', de: 'Produktmanagement' },
+                ['re']: { en: 'Requirements Engineering', de: 'Anforderungsmanagement' },
+                ['sm']: { en: 'Scrum Master', de: 'Scrum Master' },
+            },
+            ['internships']: {
+                ['header']: { en: 'Internships', de: 'Praktikum' },
+                ['from-aon']: { en: 'May 04 - Nov 05', de: 'Mai 04 - Nov 05' },
+                ['purchase']: { en: 'Purchase', de: 'Einkauf' },
+                ['controlling']: { en: 'Controlling', de: 'Controlling' },
+            },
+            ['contact-details']: {
+                ['header']: { en: 'Contact', de: 'Kontakt' },
+                ['address']: { en: 'Address', de: 'Addresse' },
+                ['city']: { en: 'City', de: 'Stadt' },
+                ['vienna']: { en: 'Vienna, Austria', de: '1070 Wien' },
+                ['phone']: { en: 'Phone', de: 'Telefon' },
+                ['email']: { en: 'E-Mail', de: 'E-Mail' },
+                ['web']: { en: 'Web', de: 'Web' },
+            }
+        }
+        function translate() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const lang = urlParams.get('l')
+            lang ??= 'en';
+
+            var translation = [];
+            for (var section in translations) {
+                translation[section] = [];
+                for (var line in translations[section]) {
+                    var element = document.getElementById(section + "-" + line);
+                    if (element) {
+                        element.innerText = translations[section][line][lang];
+                        translation[section].push(translations[section][line][lang]);
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
