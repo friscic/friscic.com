@@ -56,7 +56,6 @@
 
         .col--right .card-body__row--left {
             padding-right: 5px;
-            min-width: 106px;
         }
 
         .card {
@@ -159,6 +158,10 @@
 
             .row {
                 flex-wrap: wrap;
+            }
+
+            .col--right {
+                max-width: 360px;
             }
 
             .col--right .picture {
@@ -483,10 +486,9 @@
 
             window.addEventListener('resize', () => insertPic());
         }
-        
+
         const translate = () => {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
+            const urlParams = new URLSearchParams(window.location.search);
             const lang = urlParams.get('l') ?? 'en';
 
             for (var section in translations) {
