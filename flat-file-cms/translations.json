@@ -1,0 +1,59 @@
+{
+    "personal": {
+        "header": { "en": "Personal Data", "de": "Persönliche Daten" },
+        "first": { "en": "First name", "de": "Vorname" },
+        "last": { "en": "Second name", "de": "Nachname" },
+        "dob": { "en": "Date of birth", "de": "Geburtsdatum" },
+        "pob": { "en": "Place of birth", "de": "Geburtsort" }
+    },
+    "edu": {
+        "header": { "en": "Education", "de": "Ausbildung" },
+        "tu": { "en": "Vienna University of Technology", "de": "Technische Universität Wien" },
+        "wu": { "en": "Vienna University of Economics & Business", "de": "Wirtschaftsuniversität Wien" },
+        "ba": { "en": "Business Administration", "de": "Betriebswirtschaft" },
+        "vs": { "en": "Elementary school Hallein Neualm", "de": "Volksschule Hallein Neualm" },
+        "nd": { "en": "(not completed)", "de": "(nicht abgeschlossen)" },
+        "de": { "en": "Degree: Magister (rer.soc.oec.)", "de": "Abschluss: Magister (rer.soc.oec.)" }
+    },
+    "work": {
+        "header": { "en": "Work Experience", "de": "Berufserfahrung" },
+        "se": { "en": "Software Engineer", "de": "Software Entwickler" },
+        "tl": { "en": "Team Leader", "de": "Teamleiter" },
+        "pm": { "en": "Project Manager", "de": "Projekt Manager" },
+        "te": { "en": "Technical Editor", "de": "Technischer Redakteur" },
+        "free": { "en": "Web Design & Web Development", "de": "Web Design & Web Entwicklung" },
+        "tz": { "en": "(part-time)", "de": "(Nebenberuflich)" },
+        "since": { "en": "since Jun 2013", "de": "seit Jun 2013" }
+
+    },
+    "lang": {
+        "header": { "en": "Languages", "de": "Sprachen" },
+        "de": { "en": "German", "de": "Deutsch" },
+        "en": { "en": "English", "de": "Englisch" },
+        "fr": { "en": "French", "de": "Französisch" }
+    },
+    "skills": {
+        "header": { "en": "Skills", "de": "Kentnisse" },
+        "asd": { "en": "Agile Software Development", "de": "Agile Software Entwicklung" },
+        "pm": { "en": "Project Management", "de": "Projektmanagement" },
+        "ui": { "en": "User Interface Design", "de": "Interfacedesign" },
+        "pmgnt": { "en": "Product Management", "de": "Produktmanagement" },
+        "re": { "en": "Requirements Engineering", "de": "Anforderungsmanagement" },
+        "sm": { "en": "Scrum Master", "de": "Scrum Master" }
+    },
+    "internships": {
+        "header": { "en": "Internships", "de": "Praktikum" },
+        "from-aon": { "en": "May 04 - Nov 05", "de": "Mai 04 - Nov 05" },
+        "purchase": { "en": "Purchase", "de": "Einkauf" },
+        "controlling": { "en": "Controlling", "de": "Controlling" }
+    },
+    "contact-details": {
+        "header": { "en": "Contact", "de": "Kontakt" },
+        "address": { "en": "Address", "de": "Addresse" },
+        "city": { "en": "City", "de": "Stadt" },
+        "vienna": { "en": "Vienna, Austria", "de": "1070 Wien" },
+        "phone": { "en": "Phone", "de": "Telefon" },
+        "email": { "en": "E-Mail", "de": "E-Mail" },
+        "web": { "en": "Web", "de": "Web" }
+    }
+}
