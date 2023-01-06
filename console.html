@@ -1,0 +1,38 @@
+<!doctype html>
+
+<head>
+    <title>friscic.com【ツ】hi</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css" />
+    <style>
+        .terminal {
+            --size: 4;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+
+// 
+
+
+        $('body').terminal({
+            'cls': function() {
+
+            },
+            '1': function () {
+                this.echo('https://placekitten.com/408/287');
+            },
+            cat: function () {
+                this.echo($('<img src="https://placekitten.com/408/287">'));
+            },
+            hello: function (what) {
+                this.echo('Hello, ' + what + '. Wellcome to this terminal.');
+            }
+        }, {
+            greetings: `hi【ツ】\n1 - about me\n2 - contact\n3 - imprint\nyour choice ;)`
+        });
+    </script>
+</body>
