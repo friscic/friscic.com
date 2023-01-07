@@ -7,13 +7,22 @@
     <style>
         body {
             font-family: monospace;
+            font-size: 2em;
             background-color: black;
             color: #41FF00;
+            text-transform: uppercase;
+        }
+
+        a {
+            color: #41FF00;
+            font-weight: bold;
+        }
+
+        input:focus-visible {
+            outline: -webkit-focus-ring-color auto 10px;
         }
 
         .terminal {
-            line-height: 32px;
-            padding: 5px;
             display: flex;
             flex-direction: column;
         }
@@ -21,14 +30,17 @@
         .line {
             line-height: 2em;
             display: flex;
+            outline: none;
         }
 
         .cursor {
-            width: 10px;
-            height: 25px;
+            width: 1em;
+            height: 2em;
             animation: blinker 1s linear infinite;
             background-color: #41FF00;
         }
+
+
 
         @keyframes blinker {
             50% {
@@ -41,11 +53,15 @@
 <body>
     <div id="terminal">
         <div id="intro">
-            <div class="line">http://friscic.com <span>【ツ】hi</span></div>
+            <div class="line"><span>hello【ツ】</span></div>
+            <div class="line"><a href="#">1</a>&nbsp;-&nbsp;about</div>
+            <div class="line"><a href="#">2</a>&nbsp;-&nbsp;contact</div>
+            <div class="line"><a href="#">3</a>&nbsp;-&nbsp;imprint</div>
         </div>
         <div id="lines"></div>
 
-        <div class="line" contenteditable="true">>&nbsp;<span id="input"></span><span class="cursor"></span></div>
+        <div class="line">http://friscic.com >&nbsp;<span id="input"></span><span class="cursor"
+                contenteditable="true"></span></div>
     </div>
     <script>
         const lines = document.getElementById("lines");
@@ -63,47 +79,55 @@
                     input.innerHTML += '&nbsp;';
                     break;
                 }
-                /* Backspace */
+                /* backspace */
                 case 8: {
-                    input.innerText = keyboardInput.replace('&nbsp;', ' ');
-                    input = input.slice(0, -1);
-                    keyboardInput = input.replace(' ', '&nbsp;');
-
-                    input.innerHTML = '';
+                    let clean = keyboardInput.replaceAll('&nbsp;', ' ');
+                    input.innerHTML = clean.substr(0, clean.length - 1).replaceAll(' ', '&nbsp;');
                     break;
                 }
-                /* Enter */
+                /* enter */
                 case 13: {
-                    const save = document.createElement("div");
-                    save.innerHTML = input.innerHTML;
-                    // `<div class="line">${input.outerText}</div>`;
-                    // lines.push(`<div class="line">${input}</div>`);
-                    lines.append(save);
-                    // console.log(terminal.innerHTML);
+
+                    switch (keyboardInput) {
+                        case '1':
+                            newLine(`- xing`);
+                            newLine(`- linkedin`);
+                            break;
+                        case '2':
+                            newLine(`- xing`);
+                            newLine(`- linkedin`);
+                            break;
+                        case '3':
+                            newLine(`- xing`);
+                            newLine(`- linkedin`);
+                            break;
+                        case 'clear':
+                        case 'cls':
+                            lines.innerHTML = '';
+                            break;
+                        default:
+                            break;
+                    }
+
+                    newLine(input.innerHTML || '*');
+
                     input.innerHTML = '';
                     break;
                 }
                 default:
                     if (e.keyCode < 48 || e.keyCode > 90) {
+                        newLine(' WARN ');
                         return;
                     }
                     input.innerHTML += e.key;
                     break;
             }
-
-            // input.innerHTML = keyboardInput;
         }
 
-        function greeting() {
-            const date = new Date;
-            let hours = date.getHours();
-            let status = (hours < 12)
-                ? "morning" :
-                ((hours <= 18 && hours >= 12)
-                    ? "afternoon"
-                    : "night");
-
-            return status;
+        function newLine(text) {
+            let line = document.createElement("div");
+            line.innerHTML = text;
+            lines.append(line);
         }
     </script>
 </body>
