@@ -1,34 +1,111 @@
 <!doctype html>
+<html lang="en">
 
 <head>
-    <title>friscic.com【ツ】hi</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css" />
+    <meta charset="utf-8">
+    <title>friscic.com</title>
     <style>
+        body {
+            font-family: monospace;
+            background-color: black;
+            color: #41FF00;
+        }
+
         .terminal {
-            --size: 4;
+            line-height: 32px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .line {
+            line-height: 2em;
+            display: flex;
+        }
+
+        .cursor {
+            width: 10px;
+            height: 25px;
+            animation: blinker 1s linear infinite;
+            background-color: #41FF00;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
 
 <body>
-    <script>
-        $('body').terminal({
-            'cls': function() {
+    <div id="terminal">
+        <div id="intro">
+            <div class="line">http://friscic.com <span>【ツ】hi</span></div>
+        </div>
+        <div id="lines"></div>
 
-            },
-            '1': function () {
-                this.echo('https://placekitten.com/408/287');
-            },
-            cat: function () {
-                this.echo($('<img src="https://placekitten.com/408/287">'));
-            },
-            hello: function (what) {
-                this.echo('Hello, ' + what + '. Wellcome to this terminal.');
+        <div class="line">>&nbsp;<span id="input"></span><span class="cursor"></span></div>
+    </div>
+    <script>
+        const lines = document.getElementById("lines");
+        const terminal = document.getElementById("terminal");
+        const input = document.getElementById("input");
+
+        document.addEventListener('keydown', onKeyPress);
+
+        function onKeyPress(e) {
+            let keyboardInput = input.innerHTML;
+
+            switch (e.keyCode) {
+                /* space */
+                case 32: {
+                    input.innerHTML += '&nbsp;';
+                    break;
+                }
+                /* Backspace */
+                case 8: {
+                    input.innerText = keyboardInput.replace('&nbsp;', ' ');
+                    input = input.slice(0, -1);
+                    keyboardInput = input.replace(' ', '&nbsp;');
+
+                    input.innerHTML = '';
+                    break;
+                }
+                /* Enter */
+                case 13: {
+                    const save = document.createElement("div");
+                    save.innerHTML = input.innerHTML;
+                    // `<div class="line">${input.outerText}</div>`;
+                    // lines.push(`<div class="line">${input}</div>`);
+                    lines.append(save);
+                    // console.log(terminal.innerHTML);
+                    input.innerHTML = '';
+                    break;
+                }
+                default:
+                    if (e.keyCode < 48 || e.keyCode > 90) {
+                        return;
+                    }
+                    input.innerHTML += e.key;
+                    break;
             }
-        }, {
-            greetings: `hi【ツ】\nhttps://1 - about me\nhttps://2 - contact\nhttps://3 - imprint\nyour choice ;)`
-        });
+
+            // input.innerHTML = keyboardInput;
+        }
+
+        function greeting() {
+            const date = new Date;
+            let hours = date.getHours();
+            let status = (hours < 12)
+                ? "morning" :
+                ((hours <= 18 && hours >= 12)
+                    ? "afternoon"
+                    : "night");
+
+            return status;
+        }
     </script>
 </body>
+
+</html>
