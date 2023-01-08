@@ -17,9 +17,12 @@
             color: #41FF00;
             font-weight: bold;
         }
-
-        input:focus-visible {
-            outline: -webkit-focus-ring-color auto 10px;
+        
+        #cursor {
+            width: 1em;
+            height: 3em;
+            animation: blinker 1s linear infinite;
+            background-color: #41FF00;
         }
 
         .terminal {
@@ -32,15 +35,6 @@
             display: flex;
             outline: none;
         }
-
-        #cursor {
-            width: 1em;
-            height: 2em;
-            animation: blinker 1s linear infinite;
-            background-color: #41FF00;
-        }
-
-
 
         @keyframes blinker {
             50% {
@@ -59,7 +53,7 @@
             <div class="line"><a href="#">3</a>&nbsp;-&nbsp;imprint</div>
         </div>
         <div id="lines"></div>
-        <div class="line" >>&nbsp;<span id="input"></span><span id="cursor" contenteditable="true"></span></div>
+        <div class="line">>&nbsp;<span id="input"></span><input id="cursor"></div>
     </div>
     <script>
         const lines = document.getElementById("lines");
@@ -72,6 +66,7 @@
         function onKeyPress(e) {
             let keyboardInput = input.innerHTML;
 
+            console.log(e.keyCode);
             switch (e.keyCode) {
                 /* space */
                 case 32: {
@@ -120,9 +115,12 @@
                         return;
                     }
                     input.innerHTML += e.key;
-                    cursor.textContent = '';
+                    // cursor.textContent = '';
+                                        
                     break;
             }
+
+            cursor.value = '';
         }
 
         function newLine(text) {
