@@ -33,7 +33,7 @@
             outline: none;
         }
 
-        .cursor {
+        #cursor {
             width: 1em;
             height: 2em;
             animation: blinker 1s linear infinite;
@@ -53,20 +53,19 @@
 <body>
     <div id="terminal">
         <div id="intro">
-            <div class="line"><span>hello【ツ】</span></div>
+            <div class="line">http://friscic【ツ】com</div>
             <div class="line"><a href="#">1</a>&nbsp;-&nbsp;about</div>
             <div class="line"><a href="#">2</a>&nbsp;-&nbsp;contact</div>
             <div class="line"><a href="#">3</a>&nbsp;-&nbsp;imprint</div>
         </div>
         <div id="lines"></div>
-
-        <div class="line">http://friscic.com >&nbsp;<span id="input"></span><span class="cursor"
-                contenteditable="true"></span></div>
+        <div class="line" >>&nbsp;<span id="input"></span><span id="cursor" contenteditable="true"></span></div>
     </div>
     <script>
         const lines = document.getElementById("lines");
         const terminal = document.getElementById("terminal");
         const input = document.getElementById("input");
+        const cursor = document.getElementById("cursor");
 
         document.addEventListener('keydown', onKeyPress);
 
@@ -77,6 +76,7 @@
                 /* space */
                 case 32: {
                     input.innerHTML += '&nbsp;';
+                    cursor.textContent = ''; // TODO
                     break;
                 }
                 /* backspace */
@@ -120,6 +120,7 @@
                         return;
                     }
                     input.innerHTML += e.key;
+                    cursor.textContent = '';
                     break;
             }
         }
