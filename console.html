@@ -16,13 +16,15 @@
         a {
             color: #41FF00;
             font-weight: bold;
+            text-decoration: none;
         }
-        
+
         #cursor {
             width: 1em;
             height: 3em;
             animation: blinker 1s linear infinite;
             background-color: #41FF00;
+            color: #41FF00;
         }
 
         .terminal {
@@ -34,6 +36,13 @@
             line-height: 2em;
             display: flex;
             outline: none;
+        }
+
+        .key {
+            font-weight: bold;
+            background-color: #41FF00;
+            color: black;
+            padding: 0 0.2em 0 0.2em;
         }
 
         @keyframes blinker {
@@ -48,61 +57,49 @@
     <div id="terminal">
         <div id="intro">
             <div class="line">http://friscic【ツ】com</div>
-            <div class="line"><a href="#">1</a>&nbsp;-&nbsp;about</div>
-            <div class="line"><a href="#">2</a>&nbsp;-&nbsp;contact</div>
-            <div class="line"><a href="#">3</a>&nbsp;-&nbsp;imprint</div>
+            <div class="line">pls select&nbsp;<span class="key">key</span></div>
+            <div class="line"><a href="#"><span class="key">1</span></a>&nbsp;» about</div>
+            <div class="line"><a href="#"><span class="key">2</span></a>&nbsp;» contact</div>
+            <div class="line"><a href="#"><span class="key">3</span></a>&nbsp;» imprint</div>
+            <div class="line">and press&nbsp;<span class="key">&#9166;</span></div>
         </div>
         <div id="lines"></div>
         <div class="line">>&nbsp;<span id="input"></span><input id="cursor"></div>
     </div>
     <script>
         const lines = document.getElementById("lines");
-        const terminal = document.getElementById("terminal");
         const input = document.getElementById("input");
         const cursor = document.getElementById("cursor");
 
-        document.addEventListener('keydown', onKeyPress);
+        document.addEventListener('keyup', keyPressed);
 
-        function onKeyPress(e) {
-            let keyboardInput = input.innerHTML;
+        function keyPressed(e) {
 
-            console.log(e.keyCode);
+            if (e.keyCode > 96 && e.keyCode <= 123) {
+                return
+            }
+
+            /*
+            0 - 47 ignore
+            48 - 90 output
+            < 124 error
+            */
+
             switch (e.keyCode) {
                 /* space */
                 case 32: {
                     input.innerHTML += '&nbsp;';
-                    cursor.textContent = ''; // TODO
                     break;
                 }
                 /* backspace */
                 case 8: {
-                    let clean = keyboardInput.replaceAll('&nbsp;', ' ');
+                    let clean = input.innerHTML.replaceAll('&nbsp;', ' ');
                     input.innerHTML = clean.substr(0, clean.length - 1).replaceAll(' ', '&nbsp;');
                     break;
                 }
                 /* enter */
                 case 13: {
-
-                    switch (keyboardInput) {
-                        case '1':
-                            newLine(`- xing`);
-                            newLine(`- linkedin`);
-                            break;
-                        case '2':
-                            newLine(`- xing`);
-                            newLine(`- linkedin`);
-                            break;
-                        case '3':
-                            newLine(`- xing`);
-                            newLine(`- linkedin`);
-                            break;
-                        case 'clear':
-                        case 'cls':
-                            lines.innerHTML = '';
-                            break;
-                        default:
-                            break;
-                    }
+                    checkInput();
 
                     newLine(input.innerHTML || '*');
 
@@ -110,13 +107,13 @@
                     break;
                 }
                 default:
-                    if (e.keyCode < 48 || e.keyCode > 90) {
-                        newLine(' WARN ');
+
+                    if (e.keyCode < 48 && e.keyCode > 90) {
+                        newLine(`'${input.value || e.key}' is not recognized as a command, operable program or batch file`);
                         return;
                     }
                     input.innerHTML += e.key;
-                    // cursor.textContent = '';
-                                        
+
                     break;
             }
 
@@ -128,6 +125,45 @@
             line.innerHTML = text;
             lines.append(line);
         }
+
+        function checkInput() {
+            switch (input.innerHTML) {
+                case '1':
+                    newLine(`- xing`);
+                    newLine(`- linkedin`);
+                    break;
+                case '2':
+                    newLine(`- xing`);
+                    newLine(`- linkedin`);
+                    break;
+                case '3':
+                    imprint.forEach(l => newLine(l));
+                    break;
+                case 'clear':
+                case 'cls':
+                    lines.innerHTML = '';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        const about = [
+            '- xing',
+            '- linkedin'
+        ];
+
+        const contact = [
+            'email: manfred@friscic.com'
+        ];
+        const imprint = [
+            'impressum',
+            'mag. manfred friscic',
+            'neustiftgasse 54',
+            '1070 wien',
+            'manfred@friscic.com'
+        ];
+
     </script>
 </body>
 
