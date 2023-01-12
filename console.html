@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>friscic.com</title>
     <style>
         body {
@@ -11,6 +12,7 @@
             background-color: black;
             color: #41FF00;
             text-transform: uppercase;
+            margin: 0 0.5em;
         }
 
         a {
@@ -36,6 +38,7 @@
             line-height: 2em;
             display: flex;
             outline: none;
+            overflow: scroll;
         }
 
         .key {
@@ -56,15 +59,14 @@
 <body>
     <div id="terminal">
         <div id="intro">
-            <div class="line">http://friscic【ツ】com</div>
-            <div class="line">pls select&nbsp;<span class="key">key</span></div>
-            <div class="line"><a href="#"><span class="key">1</span></a>&nbsp;» about</div>
-            <div class="line"><a href="#"><span class="key">2</span></a>&nbsp;» contact</div>
-            <div class="line"><a href="#"><span class="key">3</span></a>&nbsp;» imprint</div>
-            <div class="line">and press&nbsp;<span class="key">&#9166;</span></div>
+            <div class="line">https://friscic.com/</div>
+            <div class="line">select&nbsp;<span class="key">&#9166;</span></div>
+            <div class="line"><a href="#"><span class="key">1</span></a>&nbsp;about</div>
+            <div class="line"><a href="#"><span class="key">2</span></a>&nbsp;contact</div>
+            <div class="line"><a href="#"><span class="key">3</span></a>&nbsp;imprint</div>
         </div>
         <div id="lines"></div>
-        <div class="line">>&nbsp;<span id="input"></span><input id="cursor"></div>
+        <div class="line">~$&nbsp;<span id="input"></span><input id="cursor"></div>
     </div>
     <script>
         const lines = document.getElementById("lines");
@@ -86,6 +88,23 @@
             */
 
             switch (e.keyCode) {
+                /* 1 */
+                case 49:
+                    newLine('» about');
+                    newLine(about['xing']);
+                    newLine(about['linkedin']);
+                    newLine('');
+                    break;
+                /* 2 */
+                case 50:
+                    newLine(contact['email']);
+                    newLine('');
+                    break;
+                /* 3 */
+                case 51:
+                    imprint.forEach(l => newLine(l));
+                    newLine('');
+                    break;
                 /* space */
                 case 32: {
                     input.innerHTML += '&nbsp;';
@@ -99,7 +118,7 @@
                 }
                 /* enter */
                 case 13: {
-                    checkInput();
+                    // checkInput();
 
                     newLine(input.innerHTML || '*');
 
@@ -126,43 +145,50 @@
             lines.append(line);
         }
 
-        function checkInput() {
-            switch (input.innerHTML) {
-                case '1':
-                    newLine(`- xing`);
-                    newLine(`- linkedin`);
-                    break;
-                case '2':
-                    newLine(`- xing`);
-                    newLine(`- linkedin`);
-                    break;
-                case '3':
-                    imprint.forEach(l => newLine(l));
-                    break;
-                case 'clear':
-                case 'cls':
-                    lines.innerHTML = '';
-                    break;
-                default:
-                    break;
-            }
-        }
+        // function checkInput() {
+        //     switch (input.innerHTML) {
+        //         case '1':
+        //             newLine(about['xing']);
+        //             newLine(about['linkedin']);
+        //             break;
+        //         case '2':
+        //             newLine(contact['email']);
+        //             break;
+        //         case '3':
+        //             imprint.forEach(l => newLine(l));
+        //             break;
+        //         case 'clear':
+        //         case 'cls':
+        //             lines.innerHTML = '';
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
 
-        const about = [
-            '- xing',
-            '- linkedin'
-        ];
+        const about = {
+            ['xing']: 'https://www.xing.com/profile/Manfred_Friscic',
+            ['linkedin']: 'https://www.linkedin.com/in/friscic/',
+        };
 
-        const contact = [
-            'email: manfred@friscic.com'
-        ];
+        const contact = {
+            ['email']: 'manfred@friscic.com'
+        };
         const imprint = [
-            'impressum',
+            '» impressum',
             'mag. manfred friscic',
-            'neustiftgasse 54',
+            ' neustiftgasse 54',
             '1070 wien',
             'manfred@friscic.com'
         ];
+
+        function emptyLine() {
+            newLine('¯');
+        }
+
+        class Terminal {
+            
+        }
 
     </script>
 </body>
