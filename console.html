@@ -13,6 +13,7 @@
             color: #41FF00;
             text-transform: uppercase;
             margin: 0 0.5em;
+            /* min-width: 80rem; */
         }
 
         a {
@@ -32,20 +33,22 @@
         .terminal {
             display: flex;
             flex-direction: column;
+            transform: scale(2);
         }
 
         .line {
-            line-height: 2em;
+            line-height: 1.5em;
             display: flex;
             outline: none;
-            overflow: scroll;
+            width: fit-content;
+            /* overflow: scroll; */
         }
 
         .key {
             font-weight: bold;
             background-color: #41FF00;
             color: black;
-            padding: 0 0.2em 0 0.2em;
+            padding: 0 0.4em 0 0.2em;
         }
 
         @keyframes blinker {
@@ -64,6 +67,7 @@
             <div class="line"><a href="#"><span class="key">1</span></a>&nbsp;about</div>
             <div class="line"><a href="#"><span class="key">2</span></a>&nbsp;contact</div>
             <div class="line"><a href="#"><span class="key">3</span></a>&nbsp;imprint</div>
+            <div class="line">&nbsp;</div>
         </div>
         <div id="lines"></div>
         <div class="line">~$&nbsp;<span id="input"></span><input id="cursor"></div>
@@ -90,20 +94,25 @@
             switch (e.keyCode) {
                 /* 1 */
                 case 49:
-                    newLine('» about');
-                    newLine(about['xing']);
-                    newLine(about['linkedin']);
-                    newLine('');
+                    newLine('about', true);
+                    newLink('https://www.xing.com/profile/Manfred_Friscic', 'xing');
+                    newLink('https://www.linkedin.com/in/friscic/', 'linkedin');
+                    newLine('&nbsp;');
                     break;
                 /* 2 */
                 case 50:
-                    newLine(contact['email']);
-                    newLine('');
+                    newLine('contact', true);
+                    newLink('mailto:manfred@friscic.com', 'email');
+                    newLine('&nbsp;');
                     break;
                 /* 3 */
                 case 51:
-                    imprint.forEach(l => newLine(l));
-                    newLine('');
+                    newLine('impressum', true);
+                    newLine('mag. manfred friscic');
+                    newLine('neustiftgasse 54');
+                    newLine('1070 wien');
+                    newLine('manfred@friscic.com');
+                    newLine('&nbsp;');
                     break;
                 /* space */
                 case 32: {
@@ -139,10 +148,22 @@
             cursor.value = '';
         }
 
-        function newLine(text) {
+        function newLine(text, highlight = false) {
             let line = document.createElement("div");
             line.innerHTML = text;
+            line.className = 'line';
+            if (highlight) {
+                line.className += ' key';
+            }
             lines.append(line);
+        }
+
+        function newLink(url, text) {
+            let link = document.createElement("a");
+            link.innerHTML = text;
+            link.href = url;
+
+            newLine(link);
         }
 
         // function checkInput() {
@@ -165,30 +186,6 @@
         //             break;
         //     }
         // }
-
-        const about = {
-            ['xing']: 'https://www.xing.com/profile/Manfred_Friscic',
-            ['linkedin']: 'https://www.linkedin.com/in/friscic/',
-        };
-
-        const contact = {
-            ['email']: 'manfred@friscic.com'
-        };
-        const imprint = [
-            '» impressum',
-            'mag. manfred friscic',
-            ' neustiftgasse 54',
-            '1070 wien',
-            'manfred@friscic.com'
-        ];
-
-        function emptyLine() {
-            newLine('¯');
-        }
-
-        class Terminal {
-            
-        }
 
     </script>
 </body>
