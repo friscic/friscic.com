@@ -4,51 +4,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="manfred friscic's location on the world wide web">
+
     <title>friscic.com</title>
+
     <style>
-        body {
+        * {
             font-family: monospace;
-            font-size: 2em;
-            background-color: black;
+            font-size: 1.4rem;
+            font-weight: bold;
             color: #41FF00;
+            background-color: black;
+            border-color: black;
             text-transform: uppercase;
-            margin: 0 0.5em;
-            /* min-width: 80rem; */
+            margin: 0.2rem;
         }
 
-        a {
-            color: #41FF00;
-            font-weight: bold;
-            text-decoration: none;
+        h1,
+        h2,
+        h3,
+        h4 {
+            width: fit-content;
         }
+
 
         #cursor {
-            width: 1em;
-            height: 3em;
+            width: 1rem;
+            height: 2rem;
             animation: blinker 1s linear infinite;
             background-color: #41FF00;
-            color: #41FF00;
         }
 
-        .terminal {
-            display: flex;
-            flex-direction: column;
-            transform: scale(2);
-        }
-
-        .line {
-            line-height: 1.5em;
-            display: flex;
-            outline: none;
-            width: fit-content;
-            /* overflow: scroll; */
-        }
-
-        .key {
-            font-weight: bold;
+        .highlight {
             background-color: #41FF00;
             color: black;
-            padding: 0 0.4em 0 0.2em;
+            padding: 0 0.4rem 0 0.2rem;
+            margin: 0.4rem;
         }
 
         @keyframes blinker {
@@ -60,60 +51,89 @@
 </head>
 
 <body>
-    <div id="terminal">
-        <div id="intro">
-            <div class="line">https://friscic.com/</div>
-            <div class="line">select&nbsp;<span class="key">&#9166;</span></div>
-            <div class="line"><a href="#"><span class="key">1</span></a>&nbsp;about</div>
-            <div class="line"><a href="#"><span class="key">2</span></a>&nbsp;contact</div>
-            <div class="line"><a href="#"><span class="key">3</span></a>&nbsp;imprint</div>
-            <div class="line">&nbsp;</div>
-        </div>
-        <div id="lines"></div>
-        <div class="line">~$&nbsp;<span id="input"></span><input id="cursor"></div>
+    <h1><i>https://</i>friscic.com</h1>
+    <h2><a href="#"><span class="highlight">1</span></a>about</h2>
+    <h3><a href="#"><span class="highlight">2</span></a>contact</h3>
+    <h4><a href="#"><span class="highlight">3</span></a>imprint</h4>
+    <div id="lines">
+        ~$<input id="input" value="" style="width: 0ch" /><input id="cursor" />
     </div>
+
     <script>
         const lines = document.getElementById("lines");
         const input = document.getElementById("input");
         const cursor = document.getElementById("cursor");
 
-        document.addEventListener('keyup', keyPressed);
+        document.addEventListener('keyup', (e) => {
+            checkKeyInput(e);
+            cursor.value = ''; // hack input.value
+        });
 
-        function keyPressed(e) {
+        document.addEventListener('input', (e) => {
+            checkInput(e);
+        });
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const product = urlParams.get('product')
+
+        newLine = (text, highlight = false) => {
+
+            const className = 'line' + highlight ?? ' highlight';
+
+            const options = {
+                html: '',
+                href: '#',
+            };
+
+            let line = document.createElement("div");
+            line.innerHTML = text;
+            line.className = 'line';
+            if (highlight) {
+                line.className += ' highlight';
+            }
+            lines.prepend(line);
+        }
+
+        newLink = (url, text) => {
+            let link = document.createElement("a");
+            link.innerHTML = text;
+            link.href = url;
+            newLine(link);
+        }
+
+        createHtml = (tag, options) => {
+            let e = document.createElement(tag);
+            e.innerHTML = options.html || '';
+            e.href = options.href || '#';
+
+            return e;
+        }
+
+        checkInput = (i) => {
+            if (!i.data) {
+                return;
+            }
+
+            checkStringInput();
+        }
+
+        checkKeyInput = (e) => {
+
+            // NEW
+            // input.value += e.key;
+
+            /*
+               0 - 47 ignore
+               48 - 90 output
+               < 124 error
+            */
 
             if (e.keyCode > 96 && e.keyCode <= 123) {
                 return
             }
 
-            /*
-            0 - 47 ignore
-            48 - 90 output
-            < 124 error
-            */
-
             switch (e.keyCode) {
-                /* 1 */
-                case 49:
-                    newLine('about', true);
-                    newLink('https://www.xing.com/profile/Manfred_Friscic', 'xing');
-                    newLink('https://www.linkedin.com/in/friscic/', 'linkedin');
-                    newLine('&nbsp;');
-                    break;
-                /* 2 */
-                case 50:
-                    newLine('contact', true);
-                    newLink('mailto:manfred@friscic.com', 'email');
-                    newLine('&nbsp;');
-                    break;
-                /* 3 */
-                case 51:
-                    newLine('impressum', true);
-                    newLine('mag. manfred friscic');
-                    newLine('neustiftgasse 54');
-                    newLine('1070 wien');
-                    newLine('manfred@friscic.com');
-                    newLine('&nbsp;');
-                    break;
                 /* space */
                 case 32: {
                     input.innerHTML += '&nbsp;';
@@ -127,66 +147,53 @@
                 }
                 /* enter */
                 case 13: {
-                    // checkInput();
+                    checkStringInput();
 
-                    newLine(input.innerHTML || '*');
+                    newLine(input.value || '*');
 
-                    input.innerHTML = '';
+                    input.value = '';
                     break;
                 }
                 default:
-
                     if (e.keyCode < 48 && e.keyCode > 90) {
                         newLine(`'${input.value || e.key}' is not recognized as a command, operable program or batch file`);
-                        return;
+                        return; // todo
                     }
-                    input.innerHTML += e.key;
-
                     break;
             }
 
-            cursor.value = '';
+            input.setAttribute('style', `width: ${input.value.length}ch`);
         }
 
-        function newLine(text, highlight = false) {
-            let line = document.createElement("div");
-            line.innerHTML = text;
-            line.className = 'line';
-            if (highlight) {
-                line.className += ' key';
+        checkStringInput = () => {
+            switch (input.value) {
+                case '1':
+                    newLine('about', true);
+                    newLink('https://www.xing.com/profile/Manfred_Friscic', 'xing');
+                    newLink('https://www.linkedin.com/in/friscic/', 'linkedin');
+                    newLine('&nbsp;');
+                    break;
+                case '2':
+                    newLine('contact', true);
+                    newLink('mailto:manfred@friscic.com', 'email');
+                    newLine('&nbsp;');
+                    break;
+                case '3':
+                    newLine('impressum', true);
+                    newLine('mag. manfred friscic');
+                    newLine('neustiftgasse 54');
+                    newLine('1070 wien');
+                    newLine('manfred@friscic.com');
+                    newLine('&nbsp;');
+                    break;
+                case 'clear':
+                case 'cls':
+                    lines.innerHTML = '';
+                    break;
+                default:
+                    break;
             }
-            lines.append(line);
         }
-
-        function newLink(url, text) {
-            let link = document.createElement("a");
-            link.innerHTML = text;
-            link.href = url;
-
-            newLine(link);
-        }
-
-        // function checkInput() {
-        //     switch (input.innerHTML) {
-        //         case '1':
-        //             newLine(about['xing']);
-        //             newLine(about['linkedin']);
-        //             break;
-        //         case '2':
-        //             newLine(contact['email']);
-        //             break;
-        //         case '3':
-        //             imprint.forEach(l => newLine(l));
-        //             break;
-        //         case 'clear':
-        //         case 'cls':
-        //             lines.innerHTML = '';
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // }
-
     </script>
 </body>
 
