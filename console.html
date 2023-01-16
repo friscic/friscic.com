@@ -18,6 +18,7 @@
             border-color: black;
             text-transform: uppercase;
             margin: 0.2rem;
+            pointer-events: none;
         }
 
         h1,
@@ -26,7 +27,6 @@
         h4 {
             width: fit-content;
         }
-
 
         #cursor {
             width: 1rem;
@@ -61,23 +61,35 @@
 
     <script>
         const lines = document.getElementById("lines");
+        
         const input = document.getElementById("input");
+
+        // TODO input field not clickable
+
         const cursor = document.getElementById("cursor");
 
         document.addEventListener('keyup', (e) => {
             checkKeyInput(e);
             cursor.value = ''; // hack input.value
+            e.preventDefault();
         });
 
         document.addEventListener('input', (e) => {
             checkInput(e);
+            // e.preventDefault();
         });
 
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const product = urlParams.get('product')
+        const pageNr = Number(urlParams.get('p'));
+        /*
+        * check query params for page nr.
+        */
+        if (!isNaN(pageNr)) {
+            checkStringInput(pageNr);
+        }
 
-        newLine = (text, highlight = false) => {
+        function newLine(text, highlight = false) {
 
             const className = 'line' + highlight ?? ' highlight';
 
@@ -95,7 +107,7 @@
             lines.prepend(line);
         }
 
-        newLink = (url, text) => {
+        function newLink(url, text) {
             let link = document.createElement("a");
             link.innerHTML = text;
             link.href = url;
@@ -120,9 +132,6 @@
 
         checkKeyInput = (e) => {
 
-            // NEW
-            // input.value += e.key;
-
             /*
                0 - 47 ignore
                48 - 90 output
@@ -130,8 +139,10 @@
             */
 
             if (e.keyCode > 96 && e.keyCode <= 123) {
-                return
+                return;
             }
+
+            input.value += e.key;
 
             switch (e.keyCode) {
                 /* space */
@@ -165,8 +176,8 @@
             input.setAttribute('style', `width: ${input.value.length}ch`);
         }
 
-        checkStringInput = () => {
-            switch (input.value) {
+        function checkStringInput(inputString = input.value) {
+            switch (inputString.toString()) {
                 case '1':
                     newLine('about', true);
                     newLink('https://www.xing.com/profile/Manfred_Friscic', 'xing');
