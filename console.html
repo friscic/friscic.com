@@ -11,14 +11,15 @@
     <style>
         * {
             font-family: monospace;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #41FF00;
             background-color: black;
             border-color: black;
             text-transform: uppercase;
+            text-decoration: none;
             margin: 0.2rem;
-            /* pointer-events: none; */
+            width: fit-content;
         }
 
         h1,
@@ -29,7 +30,7 @@
         }
 
         #cursor {
-            width: 1rem;
+            width: 1.5rem;
             height: 2rem;
             animation: blinker 1s linear infinite;
             background-color: #41FF00;
@@ -51,13 +52,12 @@
 </head>
 
 <body>
-    <h1><i>https://</i>friscic.com</h1>
-    <h2><a href="#"><span class="highlight">1</span></a>about</h2>
-    <h3><a href="#"><span class="highlight">2</span></a>contact</h3>
-    <h4><a href="#"><span class="highlight">3</span></a>imprint</h4>
-    <div id="lines">
-        ~$<input id="input" value="" style="width: 0ch" /><input id="cursor" />
-    </div>
+    <h1><a href="/">friscic.comツ】</a></h1>
+    <h2><a href="?p=1"><span class="highlight">1</span>about</a></h2>
+    <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
+    <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
+    <div id="lines"></div>
+    ~$<span id="input"></span><input id="cursor" />
 
     <script>
         const lines = document.getElementById("lines");
@@ -104,7 +104,7 @@
             if (highlight) {
                 line.className += ' highlight';
             }
-            lines.prepend(line);
+            lines.append(line);
         }
 
         function newLink(url, text) {
@@ -145,52 +145,51 @@
             // }
 
             if (e.keyCode > 48 && e.keyCode <= 123) {
-                input.value += e.key;
+                input.innerHTML += e.key;
             }
 
             switch (e.keyCode) {
                 /* space */
                 case 32: {
-                    input.value += ' ';
+                    input.innerHTML += ' ';
                     break;
                 }
                 /* backspace */
                 case 8: {
-                    input.value = input.value.substr(0, input.value.length - 1);
+                    let clean = input.innerHTML.replaceAll('&nbsp;', ' ');
+                    input.innerHTML = clean.substr(0, clean.length - 1).replaceAll(' ', '&nbsp;');
                     break;
                 }
                 /* enter */
                 case 13: {
                     checkStringInput();
 
-                    newLine(input.value || '*');
+                    newLine(input.innerHTML || '*');
 
-                    input.value = '';
+                    input.innerHTML = '';
                     break;
                 }
                 default:
                     if (e.keyCode < 48 && e.keyCode > 90) {
-                        newLine(`'${input.value || e.key}' is not recognized as a command, operable program or batch file`);
+                        newLine(`'${input.innerHTML || e.key}' is not recognized as a command, operable program or batch file`);
                         return; // todo
                     }
                     break;
             }
 
-            input.setAttribute('style', `width: ${input.value.length}ch`);
+            // input.setAttribute('style', `width: ${input.value.length}ch`);
         }
 
-        function checkStringInput(inputString = input.value) {
+        function checkStringInput(inputString = input.innerHTML) {
             switch (inputString.toString()) {
                 case '1':
                     newLine('about', true);
                     newLink('https://www.xing.com/profile/Manfred_Friscic', 'xing');
                     newLink('https://www.linkedin.com/in/friscic/', 'linkedin');
-                    newLine('&nbsp;');
                     break;
                 case '2':
                     newLine('contact', true);
                     newLink('mailto:manfred@friscic.com', 'email');
-                    newLine('&nbsp;');
                     break;
                 case '3':
                     newLine('impressum', true);
@@ -198,7 +197,6 @@
                     newLine('neustiftgasse 54');
                     newLine('1070 wien');
                     newLine('manfred@friscic.com');
-                    newLine('&nbsp;');
                     break;
                 case 'clear':
                 case 'cls':
