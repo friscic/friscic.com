@@ -68,15 +68,14 @@
 
         const cursor = document.getElementById("cursor");
 
-        // document.addEventListener('keyup', (e) => {
-        //     checkKeyInput(e);
-        //     cursor.value = ''; // hack input.value
-        //     // e.preventDefault();
-        // });
+        document.addEventListener('keyup', (e) => {
+            checkKeyInput(e);
+            cursor.value = ''; // hack input.value
+        });
 
         document.addEventListener('input', (e) => {
             checkInput(e);
-            // e.preventDefault();
+            cursor.value = ''; // hack input.value
         });
 
         // check url query params for page nr.
@@ -125,9 +124,7 @@
                 return;
             }
 
-            // if () {
-                
-            // }
+            input.innerHTML += i.data;
 
             checkStringInput(i.data);
         }
