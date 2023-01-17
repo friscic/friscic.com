@@ -61,30 +61,27 @@
 
     <script>
         const lines = document.getElementById("lines");
-        
+
         const input = document.getElementById("input");
 
         // TODO input field not clickable
 
         const cursor = document.getElementById("cursor");
 
-        document.addEventListener('keyup', (e) => {
-            checkKeyInput(e);
-            cursor.value = ''; // hack input.value
-            e.preventDefault();
-        });
+        // document.addEventListener('keyup', (e) => {
+        //     checkKeyInput(e);
+        //     cursor.value = ''; // hack input.value
+        //     // e.preventDefault();
+        // });
 
         document.addEventListener('input', (e) => {
             checkInput(e);
             // e.preventDefault();
         });
 
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
+        // check url query params for page nr.
+        const urlParams = new URLSearchParams(window.location.search);
         const pageNr = Number(urlParams.get('p'));
-        /*
-        * check query params for page nr.
-        */
         if (!isNaN(pageNr)) {
             checkStringInput(pageNr);
         }
@@ -111,7 +108,8 @@
             let link = document.createElement("a");
             link.innerHTML = text;
             link.href = url;
-            newLine(link);
+            link.target = '_blank';
+            lines.append(link);
         }
 
         createHtml = (tag, options) => {
@@ -127,7 +125,11 @@
                 return;
             }
 
-            checkStringInput();
+            // if () {
+                
+            // }
+
+            checkStringInput(i.data);
         }
 
         checkKeyInput = (e) => {
@@ -189,7 +191,7 @@
                     break;
                 case '2':
                     newLine('contact', true);
-                    newLink('mailto:manfred@friscic.com', 'email');
+                    newLink('mailto:manfred@friscic.com', 'manfred@friscic.com');
                     break;
                 case '3':
                     newLine('impressum', true);
