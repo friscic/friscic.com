@@ -43,22 +43,83 @@
             margin: 0.4rem;
         }
 
+        .crt {
+            /* animation: textShadow 1.6s infinite; */
+        }
+
+        .crt::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(18, 16, 16, 0.15);
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            animation: flicker 0.15s infinite;
+        }
+
+        .crt::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
         @keyframes blinker {
             50% {
                 opacity: 0;
+            }
+        }
+
+        @keyframes textShadow {
+            0% {
+                text-shadow: 0.4389924193300864px 0 1px red, -0.4389924193300864px 0 1px black, 0 0 3px;
+            }
+
+            50% {
+                text-shadow: 0.08084290417898504px 0 1px red, -0.08084290417898504px 0 1px black, 0 0 3px;
+            }
+
+            100% {
+                text-shadow: 2.6208764473832513px 0 1px red, -2.6208764473832513px 0 1px black, 0 0 3px;
+            }
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 0.27861;
+            }
+            50% {
+                opacity: 0.96019;
+            }
+            100% {
+                opacity: 0.24387;
             }
         }
     </style>
 </head>
 
 <body>
-    <h1><a href="/">friscic.comツ】</a></h1>
-    <h2><a href="?p=1"><span class="highlight">1</span>about</a></h2>
-    <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
-    <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
-    <div id="lines"></div>
-    ~$<span id="input"></span><input id="cursor" />
 
+    <div class="crt">
+        <h1><a href="/">friscic.comツ】</a></h1>
+        <h2><a href="?p=1"><span class="highlight">1</span>about</a></h2>
+        <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
+        <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
+        <div id="lines"></div>
+        ~$<span id="input"></span><input id="cursor" />
+    </div>
     <script>
         const lines = document.getElementById("lines");
 
@@ -68,14 +129,19 @@
 
         const cursor = document.getElementById("cursor");
 
+        // TODO combine those suckers
         document.addEventListener('keyup', (e) => {
             checkKeyInput(e);
-            cursor.value = ''; // hack input.value
+            // cursor.value = ''; // hack input.value
+            // e.stopPropagation();
+            // e.preventDefault();
         });
 
         document.addEventListener('input', (e) => {
             checkInput(e);
             cursor.value = ''; // hack input.value
+            // e.stopPropagation();
+            // e.preventDefault();
         });
 
         // check url query params for page nr.
@@ -126,7 +192,7 @@
 
             input.innerHTML += i.data;
 
-            checkStringInput(i.data);
+            // checkStringInput(i.data);
         }
 
         checkKeyInput = (e) => {
