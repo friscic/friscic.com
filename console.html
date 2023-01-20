@@ -16,7 +16,7 @@
             border-color: black;
             text-transform: uppercase;
             text-decoration: none;
-            margin: 0.2rem;
+            margin: 0.5rem 0.2rem;
             width: fit-content;
         }
 
@@ -28,6 +28,9 @@
             left: 0;
             bottom: 0;
             right: 0;
+            z-index: 2;
+            pointer-events: none;
+
             background: rgba(18, 16, 16, 0.15);
             opacity: 0;
             animation: flicker 0.15s infinite;
@@ -41,6 +44,9 @@
             left: 0;
             bottom: 0;
             right: 0;
+            z-index: 2;
+            pointer-events: none;
+
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             background-size: 100% 2px, 3px 100%;
         }
@@ -79,7 +85,7 @@
     <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
     <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
     <div id="lines"></div>
-    ~$<span id="input"></span><input id="cursor" />
+    <div>~$<span id="input" type="text"></span><input id="cursor"></div>
 
     <!-- <code>
         <script>
@@ -115,15 +121,15 @@
                     break;
             }
         });
-        document.addEventListener('keypress', (e) => {
-            switch (e.keyCode) {
+        document.addEventListener('keypress', (event) => {
+            switch (event.keyCode) {
                 case 13: { // enter
                     validateInput();
                     input.innerText = '';
                     break;
                 }
                 default:
-                    input.innerText += e.key;
+                    input.innerText += event.key;
                     break;
             }
         });
@@ -134,8 +140,6 @@
             input.innerText += event.data;
             cursor.value = ''; // hack input.value
         });
-
-
 
         // function newLine(text, highlight = false) {
         //     let line = document.createElement("div");
@@ -155,11 +159,13 @@
         // }
 
         function newLine(text, href = null, highlight = false) { // newLine new?
-            let line = document.createElement(href ? 'div' : 'a');
+            let line = document.createElement('div');
             line.innerText = text;
             if (href) {
-                line.href = href;
-                line.target = '_blank';
+                let link = document.createElement('a');
+                link.href = href;
+                link.target = '_blank';
+                line.append(link);
             }
             if (highlight) {
                 line.className += ' highlight';
