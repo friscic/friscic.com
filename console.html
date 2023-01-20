@@ -5,13 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="manfred friscic's location on the world wide web">
-
     <title>friscic.com</title>
-
     <style>
         * {
             font-family: monospace;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: #41FF00;
             background-color: black;
@@ -32,8 +30,6 @@
             right: 0;
             background: rgba(18, 16, 16, 0.15);
             opacity: 0;
-            z-index: 2;
-            pointer-events: none;
             animation: flicker 0.15s infinite;
         }
 
@@ -46,16 +42,7 @@
             bottom: 0;
             right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2;
             background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            width: fit-content;
         }
 
         #cursor {
@@ -78,39 +65,16 @@
             }
         }
 
-        /* 
-        @keyframes textShadow {
-            0% {
-                text-shadow: 0.4389924193300864px 0 1px red, -0.4389924193300864px 0 1px black, 0 0 3px;
-            }
-
-            50% {
-                text-shadow: 0.08084290417898504px 0 1px red, -0.08084290417898504px 0 1px black, 0 0 3px;
-            }
-
-            100% {
-                text-shadow: 2.6208764473832513px 0 1px red, -2.6208764473832513px 0 1px black, 0 0 3px;
-            }
-        } */
-
         @keyframes flicker {
-            0% {
-                opacity: 0.27861;
-            }
-
             50% {
-                opacity: 0.96019;
-            }
-
-            100% {
-                opacity: 0.24387;
+                opacity: 0;
             }
         }
     </style>
 </head>
 
-<body contenteditable="true">
-    <h1><a href="/">friscic.comツ】</a></h1>
+<body>
+    <h1><a href="/">friscic<span class="highlight">com</span></a></h1>
     <h2><a href="?p=1"><span class="highlight">1</span>about</a></h2>
     <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
     <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
@@ -123,164 +87,109 @@
                 .then(response => {
                     response.text().then(pageSource => {
                         document.write(pageSource);
-                    })
+                    })checkKeyPressInput
                 })
         </script>
     </code> -->
 
     <script>
-
-
-
-
-        //
         const lines = document.getElementById("lines");
-
         const input = document.getElementById("input");
-
-        // TODO input field not clickable
-
         const cursor = document.getElementById("cursor");
 
-        // TODO combine those suckers
-        document.addEventListener('keydown', (e) => {
-            checkKeyInput(e);
-            // cursor.value = ''; // hack input.value
-            // e.stopPropagation();
-            // e.preventDefault();
-        });
-
-        document.addEventListener('input', (e) => {
-            checkInput(e);
-            cursor.value = ''; // hack input.value
-            // e.stopPropagation();
-            // e.preventDefault();
-        });
-
-        // check url query params for page nr.
+        // check url query params for page
         const urlParams = new URLSearchParams(window.location.search);
         const pageNr = Number(urlParams.get('p'));
-        if (!isNaN(pageNr)) {
-            checkStringInput(pageNr);
+        if (!isNaN(pageNr) && pageNr !== 0) {
+            validateInput(pageNr);
         }
 
-        function newLine(text, highlight = false) {
+        // setup event listeners
+        document.addEventListener('keydown', (event) => {
+            switch (event.keyCode) {
+                case 8: { // backspace
+                    input.innerText = input.innerText.substr(0, input.innerText.length - 1);
+                    break;
+                }
+                default:
+                    break;
+            }
+        });
+        document.addEventListener('keypress', (e) => {
+            switch (e.keyCode) {
+                case 13: { // enter
+                    validateInput();
+                    input.innerText = '';
+                    break;
+                }
+                default:
+                    input.innerText += e.key;
+                    break;
+            }
+        });
+        document.addEventListener('input', (event) => {
+            if (!event.data) {
+                return;
+            }
+            input.innerText += event.data;
+            cursor.value = ''; // hack input.value
+        });
 
-            const className = 'line' + highlight ?? ' highlight';
 
-            const options = {
-                html: '',
-                href: '#',
-            };
 
-            let line = document.createElement("div");
-            line.innerHTML = text;
-            line.className = 'line';
+        // function newLine(text, highlight = false) {
+        //     let line = document.createElement("div");
+        //     line.innerText = text;
+        //     if (highlight) {
+        //         line.className += ' highlight';
+        //     }
+        //     lines.append(line);
+        // }
+
+        // function newLink(url, text) {
+        //     let link = document.createElement("a");
+        //     link.innerText = text;
+        //     link.href = url;
+        //     link.target = '_blank';
+        //     lines.append(link);
+        // }
+
+        function newLine(text, href = null, highlight = false) { // newLine new?
+            let line = document.createElement(href ? 'div' : 'a');
+            line.innerText = text;
+            if (href) {
+                line.href = href;
+                line.target = '_blank';
+            }
             if (highlight) {
                 line.className += ' highlight';
             }
             lines.append(line);
         }
 
-        function newLink(url, text) {
-            let link = document.createElement("a");
-            link.innerHTML = text;
-            link.href = url;
-            link.target = '_blank';
-            lines.append(link);
-        }
-
-        createHtml = (tag, options) => {
-            let e = document.createElement(tag);
-            e.innerHTML = options.html || '';
-            e.href = options.href || '#';
-
-            return e;
-        }
-
-        checkInput = (i) => {
-            if (!i.data) {
-                return;
-            }
-
-            input.innerHTML += i.data;
-
-            // checkStringInput(i.data);
-        }
-
-        checkKeyInput = (e) => {
-
-            /*
-               0 - 47 ignore
-               48 - 90 output
-               < 124 error
-            */
-
-            // keyCode: 189
-
-            // if (e.keyCode > 96 && e.keyCode <= 123) {
-            //     return;
-            // }
-
-            if (e.keyCode > 48 && e.keyCode <= 123) {
-                input.innerHTML += e.key;
-            }
-
-            switch (e.keyCode) {
-                /* space */
-                case 32: {
-                    input.innerHTML += ' ';
-                    break;
-                }
-                /* backspace */
-                case 8: {
-                    let clean = input.innerHTML.replaceAll('&nbsp;', ' ');
-                    input.innerHTML = clean.substr(0, clean.length - 1).replaceAll(' ', '&nbsp;');
-                    break;
-                }
-                /* enter */
-                case 13: {
-                    checkStringInput();
-
-                    newLine(input.innerHTML || '*');
-
-                    input.innerHTML = '';
-                    break;
-                }
-                default:
-                    if (e.keyCode < 48 && e.keyCode > 90) {
-                        newLine(`'${input.innerHTML || e.key}' is not recognized as a command, operable program or batch file`);
-                        return; // todo
-                    }
-                    break;
-            }
-
-            // input.setAttribute('style', `width: ${input.value.length}ch`);
-        }
-
-        function checkStringInput(inputString = input.innerHTML) {
-            switch (inputString.toString()) {
+        function validateInput(inputString = input.innerText) {
+            switch (inputString) {
                 case '1':
-                    newLine('about', true);
-                    newLink('https://www.xing.com/profile/Manfred_Friscic', 'xing');
-                    newLink('https://www.linkedin.com/in/friscic/', 'linkedin');
+                    newLine('about', null, true);
+                    newLine('xing', 'https://www.xing.com/profile/Manfred_Friscic');
+                    newLine('linkedin', 'https://www.linkedin.com/in/friscic/');
                     break;
                 case '2':
-                    newLine('contact', true);
-                    newLink('mailto:manfred@friscic.com', 'manfred@friscic.com');
+                    newLine('contact', null, true);
+                    newLine('manfred@friscic.com', 'mailto:manfred@friscic.com');
                     break;
                 case '3':
-                    newLine('impressum', true);
+                    newLine('impressum', null, true);
                     newLine('mag. manfred friscic');
                     newLine('neustiftgasse 54');
                     newLine('1070 wien');
-                    newLine('manfred@friscic.com');
+                    newLine('manfred@friscic.com', 'mailto:manfred@friscic.com');
                     break;
-                case 'clear':
-                case 'cls':
-                    lines.innerHTML = '';
+                case 'CLS':
+                    lines.innerText = '';
                     break;
                 default:
+                    newLine(`'${input.innerText}' is not recognized as a command`);
                     break;
             }
         }
