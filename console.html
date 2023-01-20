@@ -65,6 +65,10 @@
             margin: 0.4rem;
         }
 
+        .error {
+            background-color: orangered;
+        }
+
         @keyframes blinker {
             50% {
                 opacity: 0;
@@ -86,6 +90,7 @@
     <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
     <div id="lines"></div>
     <div>~$<span id="input" type="text"></span><input id="cursor"></div>
+    <div id="error"></div>
 
     <!-- <code>
         <script>
@@ -103,14 +108,12 @@
         const input = document.getElementById("input");
         const cursor = document.getElementById("cursor");
 
-        // check url query params for page
         const urlParams = new URLSearchParams(window.location.search);
         const pageNr = Number(urlParams.get('p'));
         if (!isNaN(pageNr) && pageNr !== 0) {
-            validateInput(pageNr);
+            inputValidator(pageNr);
         }
 
-        // setup event listeners
         document.addEventListener('keydown', (event) => {
             switch (event.keyCode) {
                 case 8: { // backspace
@@ -121,10 +124,11 @@
                     break;
             }
         });
+
         document.addEventListener('keypress', (event) => {
             switch (event.keyCode) {
                 case 13: { // enter
-                    validateInput();
+                    inputValidator();
                     input.innerText = '';
                     break;
                 }
@@ -133,6 +137,7 @@
                     break;
             }
         });
+
         document.addEventListener('input', (event) => {
             if (!event.data) {
                 return;
@@ -141,63 +146,50 @@
             cursor.value = ''; // hack input.value
         });
 
-        // function newLine(text, highlight = false) {
-        //     let line = document.createElement("div");
-        //     line.innerText = text;
-        //     if (highlight) {
-        //         line.className += ' highlight';
-        //     }
-        //     lines.append(line);
-        // }
-
-        // function newLink(url, text) {
-        //     let link = document.createElement("a");
-        //     link.innerText = text;
-        //     link.href = url;
-        //     link.target = '_blank';
-        //     lines.append(link);
-        // }
-
-        function newLine(text, href = null, highlight = false) { // newLine new?
+        newLine = (options) => {
             let line = document.createElement('div');
-            line.innerText = text;
-            if (href) {
+            line.innerText = options.text;
+            if (options.href) {
                 let link = document.createElement('a');
-                link.href = href;
+                link.href = options.href;
                 link.target = '_blank';
                 line.append(link);
             }
-            if (highlight) {
+            if (options.highlight) {
                 line.className += ' highlight';
             }
             lines.append(line);
         }
 
-        function validateInput(inputString = input.innerText) {
+        function inputValidator(inputString = input.innerText) {
             switch (inputString) {
                 case '1':
-                    newLine('about', null, true);
-                    newLine('xing', 'https://www.xing.com/profile/Manfred_Friscic');
-                    newLine('linkedin', 'https://www.linkedin.com/in/friscic/');
+                    newLine({ text: 'about', highlight: true });
+                    newLine({ text: 'xing', href: 'https://www.xing.com/profile/Manfred_Friscic'});
+                    newLine({ text: 'linkedin', href: 'https://www.linkedin.com/in/friscic/'});
                     break;
                 case '2':
-                    newLine('contact', null, true);
-                    newLine('manfred@friscic.com', 'mailto:manfred@friscic.com');
+                    newLine({ text: 'contact', highlight: true });
+                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com'});
                     break;
                 case '3':
-                    newLine('impressum', null, true);
-                    newLine('mag. manfred friscic');
-                    newLine('neustiftgasse 54');
-                    newLine('1070 wien');
-                    newLine('manfred@friscic.com', 'mailto:manfred@friscic.com');
+                    newLine({ text: 'impressum', highlight: true });
+                    newLine({ text: 'mag. manfred friscic'});
+                    newLine({ text: 'neustiftgasse 54'});
+                    newLine({ text: '1070 wien'});
+                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com'});
                     break;
                 case 'CLS':
                     lines.innerText = '';
                     break;
                 default:
-                    newLine(`'${input.innerText}' is not recognized as a command`);
+                    newLine({ text: `'${input.innerText}' is not recognized as a command` });
                     break;
             }
+        }
+
+        function indicateError(error) {
+            document.getElementById("error").innerText = error;
         }
     </script>
 </body>
