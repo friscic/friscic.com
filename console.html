@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="manfred friscic's location on the world wide web">
     <title>friscic.com</title>
+    <link rel="shortcut icon" href="data:image/gif;base64,R0lGODdhAQABAPAAAP8AAAAAACwAAAAAAQABAAACAkQBADs=" />
     <style>
         * {
             font-family: monospace;
@@ -89,19 +90,7 @@
     <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
     <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
     <div id="lines"></div>
-    <div>~$<span id="input" type="text"></span><input id="cursor"></div>
-    <div id="error"></div>
-
-    <!-- <code>
-        <script>
-            fetch(document.location.href)
-                .then(response => {
-                    response.text().then(pageSource => {
-                        document.write(pageSource);
-                    })checkKeyPressInput
-                })
-        </script>
-    </code> -->
+    <div>~$<span id="input"></span><input id="cursor"></div>
 
     <script>
         const lines = document.getElementById("lines");
@@ -134,6 +123,7 @@
                 }
                 default:
                     input.innerText += event.key;
+                    event.preventDefault();
                     break;
             }
         });
@@ -142,42 +132,43 @@
             if (!event.data) {
                 return;
             }
+
             input.innerText += event.data;
             cursor.value = ''; // hack input.value
         });
 
-        newLine = (options) => {
+        newLine = (options = {}) => {
             let line = document.createElement('div');
             line.innerText = options.text;
+            line.className += options.highlight ? ' highlight' : '';
+
             if (options.href) {
                 let link = document.createElement('a');
                 link.href = options.href;
                 link.target = '_blank';
                 line.append(link);
             }
-            if (options.highlight) {
-                line.className += ' highlight';
-            }
+
             lines.append(line);
         }
 
-        function inputValidator(inputString = input.innerText) {
-            switch (inputString) {
+        inputValidator = (inputString = input.innerText) => {
+            switch (inputString.toUpperCase()) {
                 case '1':
                     newLine({ text: 'about', highlight: true });
-                    newLine({ text: 'xing', href: 'https://www.xing.com/profile/Manfred_Friscic'});
-                    newLine({ text: 'linkedin', href: 'https://www.linkedin.com/in/friscic/'});
+                    newLine({ text: 'xing', href: 'https://www.xing.com/profile/Manfred_Friscic' });
+                    newLine({ text: 'linkedin', href: 'https://www.linkedin.com/in/friscic/' });
                     break;
                 case '2':
                     newLine({ text: 'contact', highlight: true });
-                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com'});
+                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com' });
                     break;
                 case '3':
                     newLine({ text: 'impressum', highlight: true });
-                    newLine({ text: 'mag. manfred friscic'});
-                    newLine({ text: 'neustiftgasse 54'});
-                    newLine({ text: '1070 wien'});
-                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com'});
+                    newLine({ text: 'mag. manfred friscic' });
+                    newLine({ text: 'neustiftgasse 54' });
+                    newLine({ text: '1070 wien' });
+                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com' });
                     break;
                 case 'CLS':
                     lines.innerText = '';
@@ -186,10 +177,6 @@
                     newLine({ text: `'${input.innerText}' is not recognized as a command` });
                     break;
             }
-        }
-
-        function indicateError(error) {
-            document.getElementById("error").innerText = error;
         }
     </script>
 </body>
