@@ -7,178 +7,18 @@
     <meta name="description" content="manfred friscic's location on the world wide web">
     <title>friscic.com</title>
     <link rel="shortcut icon" href="data:image/gif;base64,R0lGODdhAQABAPAAAP8AAAAAACwAAAAAAQABAAACAkQBADs=" />
-    <style>
-        * {
-            font-family: monospace;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #41FF00;
-            background-color: black;
-            border-color: black;
-            text-transform: uppercase;
-            text-decoration: none;
-            margin: 0.5rem 0.2rem;
-            width: fit-content;
-        }
-
-        body::after {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            z-index: 2;
-            pointer-events: none;
-
-            background: rgba(18, 16, 16, 0.15);
-            opacity: 0;
-            animation: flicker 0.15s infinite;
-        }
-
-        body::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            z-index: 2;
-            pointer-events: none;
-
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
-        }
-
-        #cursor {
-            width: 1.5rem;
-            height: 2rem;
-            animation: blinker 1s linear infinite;
-            background-color: #41FF00;
-        }
-
-        .highlight {
-            background-color: #41FF00;
-            color: black;
-            padding: 0 0.4rem 0 0.2rem;
-            margin: 0.4rem;
-        }
-
-        .error {
-            background-color: orangered;
-        }
-
-        @keyframes blinker {
-            50% {
-                opacity: 0;
-            }
-        }
-
-        @keyframes flicker {
-            50% {
-                opacity: 0;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
     <h1><a href="/">friscic<span class="highlight">com</span></a></h1>
-    <h2><a href="?p=1"><span class="highlight">1</span>about</a></h2>
-    <h3><a href="?p=2"><span class="highlight">2</span>contact</a></h3>
-    <h4><a href="?p=3"><span class="highlight">3</span>imprint</a></h4>
+    <h2><a href="?page=1"><span class="highlight">1</span>about</a></h2>
+    <h3><a href="?page=2"><span class="highlight">2</span>contact</a></h3>
+    <h4><a href="?page=3"><span class="highlight">3</span>imprint</a></h4>
     <div id="lines"></div>
     <div>~$<span id="input"></span><input id="cursor"></div>
 
-    <script>
-        const lines = document.getElementById("lines");
-        const input = document.getElementById("input");
-        const cursor = document.getElementById("cursor");
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const pageNr = Number(urlParams.get('p'));
-        if (!isNaN(pageNr) && pageNr !== 0) {
-            inputValidator(pageNr);
-        }
-
-        document.addEventListener('keydown', (event) => {
-            switch (event.keyCode) {
-                case 8: { // backspace
-                    input.innerText = input.innerText.substr(0, input.innerText.length - 1);
-                    break;
-                }
-                default:
-                    break;
-            }
-        });
-
-        document.addEventListener('keypress', (event) => {
-            switch (event.keyCode) {
-                case 13: { // enter
-                    inputValidator();
-                    input.innerText = '';
-                    break;
-                }
-                default:
-                    input.innerText += event.key;
-                    event.preventDefault();
-                    break;
-            }
-        });
-
-        document.addEventListener('input', (event) => {
-            if (!event.data) {
-                return;
-            }
-
-            input.innerText += event.data;
-            cursor.value = ''; // hack input.value
-        });
-
-        newLine = (options = {}) => {
-            let line = document.createElement('div');
-            line.innerText = options.text;
-            line.className += options.highlight ? ' highlight' : '';
-
-            if (options.href) {
-                let link = document.createElement('a');
-                link.href = options.href;
-                link.target = '_blank';
-                line.append(link);
-            }
-
-            lines.append(line);
-        }
-
-        inputValidator = (inputString = input.innerText) => {
-            switch (inputString.toUpperCase()) {
-                case '1':
-                    newLine({ text: 'about', highlight: true });
-                    newLine({ text: 'xing', href: 'https://www.xing.com/profile/Manfred_Friscic' });
-                    newLine({ text: 'linkedin', href: 'https://www.linkedin.com/in/friscic/' });
-                    break;
-                case '2':
-                    newLine({ text: 'contact', highlight: true });
-                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com' });
-                    break;
-                case '3':
-                    newLine({ text: 'impressum', highlight: true });
-                    newLine({ text: 'mag. manfred friscic' });
-                    newLine({ text: 'neustiftgasse 54' });
-                    newLine({ text: '1070 wien' });
-                    newLine({ text: 'manfred@friscic.com', href: 'mailto:manfred@friscic.com' });
-                    break;
-                case 'CLS':
-                    lines.innerText = '';
-                    break;
-                default:
-                    newLine({ text: `'${input.innerText}' is not recognized as a command` });
-                    break;
-            }
-        }
-    </script>
+    <script src="./script.js" type="application/javascript"></script>
 </body>
 
 </html>
