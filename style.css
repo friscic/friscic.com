@@ -11,6 +11,10 @@
   width: fit-content;
 }
 
+body {
+    width: 100vw;
+}
+
 body::after {
   content: ' ';
   display: block;
@@ -44,6 +48,12 @@ body::before {
       rgba(0, 0, 255, 0.06)
     );
   background-size: 100% 2px, 3px 100%;
+}
+
+#console {
+    min-width: 10rem;
+    max-width: 90vw;
+    margin: 2rem auto;
 }
 
 #cursor {
