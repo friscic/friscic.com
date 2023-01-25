@@ -44,7 +44,7 @@ class Console {
     }
 
     checkInput = (event, eventType) => {
-        const eventId = event.data || event.code || event.inputType;
+        const eventId = event.data || event.key;
 
         switch (eventId) {
             case "Enter": {
@@ -65,12 +65,13 @@ class Console {
 
                 if (eventType === EventType.KEYPRESS) {
                     this.appendInput(event.key);
-                    event.preventDefault && event?.preventDefault();
+                    event.preventDefault();
                     break;
                 }
 
                 if (event.data) {
                     this.appendInput(event.data);
+                    event.preventDefault();
                 }
                 break;
         }
@@ -120,12 +121,12 @@ class Console {
         });
     }
 
-    inputValidator(inputString = input.innerText) {
+    inputValidator(inputString = this.input.innerText) {
         const keyMatch = Object.keys(this.content).find((command) =>
             inputString.match(new RegExp(`^${command}`, "gi"))
         );
 
-        if (!inputString || !keyMatch) {
+        if (!inputString && !keyMatch) {
             this.newLine({ text: `TRY 'HELP' FOR MORE INFOS` });
 
             return;
