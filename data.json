@@ -77,12 +77,8 @@
         { "text": "../" },
         { "text": "0 directories, 0 files" }
     ],
-    "DIR": [
-        { "text": "Directory of C:" },
-        { "text": "." },
-        { "text": ".." }
-    ],
-    "CLS": [{ "command": "C" }],
+    "DIR": [{ "text": "Directory of C:" }, { "text": "." }, { "text": ".." }],
+    "CLS": [],
     "COPY": [{ "text": "TXTODO" }],
     "DEL": [{ "text": "COULD NOT FIND %I" }],
     "PING": [{ "text": "PONG" }],

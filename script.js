@@ -1,62 +1,86 @@
+const EventType = Object.freeze({
+    KEYDOWN: "keydown",
+    KEYPRESS: "keypress",
+    INPUT: "input",
+});
+
 class Console {
     maxCharInput = 10;
     content = {};
+
+    loading = document.getElementById("loading");
+    console = document.getElementById("console");
+
     lines = document.getElementById("lines");
     input = document.getElementById("input");
     cursor = document.getElementById("cursor");
 
     constructor() {
         this.checkUriParam();
-        this.init();
+        this.load();
+        this.setup();
     }
 
-    init() {
-        fetch("./data.json")
+    async load() {
+        await fetch("./data.json")
             .then((response) => response.json())
             .then((json) => {
                 this.content = json;
             });
 
-        document.addEventListener("keydown", (event) => {
-            switch (event.code) {
-                case "Backspace": {
-                    this.input.innerText = input.innerText.substr(
-                        0,
-                        this.input.innerText.length - 1
-                    );
-                    break;
-                }
-                default:
-                    break;
-            }
-        });
-
-        document.addEventListener("keypress", (event) => {
-            switch (event.code) {
-                case "Enter": {
-                    this.newLine({ text: `~/${this.input.innerText} ` });
-                    this.inputValidator();
-                    this.input.innerText = "";
-                    break;
-                }
-                default:
-                    this.appendInput(event.key);
-                    event.preventDefault();
-                    break;
-            }
-        });
-
-        document.addEventListener("input", (event) => {
-            if (event.data) {
-                this.appendInput(event.data);
-            }
-        });
+        // this.console.style.display = "none";
+        // setTimeout(() => {
+        //     this.console.style.display = "";
+        //     this.loading.style.display = "none";
+        // }, 2000);
     }
+
+    setup() {
+        Object.values(EventType).forEach((eventType) =>
+            document.addEventListener(eventType, (event) =>
+                this.checkInput(event, eventType)
+            )
+        );
+    }
+
+    checkInput = (event, eventType) => {
+        const eventId = event.data || event.code || event.inputType;
+
+        switch (eventId) {
+            case "Enter": {
+                this.newLine({ text: `~/${this.input.innerText} ` });
+                this.inputValidator();
+                this.input.innerText = "";
+                break;
+            }
+            case "deleteContentBackward":
+            case "Backspace": {
+                this.delete();
+                break;
+            }
+            default:
+                if (eventType === EventType.KEYDOWN) {
+                    break;
+                }
+
+                if (eventType === EventType.KEYPRESS) {
+                    this.appendInput(event.key);
+                    event.preventDefault && event?.preventDefault();
+                    break;
+                }
+
+                if (event.data) {
+                    this.appendInput(event.data);
+                }
+                break;
+        }
+    };
 
     checkUriParam() {
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get("page");
-        if (page && !isNaN(page)) {
+
+        if (page) {
             this.inputValidator(page);
         }
     }
@@ -65,10 +89,15 @@ class Console {
         if (this.input.innerText.length <= this.maxCharInput) {
             this.input.innerText += char;
         }
-        this.cursor.value = "";
+
+        // this.cursor.value = "&nbsp;";
     }
 
-    newLine(options = {}) {
+    newLine(options) {
+        if (!options) {
+            this.lines.innerText = "";
+        }
+
         const line = document.createElement("div");
         line.innerText = options.text
             ? options.text.replace("%I", this.input.innerText)
@@ -82,16 +111,8 @@ class Console {
             line.append(link);
         }
 
-        if (options.command) {
-            switch (options.command) {
-                case "C": {
-                    // TODO
-                    lines.innerText = "";
-                }
-            }
-        }
+        this.lines.append(line);
 
-        lines.append(line);
         window.scrollTo({
             left: 0,
             top: document.body.scrollHeight,
@@ -100,23 +121,34 @@ class Console {
     }
 
     inputValidator(inputString = input.innerText) {
-        if (!inputString) {
+        const keyMatch = Object.keys(this.content).find((command) =>
+            inputString.match(new RegExp(`^${command}`, "gi"))
+        );
+
+        if (!inputString || !keyMatch) {
             this.newLine({ text: `TRY 'HELP' FOR MORE INFOS` });
+
             return;
         }
 
-        const command = this.matchCommand(inputString);
-        command
-            ? command.forEach((line) => this.newLine(line))
-            : this.newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
+        const valueMatch = this.content[keyMatch];
+
+        if (valueMatch && valueMatch.length) {
+            valueMatch.forEach((line) => this.newLine(line));
+        } else {
+            this.newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
+        }
+
+        if (!valueMatch) {
+            this.lines.innerText = "";
+        }
     }
 
-    matchCommand(input) {
-        const match = Object.keys(this.content).find((command) =>
-            input.match(new RegExp(`^${command}`, "gi"))
+    delete() {
+        this.input.innerText = input.innerText.substr(
+            0,
+            this.input.innerText.length - 1
         );
-
-        return this.content[match];
     }
 }
 

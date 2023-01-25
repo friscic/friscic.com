@@ -50,7 +50,7 @@ body::before {
   background-size: 100% 2px, 3px 100%;
 }
 
-#console {
+.center {
     min-width: 10rem;
     max-width: 90vw;
     margin: 2rem auto;
@@ -70,6 +70,16 @@ body::before {
   margin: 0.4rem;
 }
 
+#loading {
+  border: 16px solid black;
+  border-radius: 50%;
+  border-top: 16px solid #41ff00;
+  width: 10rem;
+  height: 10rem;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
 @keyframes blinker {
   50% {
     opacity: 0;
@@ -80,4 +90,13 @@ body::before {
   50% {
     opacity: 0;
   }
+}
+
+/* Safari */
+/* @-webkit-keyframes spin {
+} */
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
