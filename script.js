@@ -6,36 +6,33 @@ const EventType = Object.freeze({
 
 class Console {
     maxCharInput = 10;
+
     content = {};
 
     loading = document.getElementById("loading");
     console = document.getElementById("console");
-
     lines = document.getElementById("lines");
     input = document.getElementById("input");
     cursor = document.getElementById("cursor");
 
     constructor() {
-        this.checkUriParam();
-        this.load();
         this.setup();
+        this.checkUriParam();
     }
 
-    async load() {
+    async setup() {
         await fetch("./data.json")
             .then((response) => response.json())
             .then((json) => {
                 this.content = json;
             });
 
-        // this.console.style.display = "none";
+        // this.console.style.display = 'none';
         // setTimeout(() => {
-        //     this.console.style.display = "";
-        //     this.loading.style.display = "none";
+        //     this.console.style.display = '';
+        //     this.loading.style.display = 'none';
         // }, 2000);
-    }
 
-    setup() {
         Object.values(EventType).forEach((eventType) =>
             document.addEventListener(eventType, (event) =>
                 this.checkInput(event, eventType)
@@ -44,36 +41,58 @@ class Console {
     }
 
     checkInput = (event, eventType) => {
-        const eventId = event.data || event.key;
+        const eventId = (
+            event.data ||
+            event.key ||
+            event.inputType ||
+            ""
+        )?.toUpperCase();
 
         switch (eventId) {
-            case "Enter": {
+            case "ENTER": {
                 this.newLine({ text: `~/${this.input.innerText} ` });
                 this.inputValidator();
                 this.input.innerText = "";
                 break;
             }
-            case "deleteContentBackward":
-            case "Backspace": {
+            case "DELETECONTENTBACKWARD":
+            case "BACKSPACE": {
                 this.delete();
                 break;
             }
             default:
-                if (eventType === EventType.KEYDOWN) {
-                    break;
+                switch (eventType) {
+                    case EventType.KEYPRESS:
+                        this.appendInput(event.key);
+                        event.preventDefault();
+                        break;
+                    case EventType.KEYDOWN:
+                        break;
+                    case EventType.INPUT:
+                        if (event.data) {
+                            this.appendInput(event.data);
+                            event.preventDefault();
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
-                if (eventType === EventType.KEYPRESS) {
-                    this.appendInput(event.key);
-                    event.preventDefault();
-                    break;
-                }
+            // if (eventType === EventType.KEYDOWN) {
+            //     return;
+            // }
 
-                if (event.data) {
-                    this.appendInput(event.data);
-                    event.preventDefault();
-                }
-                break;
+            // if (eventType === EventType.KEYPRESS) {
+            //     this.appendInput(event.key);
+            //     event.preventDefault();
+            //     return;
+            // }
+
+            // if (event.data) {
+            //     this.appendInput(event.data);
+            //     event.preventDefault();
+            // }
+            break;
         }
     };
 
@@ -91,7 +110,7 @@ class Console {
             this.input.innerText += char;
         }
 
-        // this.cursor.value = "&nbsp;";
+        // this.cursor.value = '&nbsp;';
     }
 
     newLine(options) {
