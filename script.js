@@ -5,19 +5,26 @@ const EventType = Object.freeze({
 });
 
 class Console {
-    maxCharInput = 10;
-
-    content = {};
-
-    loading = document.getElementById("loading");
-    console = document.getElementById("console");
-    lines = document.getElementById("lines");
-    input = document.getElementById("input");
-    cursor = document.getElementById("cursor");
+    maxCharInput;
+    content;
+    loading;
+    console;
+    lines;
+    input;
+    cursor;
 
     constructor() {
+        this.maxCharInput = 100;
+        
+        this.content = {};
+
+        this.loading = document.getElementById("loading");
+        this.console = document.getElementById("console");
+        this.lines = document.getElementById("lines");
+        this.input = document.getElementById("input");
+        this.cursor = document.getElementById("cursor");
+
         this.setup();
-        this.checkUriParam();
     }
 
     async setup() {
@@ -38,6 +45,8 @@ class Console {
                 this.checkInput(event, eventType)
             )
         );
+
+        this.checkUriParam();
     }
 
     checkInput = (event, eventType) => {
@@ -78,21 +87,21 @@ class Console {
                         break;
                 }
 
-            // if (eventType === EventType.KEYDOWN) {
-            //     return;
-            // }
+                // if (eventType === EventType.KEYDOWN) {
+                //     return;
+                // }
 
-            // if (eventType === EventType.KEYPRESS) {
-            //     this.appendInput(event.key);
-            //     event.preventDefault();
-            //     return;
-            // }
+                // if (eventType === EventType.KEYPRESS) {
+                //     this.appendInput(event.key);
+                //     event.preventDefault();
+                //     return;
+                // }
 
-            // if (event.data) {
-            //     this.appendInput(event.data);
-            //     event.preventDefault();
-            // }
-            break;
+                // if (event.data) {
+                //     this.appendInput(event.data);
+                //     event.preventDefault();
+                // }
+                break;
         }
     };
 
