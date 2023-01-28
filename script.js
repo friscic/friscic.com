@@ -1,29 +1,19 @@
 const EventType = Object.freeze({
-    KEYDOWN: "keydown",
-    KEYPRESS: "keypress",
-    INPUT: "input",
+    KeyDown: "keydown",
+    KeyPress: "keypress",
+    Input: "input",
 });
 
 class Console {
-    maxCharInput;
-    content;
-    loading;
-    console;
-    lines;
-    input;
-    cursor;
+    maxCharInput = 100;
+    content = {};
+    loading = document.getElementById("loading");
+    console = document.getElementById("console");
+    lines = document.getElementById("lines");
+    input = document.getElementById("input");
+    cursor = document.getElementById("cursor");
 
     constructor() {
-        this.maxCharInput = 100;
-        
-        this.content = {};
-
-        this.loading = document.getElementById("loading");
-        this.console = document.getElementById("console");
-        this.lines = document.getElementById("lines");
-        this.input = document.getElementById("input");
-        this.cursor = document.getElementById("cursor");
-
         this.setup();
     }
 
@@ -53,55 +43,47 @@ class Console {
         const eventId = (
             event.data ||
             event.key ||
-            event.inputType ||
-            ""
+            event.inputType
         )?.toUpperCase();
 
-        switch (eventId) {
-            case "ENTER": {
-                this.newLine({ text: `~/${this.input.innerText} ` });
-                this.inputValidator();
-                this.input.innerText = "";
-                break;
+        if (!eventId) {
+            this.newLine({ text: `(⊘_⊘）ups...` });
+            return;
+        }
+
+        if (eventId === "ENTER") {
+            this.newLine({ text: `~/${this.input.innerText} ` });
+            this.inputValidator();
+            if (this.input.innerText === "CLS") {
+                this.lines.innerText = "";
             }
-            case "DELETECONTENTBACKWARD":
-            case "BACKSPACE": {
-                this.delete();
-                break;
-            }
-            default:
-                switch (eventType) {
-                    case EventType.KEYPRESS:
-                        this.appendInput(event.key);
-                        event.preventDefault();
-                        break;
-                    case EventType.KEYDOWN:
-                        break;
-                    case EventType.INPUT:
-                        if (event.data) {
-                            this.appendInput(event.data);
-                            event.preventDefault();
-                        }
-                        break;
-                    default:
-                        break;
-                }
+            this.input.innerText = "";
+            event.preventDefault();
 
-                // if (eventType === EventType.KEYDOWN) {
-                //     return;
-                // }
+            return;
+        }
 
-                // if (eventType === EventType.KEYPRESS) {
-                //     this.appendInput(event.key);
-                //     event.preventDefault();
-                //     return;
-                // }
+        if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
+            this.input.innerText = input.innerText.substr(
+                0,
+                this.input.innerText.length - 1
+            );
 
-                // if (event.data) {
-                //     this.appendInput(event.data);
-                //     event.preventDefault();
-                // }
-                break;
+            return;
+        }
+
+        if (eventType === EventType.KeyPress) {
+            this.appendInput(event.key);
+            event.preventDefault();
+
+            return;
+        }
+
+        if (eventType === EventType.Input && event.data) {
+            this.appendInput(event.data);
+            event.preventDefault();
+
+            return;
         }
     };
 
@@ -126,20 +108,17 @@ class Console {
         if (!options) {
             this.lines.innerText = "";
         }
-
         const line = document.createElement("div");
         line.innerText = options.text
             ? options.text.replace("%I", this.input.innerText)
             : line.innerText;
         line.className += options.highlight ? " highlight" : "";
-
         if (options.href) {
             let link = document.createElement("a");
             link.href = options.href;
             link.target = "_blank";
             line.append(link);
         }
-
         this.lines.append(line);
 
         window.scrollTo({
@@ -155,7 +134,7 @@ class Console {
         );
 
         if (!inputString && !keyMatch) {
-            this.newLine({ text: `TRY 'HELP' FOR MORE INFOS` });
+            this.newLine({ text: `¯\\_(ツ)_/¯TRY 'HELP'` });
 
             return;
         }
@@ -168,16 +147,9 @@ class Console {
             this.newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
         }
 
-        if (!valueMatch) {
-            this.lines.innerText = "";
-        }
-    }
-
-    delete() {
-        this.input.innerText = input.innerText.substr(
-            0,
-            this.input.innerText.length - 1
-        );
+        // if (!valueMatch) {
+        //     this.lines.innerText = "";
+        // }
     }
 }
 

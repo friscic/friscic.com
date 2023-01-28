@@ -1,6 +1,6 @@
 {
     "1": [
-        { "text": "about", "highlight": true },
+        { "text": "☷ about", "highlight": true },
         {
             "text": "xing",
             "href": "https://www.xing.com/profile/Manfred_Friscic"
@@ -8,19 +8,23 @@
         { "text": "linkedin", "href": "https://www.linkedin.com/in/friscic/" }
     ],
     "2": [
-        { "text": "contact", "highlight": true },
+        { "text": "☎ contact", "highlight": true },
         { "text": "manfred@friscic.com", "href": "mailto:manfred@friscic.com" }
     ],
     "3": [
-        { "text": "impressum", "highlight": true },
+        { "text": "⚖ impressum", "highlight": true },
         { "text": "mag. manfred friscic" },
         { "text": "neustiftgasse 54" },
         { "text": "1070 wien" },
         { "text": "manfred@friscic.com", "href": "mailto:manfred@friscic.com" }
     ],
+    "HELP": [
+        { "text": "ⓘ just select a number from 1-3 and press enter..." },
+        { "text": "⚠ any other commands are solely experimental" }
+    ],
     "PWD": [{ "text": "./" }],
     "MKDIR": [{ "text": "sorry permission denied" }],
-    "MV": [{ "text": "TXTODO" }],
+    "MV": [{ "text": "<(°.°)> '%I' stat cannot" }],
     "CP": [{ "text": "TXTODO" }],
     "RM": [{ "text": "TXTODO" }],
     "TOUCH": [{ "text": "TXTODO" }],
@@ -78,7 +82,6 @@
         { "text": "0 directories, 0 files" }
     ],
     "DIR": [{ "text": "Directory of C:" }, { "text": "." }, { "text": ".." }],
-    "CLS": [],
     "COPY": [{ "text": "TXTODO" }],
     "DEL": [{ "text": "COULD NOT FIND %I" }],
     "PING": [{ "text": "PONG" }],
@@ -88,5 +91,20 @@
     "nslookup": [{ "text": "TXTODO" }],
     "SHUTDOWN": [{ "text": "TXTODO" }],
     "NETSTAT": [{ "text": "TXTODO" }],
-    "NET": [{ "text": "TXTODO" }]
+    "NET": [{ "text": "TXTODO" }],
+    "RND": [
+        { "text": "(ლ_－）", "highlight": true },
+        { "text": "(－_ლ）" },
+        { "text": "( ๏̯͡๏ ）" },
+        { "text": "(๏̯͡๏  ）" },
+        { "text": "(  ๏̯͡๏）" },
+        { "text": "(◉౪◉）" },
+        { "text": "(◕౪◕）" },
+        { "text": "(ಠ_ಠ）" },
+        { "text": "(●_●）" },
+        { "text": "(⊘_⊘）" },
+        { "text": "( •̀ᴗ•́ ）" },
+        { "text": "(｀∀ ´）" }
+    ],
+    "SLEEPY": [{ "text": "(ლ_－）" }, { "text": "(－_ლ）" }]
 }
