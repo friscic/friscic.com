@@ -1,110 +1,181 @@
 {
     "1": [
-        { "text": "☷ about", "highlight": true },
         {
-            "text": "xing",
+            "text": {
+                "de": "☷ über mich",
+                "en": "☷ about"
+            },
+            "highlight": true
+        },
+        {
+            "text": {
+                "de": "xing",
+                "en": "xing"
+            },
             "href": "https://www.xing.com/profile/Manfred_Friscic"
         },
-        { "text": "linkedin", "href": "https://www.linkedin.com/in/friscic/" }
+        {
+            "text": {
+                "de": "linkedin",
+                "en": "linkedin"
+            },
+            "href": "https://www.linkedin.com/in/friscic/"
+        }
     ],
     "2": [
-        { "text": "☎ contact", "highlight": true },
-        { "text": "manfred@friscic.com", "href": "mailto:manfred@friscic.com" }
+        {
+            "text": {
+                "de": "☎ kontakt",
+                "en": "☎ contact"
+            },
+            "highlight": true
+        },
+        {
+            "text": {
+                "de": "",
+                "en": "manfred@friscic.com"
+            },
+            "href": "mailto:manfred@friscic.com"
+        }
     ],
     "3": [
-        { "text": "⚖ impressum", "highlight": true },
-        { "text": "mag. manfred friscic" },
-        { "text": "neustiftgasse 54" },
-        { "text": "1070 wien" },
-        { "text": "manfred@friscic.com", "href": "mailto:manfred@friscic.com" }
+        {
+            "text": {
+                "de": "⚖ impressum",
+                "en": "⚖ imprint"
+            },
+            "highlight": true
+        },
+        {
+            "text": {
+                "de": "mag. manfred friscic",
+                "en": "manfred friscic"
+            }
+        },
+        {
+            "text": {
+                "de": "neustiftgasse 54",
+                "en": "neustiftgasse 54"
+            }
+        },
+        {
+            "text": {
+                "de": "1070 wien",
+                "en": "1070 vienna"
+            }
+        },
+        {
+            "text": {
+                "de": "manfred@friscic.com",
+                "en": "manfred@friscic.com"
+            },
+            "href": "mailto:manfred@friscic.com"
+        }
     ],
     "HELP": [
-        { "text": "ⓘ just select a number from 1-3 and press enter..." },
-        { "text": "⚠ any other commands are solely experimental" }
+        {
+            "text": {
+                "de": "",
+                "en": "ⓘ just select a number from 1-3 and press enter..."
+            }
+        },
+        {
+            "text": {
+                "de": "",
+                "en": "⚠ any other commands are solely experimental"
+            }
+        }
     ],
-    "PWD": [{ "text": "./" }],
-    "MKDIR": [{ "text": "sorry permission denied" }],
-    "MV": [{ "text": "<(°.°)> '%I' stat cannot" }],
-    "CP": [{ "text": "TXTODO" }],
-    "RM": [{ "text": "TXTODO" }],
-    "TOUCH": [{ "text": "TXTODO" }],
-    "IN": [{ "text": "TXTODO" }],
-    "CAT": [{ "text": "TXTODO" }],
-    "CLEAR": [{ "text": "TXTODO" }],
-    "ECHO": [{ "text": "TXTODO" }],
-    "LESS": [{ "text": "TXTODO" }],
-    "MAN": [{ "text": "TXTODO" }],
-    "UNAME": [{ "text": "TXTODO" }],
-    "WHOAMI": [{ "text": "TXTODO" }],
-    "TAR": [{ "text": "TXTODO" }],
-    "GREP": [{ "text": "TXTODO" }],
-    "HEAD": [{ "text": "TXTODO" }],
-    "TAIL": [{ "text": "TXTODO" }],
-    "DIFF": [{ "text": "TXTODO" }],
-    "CMP": [{ "text": "TXTODO" }],
-    "COMM": [{ "text": "TXTODO" }],
-    "SORT": [{ "text": "TXTODO" }],
-    "EXPORT": [{ "text": "TXTODO" }],
-    "ZIP": [{ "text": "TXTODO" }],
-    "UNZIP": [{ "text": "TXTODO" }],
-    "SSH": [{ "text": "TXTODO" }],
-    "SERVICE": [{ "text": "TXTODO" }],
-    "PS": [{ "text": "TXTODO" }],
-    "KILL": [{ "text": "TXTODO" }],
-    "KILLALL": [{ "text": "TXTODO" }],
-    "DF": [{ "text": "TXTODO" }],
-    "MOUNT": [{ "text": "TXTODO" }],
-    "CHMOD": [{ "text": "TXTODO" }],
-    "CHOWN": [{ "text": "TXTODO" }],
-    "IPCONFIG": [{ "text": "TXTODO" }],
-    "TRACEROUTE": [{ "text": "TXTODO" }],
-    "WGET": [{ "text": "TXTODO" }],
-    "UFW": [{ "text": "TXTODO" }],
-    "IPTABLES": [{ "text": "TXTODO" }],
-    "APT": [{ "text": "TXTODO" }],
-    "PACMAN": [{ "text": "TXTODO" }],
-    "YUM": [{ "text": "TXTODO" }],
-    "RPM": [{ "text": "TXTODO" }],
-    "SUDO": [{ "text": "TXTODO" }],
-    "CAL": [{ "text": "TXTODO" }],
-    "ALIAS": [{ "text": "TXTODO" }],
-    "DD": [{ "text": "TXTODO" }],
-    "WHEREIS": [{ "text": "TXTODO" }],
-    "WHATIS": [{ "text": "TXTODO" }],
-    "TOP": [{ "text": "TXTODO" }],
-    "USERADD": [{ "text": "TXTODO" }],
-    "USERMOD": [{ "text": "TXTODO" }],
-    "PASSWD": [{ "text": "TXTODO" }],
-    "CD": [{ "text": "cannot find the path specified" }],
+    "PWD": [{ "text": { "de": "", "en": "./" } }],
+    "MKDIR": [{ "text": { "de": "", "en": "sorry permission denied" } }],
+    "MV": [{ "text": { "de": "", "en": "<(°.°)> '%I' stat cannot" } }],
+    "CP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "RM": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "TOUCH": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "IN": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CAT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CLEAR": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "ECHO": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "LESS": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "MAN": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "UNAME": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "WHOAMI": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "TAR": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "GREP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "HEAD": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "TAIL": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "DIFF": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CMP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "COMM": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "SORT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "EXPORT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "ZIP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "UNZIP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "SSH": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "SERVICE": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "PS": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "KILL": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "KILLALL": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "DF": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "MOUNT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CHMOD": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CHOWN": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "IPCONFIG": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "TRACEROUTE": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "WGET": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "UFW": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "IPTABLES": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "APT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "PACMAN": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "YUM": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "RPM": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "SUDO": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CAL": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "ALIAS": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "DD": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "WHEREIS": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "WHATIS": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "TOP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "USERADD": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "USERMOD": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "PASSWD": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CD": [{ "text": { "de": "", "en": "cannot find the path specified" } }],
     "LS": [
-        { "text": "./" },
-        { "text": "../" },
-        { "text": "0 directories, 0 files" }
+        { "text": { "de": "", "en": "./" } },
+        { "text": { "de": "", "en": "../" } },
+        { "text": { "de": "", "en": "0 directories, 0 files" } }
     ],
-    "DIR": [{ "text": "Directory of C:" }, { "text": "." }, { "text": ".." }],
-    "COPY": [{ "text": "TXTODO" }],
-    "DEL": [{ "text": "COULD NOT FIND %I" }],
-    "PING": [{ "text": "PONG" }],
-    "TRACERT": [{ "text": "TXTODO" }],
-    "FORMAT": [{ "text": "TXTODO" }],
-    "CHKDSK": [{ "text": "TXTODO" }],
-    "nslookup": [{ "text": "TXTODO" }],
-    "SHUTDOWN": [{ "text": "TXTODO" }],
-    "NETSTAT": [{ "text": "TXTODO" }],
-    "NET": [{ "text": "TXTODO" }],
+    "DIR": [
+        { "text": { "de": "", "en": "Directory of C:" } },
+        { "text": { "de": "", "en": "." } },
+        { "text": { "de": "", "en": ".." } }
+    ],
+    "COPY": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "DEL": [{ "text": { "de": "", "en": "COULD NOT FIND %I" } }],
+    "PING": [{ "text": { "de": "", "en": "PONG" } }],
+    "TRACERT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "FORMAT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CHKDSK": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "nslookup": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "SHUTDOWN": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "NETSTAT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "NET": [{ "text": { "de": "", "en": "TXTODO" } }],
     "RND": [
-        { "text": "(ლ_－）", "highlight": true },
-        { "text": "(－_ლ）" },
-        { "text": "( ๏̯͡๏ ）" },
-        { "text": "(๏̯͡๏  ）" },
-        { "text": "(  ๏̯͡๏）" },
-        { "text": "(◉౪◉）" },
-        { "text": "(◕౪◕）" },
-        { "text": "(ಠ_ಠ）" },
-        { "text": "(●_●）" },
-        { "text": "(⊘_⊘）" },
-        { "text": "( •̀ᴗ•́ ）" },
-        { "text": "(｀∀ ´）" }
+        { "text": { "de": "", "en": "(ლ_－）" }, "highlight": true },
+        { "text": { "de": "", "en": "(－_ლ）" } },
+        { "text": { "de": "", "en": "( ๏̯͡๏ ）" } },
+        { "text": { "de": "", "en": "(๏̯͡๏  ）" } },
+        { "text": { "de": "", "en": "(  ๏̯͡๏）" } },
+        { "text": { "de": "", "en": "(◉౪◉）" } },
+        { "text": { "de": "", "en": "(◕౪◕）" } },
+        { "text": { "de": "", "en": "(ಠ_ಠ）" } },
+        { "text": { "de": "", "en": "(●_●）" } },
+        { "text": { "de": "", "en": "(⊘_⊘）" } },
+        { "text": { "de": "", "en": "( •̀ᴗ•́ ）" } },
+        { "text": { "de": "", "en": "(｀∀ ´）" } }
     ],
-    "SLEEPY": [{ "text": "(ლ_－）" }, { "text": "(－_ლ）" }]
+    "SLEEPY": [
+        { "text": { "de": "", "en": "(ლ_－）" } },
+        { "text": { "de": "", "en": "(－_ლ）" } }
+    ]
 }

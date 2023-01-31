@@ -7,6 +7,7 @@ const EventType = Object.freeze({
 class Console {
     maxCharInput = 100;
     content = {};
+    language = "EN";
     loading = document.getElementById("loading");
     console = document.getElementById("console");
     lines = document.getElementById("lines");
@@ -21,7 +22,27 @@ class Console {
         await fetch("./data.json")
             .then((response) => response.json())
             .then((json) => {
-                this.content = json;
+                const urlParams = new URLSearchParams(window.location.search);
+                const page = urlParams.get("page");
+                page && this.inputValidator(page);
+
+                const lang = urlParams.get("lang");
+                this.language = lang && lang !== this.language ? lang : "en";
+
+                Object.entries(json).forEach((entry) => {
+                    if (!entry[0]) {
+                        return;
+                    }
+                    this.content[entry[0]] =
+                        entry[1]?.map((obj) =>
+                            obj.text
+                                ? {
+                                      ...obj,
+                                      text: obj.text[this.language],
+                                  }
+                                : obj
+                        ) || {};
+                });
             });
 
         // this.console.style.display = 'none';
@@ -36,8 +57,20 @@ class Console {
             )
         );
 
-        this.checkUriParam();
+        // TODO loading
+        setTimeout(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get("page");
+            page && this.inputValidator(page);
+
+            const lang = urlParams.get("lang");
+            if (lang !== this.language) {
+                this.language = lang;
+            }
+        }, 100);
     }
+
+    translate() {}
 
     checkInput = (event, eventType) => {
         const eventId = (
@@ -90,9 +123,14 @@ class Console {
     checkUriParam() {
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get("page");
+        const lang = urlParams.get("lang");
 
         if (page) {
             this.inputValidator(page);
+        }
+
+        if (lang) {
+            this.language = lang;
         }
     }
 
@@ -134,7 +172,7 @@ class Console {
         );
 
         if (!inputString && !keyMatch) {
-            this.newLine({ text: `¯\\_(ツ)_/¯TRY 'HELP'` });
+            this.newLine({ text: `¯\\_(ツ)_/¯TRY 'HELP'` }); // TODO lang
 
             return;
         }
