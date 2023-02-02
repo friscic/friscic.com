@@ -8,8 +8,9 @@
   text-transform: uppercase;
   text-decoration: none;
   margin: 0.5rem 0.2rem;
-  width: fit-content;
-  max-width: 5;
+  /* width: fit-content;
+  max-width: 5; */
+  word-break: break-all;
 }
 
 body {

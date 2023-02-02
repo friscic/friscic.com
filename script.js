@@ -4,73 +4,80 @@ const EventType = Object.freeze({
     Input: "input",
 });
 
-class Console {
-    maxCharInput = 100;
-    content = {};
-    language = "EN";
-    loading = document.getElementById("loading");
-    console = document.getElementById("console");
-    lines = document.getElementById("lines");
-    input = document.getElementById("input");
-    cursor = document.getElementById("cursor");
+const File = {
+    Data: "./data.json",
+    Script: "./script.js",
+};
 
+const Model = {
+    maxCharInput: 100,
+    content: {},
+    language: "en",
+    loading: document.getElementById("loading"),
+    // console: document.getElementById("console"), // TODO
+    lines: document.getElementById("lines"),
+    input: document.getElementById("input"),
+    cursor: document.getElementById("cursor"),
+};
+
+class Console {
     constructor() {
-        this.setup();
+        this.setup(this.searchParams());
+        this.addEventListener();
     }
 
-    async setup() {
+    async setup(page) {
+        // this.console.style.display = "none";
+        // setTimeout(() => {
+        //     this.console.style.display = "";
+        //     Model.loading.style.display = "none";
+        // }, 2000);
+
         await fetch("./data.json")
             .then((response) => response.json())
             .then((json) => {
-                const urlParams = new URLSearchParams(window.location.search);
-                const page = urlParams.get("page");
-                page && this.inputValidator(page);
-
-                const lang = urlParams.get("lang");
-                this.language = lang && lang !== this.language ? lang : "en";
-
-                Object.entries(json).forEach((entry) => {
-                    if (!entry[0]) {
-                        return;
-                    }
-                    this.content[entry[0]] =
-                        entry[1]?.map((obj) =>
-                            obj.text
-                                ? {
-                                      ...obj,
-                                      text: obj.text[this.language],
-                                  }
-                                : obj
-                        ) || {};
-                });
+                this.translate(json);
+                if (page) {
+                    this.inputValidator(page);
+                }
+                // this.console.style.display = "";
+                // Model.loading.style.display = "none";
             });
+    }
 
-        // this.console.style.display = 'none';
-        // setTimeout(() => {
-        //     this.console.style.display = '';
-        //     this.loading.style.display = 'none';
-        // }, 2000);
+    searchParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get("lang");
+        const page = urlParams.get("page");
 
+        if (lang && lang !== this.language) {
+            Model.language = lang;
+        }
+
+        return page;
+    }
+
+    addEventListener() {
         Object.values(EventType).forEach((eventType) =>
             document.addEventListener(eventType, (event) =>
                 this.checkInput(event, eventType)
             )
         );
-
-        // TODO loading
-        setTimeout(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const page = urlParams.get("page");
-            page && this.inputValidator(page);
-
-            const lang = urlParams.get("lang");
-            if (lang !== this.language) {
-                this.language = lang;
-            }
-        }, 100);
     }
 
-    translate() {}
+    translate(json) {
+        Object.entries(json).forEach((entry) => {
+            Model.content[entry[0]] =
+                entry[1]?.map((obj) =>
+                    obj.text
+                        ? {
+                              ...obj,
+                              text: obj.text[Model.language],
+                          }
+                        : obj
+                ) || {};
+        });
+    }
 
     checkInput = (event, eventType) => {
         const eventId = (
@@ -85,21 +92,21 @@ class Console {
         }
 
         if (eventId === "ENTER") {
-            this.newLine({ text: `~/${this.input.innerText} ` });
+            this.newLine({ text: `~/${Model.input.innerText} ` });
             this.inputValidator();
-            if (this.input.innerText === "CLS") {
-                this.lines.innerText = "";
+            if (Model.input.innerText === "CLS") {
+                Model.lines.innerText = "";
             }
-            this.input.innerText = "";
+            Model.input.innerText = "";
             event.preventDefault();
 
             return;
         }
 
         if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
-            this.input.innerText = input.innerText.substr(
+            Model.input.innerText = input.innerText.substr(
                 0,
-                this.input.innerText.length - 1
+                Model.input.innerText.length - 1
             );
 
             return;
@@ -130,13 +137,13 @@ class Console {
         }
 
         if (lang) {
-            this.language = lang;
+            Model.language = lang;
         }
     }
 
     appendInput(char) {
-        if (this.input.innerText.length <= this.maxCharInput) {
-            this.input.innerText += char;
+        if (Model.input.innerText.length <= Model.maxCharInput) {
+            Model.input.innerText += char;
         }
 
         // this.cursor.value = '&nbsp;';
@@ -144,11 +151,11 @@ class Console {
 
     newLine(options) {
         if (!options) {
-            this.lines.innerText = "";
+            Model.lines.innerText = "";
         }
         const line = document.createElement("div");
         line.innerText = options.text
-            ? options.text.replace("%I", this.input.innerText)
+            ? options.text.replace("%I", Model.input.innerText)
             : line.innerText;
         line.className += options.highlight ? " highlight" : "";
         if (options.href) {
@@ -157,7 +164,7 @@ class Console {
             link.target = "_blank";
             line.append(link);
         }
-        this.lines.append(line);
+        Model.lines.append(line);
 
         window.scrollTo({
             left: 0,
@@ -166,8 +173,8 @@ class Console {
         });
     }
 
-    inputValidator(inputString = this.input.innerText) {
-        const keyMatch = Object.keys(this.content).find((command) =>
+    inputValidator(inputString = Model.input.innerText) {
+        const keyMatch = Object.keys(Model.content).find((command) =>
             inputString.match(new RegExp(`^${command}`, "gi"))
         );
 
@@ -177,7 +184,7 @@ class Console {
             return;
         }
 
-        const valueMatch = this.content[keyMatch];
+        const valueMatch = Model.content[keyMatch];
 
         if (valueMatch && valueMatch.length) {
             valueMatch.forEach((line) => this.newLine(line));
