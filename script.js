@@ -10,7 +10,6 @@ const File = {
 };
 
 const Model = {
-    maxCharInput: 100,
     content: {},
     language: "en",
     loading: document.getElementById("loading"),
@@ -22,30 +21,16 @@ const Model = {
 
 class Console {
     constructor() {
-        this.setup(this.searchParams());
-        this.addEventListener();
-    }
-
-    async setup(page) {
         // this.console.style.display = "none";
         // setTimeout(() => {
         //     this.console.style.display = "";
         //     Model.loading.style.display = "none";
         // }, 2000);
 
-        await fetch("./data.json")
-            .then((response) => response.json())
-            .then((json) => {
-                this.translate(json);
-                if (page) {
-                    this.inputValidator(page);
-                }
-                // this.console.style.display = "";
-                // Model.loading.style.display = "none";
-            });
+        this.init();
     }
 
-    searchParams() {
+    async init(page) {
         const urlParams = new URLSearchParams(window.location.search);
         const lang = urlParams.get("lang");
         const page = urlParams.get("page");
@@ -54,7 +39,16 @@ class Console {
             Model.language = lang;
         }
 
-        return page;
+        await fetch(File.Data)
+            .then((response) => response.json())
+            .then((json) => {
+                this.translate(json);
+                if (page) {
+                    this.inputValidator(page);
+                }
+            });
+
+        this.addEventListener();
     }
 
     addEventListener() {
@@ -113,14 +107,14 @@ class Console {
         }
 
         if (eventType === EventType.KeyPress) {
-            this.appendInput(event.key);
+            Model.input.innerText += event.key;
             event.preventDefault();
 
             return;
         }
 
         if (eventType === EventType.Input && event.data) {
-            this.appendInput(event.data);
+            Model.input.innerText += event.data;
             event.preventDefault();
 
             return;
@@ -139,14 +133,6 @@ class Console {
         if (lang) {
             Model.language = lang;
         }
-    }
-
-    appendInput(char) {
-        if (Model.input.innerText.length <= Model.maxCharInput) {
-            Model.input.innerText += char;
-        }
-
-        // this.cursor.value = '&nbsp;';
     }
 
     newLine(options) {
