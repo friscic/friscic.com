@@ -193,7 +193,10 @@ class Console {
         line.innerText = options.text
             ? options.text.replace("%I", Model.input.innerText)
             : line.innerText;
-        line.className += options.highlight ? " highlight" : "";
+
+        if (options.highlight) {
+            line.className += " highlight";
+        }
         if (options.href) {
             let link = document.createElement("a");
             link.href = options.href;
