@@ -161,6 +161,7 @@ class Console {
                 0,
                 Model.input.innerText.length - 1
             );
+            event.preventDefault();
 
             return;
         }
