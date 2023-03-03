@@ -25,7 +25,7 @@
     "2": [
         {
             "text": {
-                "de": "#2| kontakt",
+                "de": "2 » kontakt",
                 "en": "2 » contact"
             },
             "highlight": true
@@ -41,7 +41,7 @@
     "3": [
         {
             "text": {
-                "de": "#3| impressum",
+                "de": "3 » impressum",
                 "en": "3 » imprint"
             },
             "highlight": true
