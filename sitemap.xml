@@ -4,7 +4,19 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 >
 <url>
-<loc>https://friscic.com/</loc>
-<lastmod>2023-03-03T10:44:06+00:00</lastmod>
+    <loc>https://friscic.com/</loc>
+    <lastmod>2023-03-03T10:44:06+00:00</lastmod>
+</url>
+<url>
+    <loc>https://friscic.com/?page=about</loc>
+    <lastmod>2023-03-03T10:44:06+00:00</lastmod>
+</url>
+<url>
+    <loc>https://friscic.com/?page=contact</loc>
+    <lastmod>2023-03-03T10:44:06+00:00</lastmod>
+</url>
+<url>
+    <loc>https://friscic.com/?page=imprint</loc>
+    <lastmod>2023-03-03T10:44:06+00:00</lastmod>
 </url>
 </urlset>
