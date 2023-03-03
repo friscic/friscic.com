@@ -28,7 +28,7 @@ const Navigation = {
 
 class Console {
     constructor() {
-        this.loder(); // todo
+        // this.loder();
         this.init(this.searchParams());
         this.addEventListener();
     }
@@ -61,11 +61,11 @@ class Console {
     }
 
     loder() {
-        // this.console.style.display = "none";
-        // setTimeout(() => {
-        //     this.console.style.display = "";
-        //     Model.loading.style.display = "none";
-        // }, 2000);
+        Model.console.style.display = "none";
+        setTimeout(() => {
+            Model.console.style.display = "";
+            Model.loading.style.display = "none";
+        }, 2000);
     }
 
     searchParams() {

@@ -100,21 +100,49 @@
     "HELP": [
         {
             "text": {
-                "de": "",
-                "en": "ⓘ just select a number from 1-3 and press enter..."
+                "de": "ⓘ just select a number from 1-3 and press enter",
+                "en": "ⓘ just select a number from 1-3 and press enter"
             }
         },
         {
             "text": {
-                "de": "",
+                "de": "⚠ any other commands are solely experimental",
                 "en": "⚠ any other commands are solely experimental"
             }
         }
     ],
-    "PWD": [{ "text": { "de": "", "en": "./" } }],
-    "MKDIR": [{ "text": { "de": "", "en": "sorry permission denied" } }],
-    "MV": [{ "text": { "de": "", "en": "<(°.°)> '%I' stat cannot" } }],
-    "CP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "PWD": [
+        {
+            "text": {
+                "de": "./",
+                "en": "./"
+            }
+        }
+    ],
+    "MKDIR": [
+        {
+            "text": {
+                "de": "sorry permission denied",
+                "en": "sorry permission denied"
+            }
+        }
+    ],
+    "MV": [
+        {
+            "text": {
+                "de": "<(°.°)> '%I' stat cannot",
+                "en": "<(°.°)> '%I' stat cannot"
+            }
+        }
+    ],
+    "CP": [
+        {
+            "text": {
+                "de": "TODO",
+                "en": "TXTODO"
+            }
+        }
+    ],
     "RM": [{ "text": { "de": "", "en": "TXTODO" } }],
     "TOUCH": [{ "text": { "de": "", "en": "TXTODO" } }],
     "IN": [{ "text": { "de": "", "en": "TXTODO" } }],
@@ -166,14 +194,44 @@
     "PASSWD": [{ "text": { "de": "", "en": "TXTODO" } }],
     "CD": [{ "text": { "de": "", "en": "cannot find the path specified" } }],
     "LS": [
-        { "text": { "de": "", "en": "./" } },
-        { "text": { "de": "", "en": "../" } },
-        { "text": { "de": "", "en": "0 directories, 0 files" } }
+        {
+            "text": {
+                "de": "./",
+                "en": "./"
+            }
+        },
+        {
+            "text": {
+                "de": "../",
+                "en": "../"
+            }
+        },
+        {
+            "text": {
+                "de": "0 directories, 0 files",
+                "en": "0 directories, 0 files"
+            }
+        }
     ],
     "DIR": [
-        { "text": { "de": "", "en": "Directory of C:" } },
-        { "text": { "de": "", "en": "." } },
-        { "text": { "de": "", "en": ".." } }
+        {
+            "text": {
+                "de": "Directory of C:",
+                "en": "Directory of C:"
+            }
+        },
+        {
+            "text": {
+                "de": ".",
+                "en": "."
+            }
+        },
+        {
+            "text": {
+                "de": "..",
+                "en": ".."
+            }
+        }
     ],
     "COPY": [{ "text": { "de": "", "en": "TXTODO" } }],
     "DEL": [{ "text": { "de": "", "en": "COULD NOT FIND %I" } }],
@@ -200,7 +258,17 @@
         { "text": { "de": "", "en": "(｀∀ ´）" } }
     ],
     "SLEEPY": [
-        { "text": { "de": "", "en": "(ლ_－）" } },
-        { "text": { "de": "", "en": "(－_ლ）" } }
+        {
+            "text": {
+                "de": "(ლ_－）",
+                "en": "(ლ_－）"
+            }
+        },
+        {
+            "text": {
+                "de": "(－_ლ）",
+                "en": "(－_ლ）"
+            }
+        }
     ]
 }
