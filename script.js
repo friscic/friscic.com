@@ -12,11 +12,18 @@ const File = {
 const Model = {
     content: {},
     language: "en",
+    page: null,
     loading: document.getElementById("loading"),
     console: document.getElementById("console"),
     lines: document.getElementById("lines"),
     input: document.getElementById("input"),
     cursor: document.getElementById("cursor"),
+};
+
+const Navigation = {
+    About: "ABOUT",
+    Contact: "CONTACT",
+    Imprint: "IMPRINT",
 };
 
 class Console {
@@ -36,9 +43,20 @@ class Console {
                 if (input) {
                     this.inputValidator(input);
                 }
-                this.addNavigationItem("ABOUT");
-                this.addNavigationItem("CONTACT");
-                this.addNavigationItem("IMPRINT");
+                
+                if (Object.values(Navigation).includes(input)) {
+                    Model.page = input.toLowerCase();
+                }
+
+                this.addLanguageSwitch("en");
+                this.addLanguageSwitch("de");
+
+                input !== Navigation.About &&
+                    this.addNavigationItem(Navigation.About);
+                input !== Navigation.Contact &&
+                    this.addNavigationItem(Navigation.Contact);
+                input !== Navigation.Imprint &&
+                    this.addNavigationItem(Navigation.Imprint);
             });
     }
 
@@ -96,11 +114,20 @@ class Console {
         const item = document.createElement("h2");
         const link = document.createElement("a");
         const text = document.createElement("span");
-        link.href = `?page=${name}`;
+        link.href = `?page=${name}&lang=${Model.language}`;
         text.innerText = Model.content[name][0]?.text;
-        
         link.appendChild(text);
         item.appendChild(link);
+        Model.console.insertBefore(item, Model.lines);
+    }
+
+    addLanguageSwitch(lang) {
+        const item = document.createElement("a");
+        item.href = `?lang=${lang}&page=${Model.page || ''}`;
+        item.innerText = lang;
+        if (lang === Model.language) {
+            item.classList.add("highlight");
+        }
         Model.console.insertBefore(item, Model.lines);
     }
 

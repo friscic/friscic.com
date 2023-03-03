@@ -2,8 +2,8 @@
     "1": [
         {
             "text": {
-                "de": "⛶ über mich",
-                "en": "⛶ about"
+                "de": "⛶ über mich [1]",
+                "en": "⛶ about [1]"
             },
             "highlight": true
         },
@@ -25,14 +25,14 @@
     "2": [
         {
             "text": {
-                "de": "☎ kontakt",
-                "en": "☎ contact"
+                "de": "☎ kontakt [2]",
+                "en": "☎ contact [2]"
             },
             "highlight": true
         },
         {
             "text": {
-                "de": "",
+                "de": "manfred@friscic.com",
                 "en": "manfred@friscic.com"
             },
             "href": "mailto:manfred@friscic.com"
@@ -41,8 +41,8 @@
     "3": [
         {
             "text": {
-                "de": "⚖ impressum",
-                "en": "⚖ imprint"
+                "de": "⚖ impressum [3]",
+                "en": "⚖ imprint [3]"
             },
             "highlight": true
         },

@@ -11,9 +11,10 @@
   margin: 0.5rem 0.2rem;
 }
 
-
 body {
   width: 100vw;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body::after {
