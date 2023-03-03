@@ -4,26 +4,25 @@ const EventType = Object.freeze({
     Input: "input",
 });
 
-const Model = {
-    content: {},
-    language: "en",
-    page: null,
-    loading: document.getElementById("loading"),
-    // console: document.getElementById("console"),
-    navigation: document.getElementById("navigation"),
-    lines: document.getElementById("lines"),
-    input: document.getElementById("input"),
-    cursor: document.getElementById("cursor"),
-    footer: document.getElementById("footer"),
-};
-
-const Navigation = {
+const Navigation = Object.freeze({
     About: "ABOUT",
     Contact: "CONTACT",
     Imprint: "IMPRINT",
-};
+});
 
 class Console {
+    content = {};
+    language = "en";
+    page = null;
+    urlParams = {};
+    loading = document.getElementById("loading");
+    // console = document.getElementById("console");
+    navigation = document.getElementById("navigation");
+    lines = document.getElementById("lines");
+    input = document.getElementById("input");
+    cursor = document.getElementById("cursor");
+    footer = document.getElementById("footer");
+
     constructor() {
         this.init(this.searchParams());
         this.addEventListener();
@@ -41,28 +40,25 @@ class Console {
                 if (input) {
                     this.inputValidator(input);
                 }
-                
+
                 if (Object.values(Navigation).includes(input)) {
-                    Model.page = input.toLowerCase();
+                    this.page = input.toLowerCase();
                 }
 
                 this.addLanguageSwitch("en");
                 this.addLanguageSwitch("de");
 
-                input !== Navigation.About &&
-                    this.addNavigationItem(Navigation.About);
-                input !== Navigation.Contact &&
-                    this.addNavigationItem(Navigation.Contact);
-                input !== Navigation.Imprint &&
-                    this.addNavigationItem(Navigation.Imprint);
+                this.addNavigationItem(Navigation.About);
+                this.addNavigationItem(Navigation.Contact);
+                this.addNavigationItem(Navigation.Imprint);
             });
     }
 
     loder(timeout) {
-        // Model.console.style.display = "none";
+        // this.console.style.display = "none";
         // setTimeout(() => {
-        //     Model.console.style.display = "";
-        //     Model.loading.style.display = "none";
+        //     this.console.style.display = "";
+        //     this.loading.style.display = "none";
         // }, timeout);
     }
 
@@ -70,8 +66,8 @@ class Console {
         const urlParams = new URLSearchParams(window.location.search);
         const lang = urlParams.get("lang");
 
-        if (lang && lang !== Model.language) {
-            Model.language = lang;
+        if (lang && lang !== this.language) {
+            this.language = lang;
             document.children[0].lang = lang;
         }
 
@@ -88,21 +84,21 @@ class Console {
 
     translate(json) {
         Object.entries(json).forEach((entry) => {
-            Model.content[entry[0]] =
+            this.content[entry[0]] =
                 entry[1]?.flatMap((obj) =>
                     obj.ref
                         ? json[obj.ref].map((t) =>
                               t.text
                                   ? {
                                         ...t,
-                                        text: t.text[Model.language],
+                                        text: t.text[this.language],
                                     }
                                   : d
                           )
                         : obj.text
                         ? {
                               ...obj,
-                              text: obj.text[Model.language],
+                              text: obj.text[this.language],
                           }
                         : d
                 ) || {};
@@ -112,26 +108,24 @@ class Console {
     addNavigationItem(name) {
         const item = document.createElement("h2");
         const link = document.createElement("a");
-        const text = document.createElement("span");
-        link.href = `?page=${name}&lang=${Model.language}`;
-        text.innerText = Model.content[name][0]?.text;
-        link.appendChild(text);
+        link.href = `?page=${name}&lang=${this.language}`;
+        link.innerText = this.content[name][0]?.text;
         item.appendChild(link);
-        Model.navigation.appendChild(item);
+        this.navigation.appendChild(item);
     }
 
     addLanguageSwitch(lang) {
         const item = document.createElement("a");
-        item.href = `?lang=${lang}&page=${Model.page || ''}`;
+        item.href = `?lang=${lang}&page=${this.page || ""}`;
         item.innerText = lang;
-        if (lang === Model.language) {
+        if (lang === this.language) {
             item.classList.add("highlight");
         }
-        Model.footer.prepend(item);
+        this.footer.append(item);
     }
 
     checkInput = (event, eventType) => {
-        Model.cursor.value = " ";
+        this.cursor.value = " ";
         const eventId = (
             event.data ||
             event.key ||
@@ -144,21 +138,21 @@ class Console {
         }
 
         if (eventId === "ENTER") {
-            this.newLine({ text: `~/${Model.input.innerText} ` });
+            this.newLine({ text: `~/${this.input.innerText} ` });
             this.inputValidator();
-            if (Model.input.innerText === "CLS") {
-                Model.lines.innerText = "";
+            if (this.input.innerText === "CLS") {
+                this.lines.innerText = "";
             }
-            Model.input.innerText = "";
+            this.input.innerText = "";
             event.preventDefault();
 
             return;
         }
 
         if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
-            Model.input.innerText = input.innerText.substr(
+            this.input.innerText = input.innerText.substr(
                 0,
-                Model.input.innerText.length - 1
+                this.input.innerText.length - 1
             );
             event.preventDefault();
 
@@ -166,14 +160,14 @@ class Console {
         }
 
         if (eventType === EventType.KeyPress) {
-            Model.input.innerText += event.key;
+            this.input.innerText += event.key;
             event.preventDefault();
 
             return;
         }
 
         if (eventType === EventType.Input && event.data) {
-            Model.input.innerText += event.data;
+            this.input.innerText += event.data;
             event.preventDefault();
 
             return;
@@ -182,11 +176,11 @@ class Console {
 
     newLine(options) {
         if (!options) {
-            Model.lines.innerText = "";
+            this.lines.innerText = "";
         }
         const line = document.createElement("div");
         line.innerText = options.text
-            ? options.text.replace("%I", Model.input.innerText)
+            ? options.text.replace("%I", this.input.innerText)
             : line.innerText;
 
         if (options.highlight) {
@@ -198,7 +192,7 @@ class Console {
             link.target = "_blank";
             line.append(link);
         }
-        Model.lines.append(line);
+        this.lines.append(line);
 
         window.scrollTo({
             left: 0,
@@ -207,8 +201,8 @@ class Console {
         });
     }
 
-    inputValidator(inputString = Model.input.innerText) {
-        const keyMatch = Object.keys(Model.content).find((command) =>
+    inputValidator(inputString = this.input.innerText) {
+        const keyMatch = Object.keys(this.content).find((command) =>
             inputString.match(new RegExp(`^${command}`, "gi"))
         );
 
@@ -218,7 +212,7 @@ class Console {
             return;
         }
 
-        const valueMatch = Model.content[keyMatch];
+        const valueMatch = this.content[keyMatch];
 
         if (valueMatch && valueMatch.length) {
             valueMatch.forEach((line) => this.newLine(line));

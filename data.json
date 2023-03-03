@@ -2,8 +2,8 @@
     "1": [
         {
             "text": {
-                "de": "[1] über mich",
-                "en": "[1] about me"
+                "de": "1 » über mich",
+                "en": "1 » about me"
             },
             "highlight": true
         },
@@ -25,8 +25,8 @@
     "2": [
         {
             "text": {
-                "de": "[2] kontakt",
-                "en": "[2] contact"
+                "de": "#2| kontakt",
+                "en": "2 » contact"
             },
             "highlight": true
         },
@@ -41,8 +41,8 @@
     "3": [
         {
             "text": {
-                "de": "[3] impressum",
-                "en": "[3] imprint"
+                "de": "#3| impressum",
+                "en": "3 » imprint"
             },
             "highlight": true
         },

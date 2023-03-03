@@ -52,6 +52,10 @@ body::before {
   background-size: 100% 2px, 3px 100%;
 }
 
+h1 {
+  text-align: right;
+}
+
 #loading {
   border: 2rem solid black;
   border-radius: 50%;
@@ -60,10 +64,6 @@ body::before {
   height: 5rem;
   -webkit-animation: spin 1s linear infinite; /* Safari */
   animation: spin 1s linear infinite;
-}
-
-#console {
-  max-width: 20rem;
 }
 
 #cursor {
@@ -76,6 +76,12 @@ body::before {
 
 #input {
   margin-right: 2.5rem;
+}
+
+.container {
+  max-width: 15rem;
+  margin: 0 auto;
+  border-right: 0.2rem solid #41ff00;
 }
 
 .highlight {
@@ -110,6 +116,11 @@ body::before {
   }
 }
 
+#navigation {
+  margin: 0.5rem 0 1rem 0;
+}
+
 #footer {
   margin-top: 1.5rem;
+  text-align: right;
 }
