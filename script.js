@@ -14,10 +14,12 @@ const Model = {
     language: "en",
     page: null,
     loading: document.getElementById("loading"),
-    console: document.getElementById("console"),
+    // console: document.getElementById("console"),
+    navigation: document.getElementById("navigation"),
     lines: document.getElementById("lines"),
     input: document.getElementById("input"),
     cursor: document.getElementById("cursor"),
+    footer: document.getElementById("footer"),
 };
 
 const Navigation = {
@@ -28,12 +30,13 @@ const Navigation = {
 
 class Console {
     constructor() {
-        // this.loder();
         this.init(this.searchParams());
         this.addEventListener();
     }
 
     async init(input) {
+        // this.loder(input ? 2000 : 10);
+
         await fetch(File.Data)
             .then((response) => response.json())
             .then((json) => {
@@ -60,12 +63,12 @@ class Console {
             });
     }
 
-    loder() {
-        Model.console.style.display = "none";
-        setTimeout(() => {
-            Model.console.style.display = "";
-            Model.loading.style.display = "none";
-        }, 2000);
+    loder(timeout) {
+        // Model.console.style.display = "none";
+        // setTimeout(() => {
+        //     Model.console.style.display = "";
+        //     Model.loading.style.display = "none";
+        // }, timeout);
     }
 
     searchParams() {
@@ -74,6 +77,7 @@ class Console {
 
         if (lang && lang !== Model.language) {
             Model.language = lang;
+            document.children[0].lang = lang;
         }
 
         return urlParams.get("page")?.toUpperCase();
@@ -118,7 +122,7 @@ class Console {
         text.innerText = Model.content[name][0]?.text;
         link.appendChild(text);
         item.appendChild(link);
-        Model.console.insertBefore(item, Model.lines);
+        Model.navigation.appendChild(item);
     }
 
     addLanguageSwitch(lang) {
@@ -128,7 +132,7 @@ class Console {
         if (lang === Model.language) {
             item.classList.add("highlight");
         }
-        Model.console.insertBefore(item, Model.lines);
+        Model.footer.prepend(item);
     }
 
     checkInput = (event, eventType) => {

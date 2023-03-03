@@ -2,8 +2,8 @@
     "1": [
         {
             "text": {
-                "de": "⛶ über mich [1]",
-                "en": "⛶ about me [1]"
+                "de": "➀ über mich",
+                "en": "➀ about me"
             },
             "highlight": true
         },
@@ -25,8 +25,8 @@
     "2": [
         {
             "text": {
-                "de": "✆ kontakt [2]",
-                "en": "✆ contact [2]"
+                "de": "➁ kontakt",
+                "en": "➁ contact"
             },
             "highlight": true
         },
@@ -41,8 +41,8 @@
     "3": [
         {
             "text": {
-                "de": "⚖ impressum [3]",
-                "en": "⚖ imprint [3]"
+                "de": "➂ impressum",
+                "en": "➂ imprint"
             },
             "highlight": true
         },
@@ -50,12 +50,6 @@
             "text": {
                 "de": "mag. manfred friscic",
                 "en": "mag. manfred friscic"
-            }
-        },
-        {
-            "text": {
-                "de": "gisa: 35557449",
-                "en": "gisa: 35557449"
             }
         },
         {

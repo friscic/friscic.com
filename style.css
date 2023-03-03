@@ -8,7 +8,7 @@
   text-transform: uppercase;
   text-decoration: none;
   word-break: break-all;
-  margin: 0.5rem 0.2rem;
+  margin: 0.4rem 0.2rem;
 }
 
 body {
@@ -53,18 +53,18 @@ body::before {
 }
 
 #loading {
-  border: 16px solid black;
+  border: 2rem solid black;
   border-radius: 50%;
-  border-top: 16px solid #41ff00;
-  width: 10rem;
-  height: 10rem;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+  border-top: 2rem solid #41ff00;
+  width: 5rem;
+  height: 5rem;
+  -webkit-animation: spin 1s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
 }
 
-/* #console {
+#console {
   max-width: 20rem;
-} */
+}
 
 #cursor {
   width: 1.5rem;
@@ -82,7 +82,7 @@ body::before {
   background-color: #41ff00;
   color: black;
   padding: 0 0.4rem 0 0.2rem;
-  margin-top: 1rem;
+  line-height: 1.4rem;
 }
 
 @keyframes blinker {
