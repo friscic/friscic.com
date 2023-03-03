@@ -21,34 +21,39 @@ const Model = {
 
 class Console {
     constructor() {
+        this.loder(); // todo
+        this.init(this.searchParams());
+        this.addEventListener();
+    }
+
+    async init(input) {
+        await fetch(File.Data)
+            .then((response) => response.json())
+            .then((json) => {
+                this.translate(json);
+                if (input) {
+                    this.inputValidator(input);
+                }
+            });
+    }
+
+    loder() {
         // this.console.style.display = "none";
         // setTimeout(() => {
         //     this.console.style.display = "";
         //     Model.loading.style.display = "none";
         // }, 2000);
-
-        this.init();
     }
 
-    async init(page) {
+    searchParams() {
         const urlParams = new URLSearchParams(window.location.search);
         const lang = urlParams.get("lang");
-        const page = urlParams.get("page");
 
-        if (lang && lang !== this.language) {
+        if (lang && lang !== Model.language) {
             Model.language = lang;
         }
 
-        await fetch(File.Data)
-            .then((response) => response.json())
-            .then((json) => {
-                this.translate(json);
-                if (page) {
-                    this.inputValidator(page);
-                }
-            });
-
-        this.addEventListener();
+        return urlParams.get("page");
     }
 
     addEventListener() {
@@ -62,18 +67,21 @@ class Console {
     translate(json) {
         Object.entries(json).forEach((entry) => {
             Model.content[entry[0]] =
-                entry[1]?.map((obj) =>
-                    obj.text
+                entry[1]?.flatMap((obj) => {
+                    const d = obj.ref ? json[obj.ref] : obj;
+                    return d.text
                         ? {
-                              ...obj,
-                              text: obj.text[Model.language],
+                              ...d,
+                              text: d.text[Model.language],
                           }
-                        : obj
-                ) || {};
+                        : d;
+                }) || {};
         });
+        console.log(Model.content);
     }
 
     checkInput = (event, eventType) => {
+        Model.cursor.value = " ";
         const eventId = (
             event.data ||
             event.key ||
@@ -120,20 +128,6 @@ class Console {
             return;
         }
     };
-
-    checkUriParam() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const page = urlParams.get("page");
-        const lang = urlParams.get("lang");
-
-        if (page) {
-            this.inputValidator(page);
-        }
-
-        if (lang) {
-            Model.language = lang;
-        }
-    }
 
     newLine(options) {
         if (!options) {

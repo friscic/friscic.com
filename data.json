@@ -1,5 +1,5 @@
 {
-    "1": [
+    "ABOUT": [
         {
             "text": {
                 "de": "☷ über mich",
@@ -22,7 +22,17 @@
             "href": "https://www.linkedin.com/in/friscic/"
         }
     ],
+    "CONTACT": [],
+    "IMPRINT": [],
+    "1": [
+        {
+            "ref": ["ABOUT"]
+        }
+    ],
     "2": [
+        {
+            "ref": ["CONTACT"]
+        },
         {
             "text": {
                 "de": "☎ kontakt",
@@ -39,6 +49,9 @@
         }
     ],
     "3": [
+        {
+            "ref": ["IMPRINT"]
+        },
         {
             "text": {
                 "de": "⚖ impressum",

@@ -9,6 +9,7 @@
   text-decoration: none;
   margin: 0.5rem 0.2rem;
   word-break: break-all;
+  max-width: 5;
 }
 
 body {
@@ -50,17 +51,6 @@ body::before {
   background-size: 100% 2px, 3px 100%;
 }
 
-#console {
-  max-width: 15rem;
-}
-
-#cursor {
-  width: 1.5rem;
-  height: 2rem;
-  animation: blinker 1s linear infinite;
-  background-color: #41ff00;
-}
-
 #loading {
   border: 16px solid black;
   border-radius: 50%;
@@ -71,11 +61,27 @@ body::before {
   animation: spin 2s linear infinite;
 }
 
+#console {
+  max-width: 20rem;
+}
+
+#cursor {
+  width: 1.5rem;
+  height: 2rem;
+  margin-left: -2rem;
+  animation: blinker 1s linear infinite;
+  background-color: #41ff00;
+}
+
+#input {
+  margin-right: 2.5rem;
+}
+
 .highlight {
   background-color: #41ff00;
   color: black;
   padding: 0 0.4rem 0 0.2rem;
-  margin: 0.4rem;
+  margin-top: 1rem;
 }
 
 @keyframes blinker {
