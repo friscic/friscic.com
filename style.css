@@ -109,3 +109,7 @@ body::before {
     transform: rotate(360deg);
   }
 }
+
+#footer {
+  margin-top: 1.5rem;
+}

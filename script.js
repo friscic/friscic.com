@@ -4,11 +4,6 @@ const EventType = Object.freeze({
     Input: "input",
 });
 
-const File = {
-    Data: "./data.json",
-    Script: "./script.js",
-};
-
 const Model = {
     content: {},
     language: "en",
@@ -37,7 +32,7 @@ class Console {
     async init(input) {
         // this.loder(input ? 2000 : 10);
 
-        await fetch(File.Data)
+        await fetch("./data.json")
             .then((response) => response.json())
             .then((json) => {
                 this.translate(json);
