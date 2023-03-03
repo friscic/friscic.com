@@ -13,7 +13,7 @@ const Model = {
     content: {},
     language: "en",
     loading: document.getElementById("loading"),
-    // console: document.getElementById("console"), // TODO
+    console: document.getElementById("console"),
     lines: document.getElementById("lines"),
     input: document.getElementById("input"),
     cursor: document.getElementById("cursor"),
@@ -31,9 +31,14 @@ class Console {
             .then((response) => response.json())
             .then((json) => {
                 this.translate(json);
+            })
+            .finally(() => {
                 if (input) {
                     this.inputValidator(input);
                 }
+                this.addNavigationItem("ABOUT");
+                this.addNavigationItem("CONTACT");
+                this.addNavigationItem("IMPRINT");
             });
     }
 
@@ -53,7 +58,7 @@ class Console {
             Model.language = lang;
         }
 
-        return urlParams.get("page");
+        return urlParams.get("page")?.toUpperCase();
     }
 
     addEventListener() {
@@ -67,17 +72,36 @@ class Console {
     translate(json) {
         Object.entries(json).forEach((entry) => {
             Model.content[entry[0]] =
-                entry[1]?.flatMap((obj) => {
-                    const d = obj.ref ? json[obj.ref] : obj;
-                    return d.text
+                entry[1]?.flatMap((obj) =>
+                    obj.ref
+                        ? json[obj.ref].map((t) =>
+                              t.text
+                                  ? {
+                                        ...t,
+                                        text: t.text[Model.language],
+                                    }
+                                  : d
+                          )
+                        : obj.text
                         ? {
-                              ...d,
-                              text: d.text[Model.language],
+                              ...obj,
+                              text: obj.text[Model.language],
                           }
-                        : d;
-                }) || {};
+                        : d
+                ) || {};
         });
-        console.log(Model.content);
+    }
+
+    addNavigationItem(name) {
+        const item = document.createElement("h2");
+        const link = document.createElement("a");
+        const text = document.createElement("span");
+        link.href = `?page=${name}`;
+        text.innerText = Model.content[name][0]?.text;
+        
+        link.appendChild(text);
+        item.appendChild(link);
+        Model.console.insertBefore(item, Model.lines);
     }
 
     checkInput = (event, eventType) => {

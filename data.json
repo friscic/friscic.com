@@ -1,9 +1,9 @@
 {
-    "ABOUT": [
+    "1": [
         {
             "text": {
-                "de": "☷ über mich",
-                "en": "☷ about"
+                "de": "⛶ über mich",
+                "en": "⛶ about"
             },
             "highlight": true
         },
@@ -22,17 +22,7 @@
             "href": "https://www.linkedin.com/in/friscic/"
         }
     ],
-    "CONTACT": [],
-    "IMPRINT": [],
-    "1": [
-        {
-            "ref": ["ABOUT"]
-        }
-    ],
     "2": [
-        {
-            "ref": ["CONTACT"]
-        },
         {
             "text": {
                 "de": "☎ kontakt",
@@ -49,9 +39,6 @@
         }
     ],
     "3": [
-        {
-            "ref": ["IMPRINT"]
-        },
         {
             "text": {
                 "de": "⚖ impressum",
@@ -83,6 +70,26 @@
                 "en": "manfred@friscic.com"
             },
             "href": "mailto:manfred@friscic.com"
+        }
+    ],
+    "ABOUT": [
+        {
+            "ref": "1"
+        }
+    ],
+    "ABOUT ME": [
+        {
+            "ref": "1"
+        }
+    ],
+    "CONTACT": [
+        {
+            "ref": "2"
+        }
+    ],
+    "IMPRINT": [
+        {
+            "ref": "3"
         }
     ],
     "HELP": [
