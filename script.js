@@ -20,29 +20,16 @@ let cursor = document.getElementById("cursor");
 let footer = document.getElementById("footer");
 let [language, command] = getUrlSearchParams();
 let content = {};
-let enterCounter = 0;
+let eCnt = 0;
 
-/**
- * [app] start up
- * @param loader (optional) flag to display loading animation (disabled by default)
+/** [app] add event listeners
  */
-async function start() {
-    await fetch("./data.json")
-        .then((response) => response.json())
-        .then((json) => {
-            translate(json);
-            Object.values(Language).forEach(addLanguageSwitch);
-            Object.values(Navigation).forEach(addNavigationItem);
-            Object.values(EventType).forEach(addEventListener);
+const addEventListener = (eventType) =>
+    document.addEventListener(eventType, (event) =>
+        checkInput(event, eventType)
+    );
 
-            if (command) {
-                inputValidator(command);
-            }
-        });
-}
-
-/**
- * [app] check for url query strings (e.g. lang & page)
+/** [app] check for url query strings (e.g. lang & page)
  */
 function getUrlSearchParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -51,8 +38,7 @@ function getUrlSearchParams() {
     return [lang, urlParams.get("page")?.toUpperCase()];
 }
 
-/**
- * [app] translate content json
+/** [app] translate content json
  */
 function translate(json) {
     Object.entries(json).forEach((entry) => {
@@ -77,16 +63,7 @@ function translate(json) {
     });
 }
 
-/**
- * [app] add event listeners
- */
-const addEventListener = (eventType) =>
-    document.addEventListener(eventType, (event) =>
-        checkInput(event, eventType)
-    );
-
-/**
- * [ui] add navigation item
+/** [ui] add navigation item
  * @param name command/input
  */
 const addNavigationItem = (name) => {
@@ -98,8 +75,7 @@ const addNavigationItem = (name) => {
     navigation.appendChild(item);
 };
 
-/**
- * [ui] add language switcher
+/** [ui] add language switcher
  * @param lang langauge id (e.g. 'en' or 'de')
  */
 const addLanguageSwitch = (lang) => {
@@ -112,11 +88,10 @@ const addLanguageSwitch = (lang) => {
     footer.append(item);
 };
 
-/**
- * [console] add new line
+/** [console] add new line
  * @param options todo
  */
-function newLine(options) {
+function newLine(options = {}) {
     const line = document.createElement("div");
     if (options.highlight) {
         line.className += " highlight";
@@ -126,16 +101,14 @@ function newLine(options) {
         let link = document.createElement("a");
         link.href = options.href;
         link.target = "_blank";
-        link.innerText = options.text;
+        link.innerText = options.text || "";
         line.append(link);
     } else {
         line.innerText = options.text
             ? options.text.replace("%I", input.innerText)
             : line.innerText;
     }
-
     lines.append(line);
-
     window.scrollTo({
         left: 0,
         top: document.body.scrollHeight,
@@ -143,8 +116,7 @@ function newLine(options) {
     });
 }
 
-/**
- * [console] check input data
+/** [console] check input data
  * @param options todo
  */
 const checkInput = (event, eventType) => {
@@ -176,8 +148,7 @@ const checkInput = (event, eventType) => {
     }
 };
 
-/**
- * [console] validate input command
+/** [console] validate input command
  * @param inputString input line inner text (if not passed on)
  */
 function inputValidator(inputString = input.innerText) {
@@ -189,20 +160,33 @@ function inputValidator(inputString = input.innerText) {
     if (!inputString && !keyMatch) {
         newLine({
             text:
-                enterCounter > 2
-                    ? `${enterCounter > 10 ? "(ノಠ益ಠ)ノ !" : "(╯°□°）╯"}  ${
-                          enterCounter + 1
-                      } º`
+                eCnt > 2
+                    ? `${eCnt > 10 ? "(ノಠ益ಠ)ノ" : "(╯°□°）╯"}【#${eCnt}】`
                     : `¯\\_(ツ)_/¯ TRY 'HELP'`,
         });
-        enterCounter++;
+        eCnt++;
     } else if (valueMatch?.length) {
         valueMatch.forEach((line) => newLine(line));
-        enterCounter = 0;
+        eCnt = 0;
     } else {
         newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
-        enterCounter = 0;
+        eCnt = 0;
     }
 }
 
-start();
+/** run start up tasks
+ */
+(async function start() {
+    await fetch("./data.json")
+        .then((response) => response.json())
+        .then((json) => {
+            translate(json);
+            Object.values(Language).forEach(addLanguageSwitch);
+            Object.values(Navigation).forEach(addNavigationItem);
+            Object.values(EventType).forEach(addEventListener);
+
+            if (command) {
+                inputValidator(command);
+            }
+        });
+})();
