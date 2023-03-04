@@ -1,3 +1,6 @@
+/**
+ * variable declaration
+ */
 const EventType = Object.freeze({
     KeyDown: "keydown",
     KeyPress: "keypress",
@@ -8,62 +11,49 @@ const Navigation = Object.freeze({
     Contact: "CONTACT",
     Imprint: "IMPRINT",
 });
-const Language = Object.freeze({
-    English: "en",
-    Deutsch: "de",
-});
-let [language, command] = getUrlSearchParams();
-let content = {};
+const Language = Object.freeze({ En: "en", De: "de" });
 let loading = document.getElementById("loading");
-let container = document.getElementById("container");
 let navigation = document.getElementById("navigation");
 let lines = document.getElementById("lines");
 let input = document.getElementById("input");
 let cursor = document.getElementById("cursor");
 let footer = document.getElementById("footer");
+let [language, command] = getUrlSearchParams();
+let content = {};
 let enterCounter = 0;
 
 /**
  * [app] start up
  * @param loader (optional) flag to display loading animation (disabled by default)
  */
-async function start(loader = false) {
-    if (loader) {
-        container.style.display = "none";
-        setTimeout(() => {
-            container.style.display = "";
-            loading.style.display = "none";
-        }, input ? 2000 : 10);
-    }
-
+async function start() {
     await fetch("./data.json")
         .then((response) => response.json())
         .then((json) => {
             translate(json);
-            init();
+            Object.values(Language).forEach(addLanguageSwitch);
+            Object.values(Navigation).forEach(addNavigationItem);
+            Object.values(EventType).forEach(addEventListener);
+
+            if (command) {
+                inputValidator(command);
+            }
         });
 }
 
 /**
- * [app] run start up tasks
+ * [app] check for url query strings (e.g. lang & page)
  */
-function init() {
-    if (command) {
-        inputValidator(command);
-    }
-
-    Object.values(Language).forEach(addLanguageSwitch);
-    Object.values(Navigation).forEach(addNavigationItem);
-    Object.values(EventType).forEach(addEventListener);
-}
-
 function getUrlSearchParams() {
     const urlParams = new URLSearchParams(window.location.search);
-    const lang = urlParams.get("lang") || Language.English;
+    const lang = urlParams.get("lang") || Language.En;
 
     return [lang, urlParams.get("page")?.toUpperCase()];
 }
 
+/**
+ * [app] translate content json
+ */
 function translate(json) {
     Object.entries(json).forEach((entry) => {
         content[entry[0]] =
@@ -87,6 +77,18 @@ function translate(json) {
     });
 }
 
+/**
+ * [app] add event listeners
+ */
+const addEventListener = (eventType) =>
+    document.addEventListener(eventType, (event) =>
+        checkInput(event, eventType)
+    );
+
+/**
+ * [ui] add navigation item
+ * @param name command/input
+ */
 const addNavigationItem = (name) => {
     const item = document.createElement("h2");
     const link = document.createElement("a");
@@ -96,6 +98,10 @@ const addNavigationItem = (name) => {
     navigation.appendChild(item);
 };
 
+/**
+ * [ui] add language switcher
+ * @param lang langauge id (e.g. 'en' or 'de')
+ */
 const addLanguageSwitch = (lang) => {
     const item = document.createElement("a");
     item.href = `?lang=${lang}&page=${command || ""}`;
@@ -105,11 +111,6 @@ const addLanguageSwitch = (lang) => {
     }
     footer.append(item);
 };
-
-const addEventListener = (eventType) =>
-    document.addEventListener(eventType, (event) =>
-        checkInput(event, eventType)
-    );
 
 /**
  * [console] add new line
@@ -132,12 +133,18 @@ function newLine(options) {
             ? options.text.replace("%I", input.innerText)
             : line.innerText;
     }
+
     lines.append(line);
-    scroll();
+
+    window.scrollTo({
+        left: 0,
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+    });
 }
 
 /**
- * [console] check input
+ * [console] check input data
  * @param options todo
  */
 const checkInput = (event, eventType) => {
@@ -153,7 +160,6 @@ const checkInput = (event, eventType) => {
             lines.innerText = "";
         }
         input.innerText = "";
-        scroll(false);
         event.preventDefault();
     } else if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
         input.innerText = input.innerText.substring(
@@ -172,7 +178,7 @@ const checkInput = (event, eventType) => {
 
 /**
  * [console] validate input command
- * @param inputString input line inner text, if not passed on
+ * @param inputString input line inner text (if not passed on)
  */
 function inputValidator(inputString = input.innerText) {
     const keyMatch = Object.keys(content).find((command) =>
@@ -197,18 +203,6 @@ function inputValidator(inputString = input.innerText) {
         newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
         enterCounter = 0;
     }
-}
-
-/**
- * [console] scroll up or down
- * @param top (optional) boolean flag, defaults to scroll to bottom by default
- */
-function scroll(top = false) {
-    window.scrollTo({
-        left: 0,
-        top: top ? 0 : document.body.scrollHeight,
-        behavior: "smooth",
-    });
 }
 
 start();
