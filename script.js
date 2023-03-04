@@ -12,18 +12,21 @@ const Language = Object.freeze({
     English: "en",
     Deutsch: "de",
 });
-const [language, page] = getUrlSearchParams();
-const content = {};
-// let loading = document.getElementById("loading");
-//let container = document.getElementById("container");
+let [language, command] = getUrlSearchParams();
+let content = {};
+let loading = document.getElementById("loading");
+let container = document.getElementById("container");
 let navigation = document.getElementById("navigation");
 let lines = document.getElementById("lines");
 let input = document.getElementById("input");
 let cursor = document.getElementById("cursor");
 let footer = document.getElementById("footer");
 
-async function start() {
-    // loder(input ? 2000 : 10);
+async function start(loader = false) {
+    if (loader) {
+        loder(input ? 2000 : 10);
+    }
+
     await fetch("./data.json")
         .then((response) => response.json())
         .then((json) => {
@@ -33,8 +36,8 @@ async function start() {
 }
 
 function init() {
-    if (page) {
-        inputValidator(page);
+    if (command) {
+        inputValidator(command);
     }
 
     Object.values(Language).forEach(addLanguageSwitch);
@@ -42,13 +45,13 @@ function init() {
     Object.values(EventType).forEach(addEventListener);
 }
 
-// function loder(timeout) {
-    // container.style.display = "none";
-    // setTimeout(() => {
-    //     container.style.display = "";
-    //     loading.style.display = "none";
-    // }, timeout);
-// }
+function loder(timeout) {
+    container.style.display = "none";
+    setTimeout(() => {
+        container.style.display = "";
+        loading.style.display = "none";
+    }, timeout);
+}
 
 function getUrlSearchParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -91,7 +94,7 @@ const addNavigationItem = (name) => {
 
 const addLanguageSwitch = (lang) => {
     const item = document.createElement("a");
-    item.href = `?lang=${lang}&page=${page || ""}`;
+    item.href = `?lang=${lang}&page=${command || ""}`;
     item.innerText = lang;
     if (lang === language) {
         item.classList.add("highlight");
@@ -105,55 +108,37 @@ const addEventListener = (eventType) =>
     );
 
 const checkInput = (event, eventType) => {
-    cursor.value = " ";
     const eventId = (event.data || event.key || event.inputType)?.toUpperCase();
+    cursor.value = " "; // hacking input value
 
     if (!eventId) {
         newLine({ text: `(⊘_⊘）ups...` });
-        return;
-    }
-
-    if (eventId === "ENTER") {
+    } else if (eventId === "ENTER") {
         newLine({ text: `~/${input.innerText} ` });
         inputValidator();
         if (input.innerText === "CLS") {
             lines.innerText = "";
         }
         input.innerText = "";
+        scroll(false);
         event.preventDefault();
-
-        return;
-    }
-
-    if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
-        input.innerText = input.innerText.substr(0, input.innerText.length - 1);
+    } else if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
+        input.innerText = input.innerText.substring(
+            0,
+            input.innerText.length - 1
+        );
         event.preventDefault();
-
-        return;
-    }
-
-    if (eventType === EventType.KeyPress) {
+    } else if (eventType === EventType.KeyPress) {
         input.innerText += event.key;
         event.preventDefault();
-
-        return;
-    }
-
-    if (eventType === EventType.Input && event.data) {
+    } else if (eventType === EventType.Input && event.data) {
         input.innerText += event.data;
         event.preventDefault();
-
-        return;
     }
 };
 
 function newLine(options) {
     const line = document.createElement("div");
-
-    if (!options) {
-        lines.innerText = "";
-    }
-
     if (options.highlight) {
         line.className += " highlight";
     }
@@ -169,38 +154,31 @@ function newLine(options) {
             ? options.text.replace("%I", input.innerText)
             : line.innerText;
     }
-
     lines.append(line);
-
-    window.scrollTo({
-        left: 0,
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-    });
+    scroll();
 }
 
 function inputValidator(inputString = input.innerText) {
     const keyMatch = Object.keys(content).find((command) =>
         inputString.match(new RegExp(`^${command}`, "gi"))
     );
+    const valueMatch = content[keyMatch];
 
     if (!inputString && !keyMatch) {
         newLine({ text: `¯\\_(ツ)_/¯TRY 'HELP'` });
-
-        return;
-    }
-
-    const valueMatch = content[keyMatch];
-
-    if (valueMatch && valueMatch.length) {
+    } else if (valueMatch?.length) {
         valueMatch.forEach((line) => newLine(line));
     } else {
         newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
     }
+}
 
-    // if (!valueMatch) {
-    //     lines.innerText = "";
-    // }
+function scroll(top = false) {
+    window.scrollTo({
+        left: 0,
+        top: top ? 0 : document.body.scrollHeight,
+        behavior: "smooth",
+    });
 }
 
 start();
