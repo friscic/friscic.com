@@ -21,6 +21,7 @@ let lines = document.getElementById("lines");
 let input = document.getElementById("input");
 let cursor = document.getElementById("cursor");
 let footer = document.getElementById("footer");
+let enterCounter = 0;
 
 async function start(loader = false) {
     if (loader) {
@@ -165,11 +166,21 @@ function inputValidator(inputString = input.innerText) {
     const valueMatch = content[keyMatch];
 
     if (!inputString && !keyMatch) {
-        newLine({ text: `¯\\_(ツ)_/¯TRY 'HELP'` });
+        newLine({
+            text:
+                enterCounter > 2
+                    ? `${enterCounter > 10 ? "(ノಠ益ಠ)ノ !" : "(╯°□°）╯"}  ${
+                          enterCounter + 1
+                      } º`
+                    : `¯\\_(ツ)_/¯ TRY 'HELP'`,
+        });
+        enterCounter++;
     } else if (valueMatch?.length) {
         valueMatch.forEach((line) => newLine(line));
+        enterCounter = 0;
     } else {
         newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
+        enterCounter = 0;
     }
 }
 
