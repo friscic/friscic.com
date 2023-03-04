@@ -23,9 +23,17 @@ let cursor = document.getElementById("cursor");
 let footer = document.getElementById("footer");
 let enterCounter = 0;
 
+/**
+ * [app] start up
+ * @param loader (optional) flag to display loading animation (disabled by default)
+ */
 async function start(loader = false) {
     if (loader) {
-        loder(input ? 2000 : 10);
+        container.style.display = "none";
+        setTimeout(() => {
+            container.style.display = "";
+            loading.style.display = "none";
+        }, input ? 2000 : 10);
     }
 
     await fetch("./data.json")
@@ -36,6 +44,9 @@ async function start(loader = false) {
         });
 }
 
+/**
+ * [app] run start up tasks
+ */
 function init() {
     if (command) {
         inputValidator(command);
@@ -44,14 +55,6 @@ function init() {
     Object.values(Language).forEach(addLanguageSwitch);
     Object.values(Navigation).forEach(addNavigationItem);
     Object.values(EventType).forEach(addEventListener);
-}
-
-function loder(timeout) {
-    container.style.display = "none";
-    setTimeout(() => {
-        container.style.display = "";
-        loading.style.display = "none";
-    }, timeout);
 }
 
 function getUrlSearchParams() {
@@ -108,6 +111,35 @@ const addEventListener = (eventType) =>
         checkInput(event, eventType)
     );
 
+/**
+ * [console] add new line
+ * @param options todo
+ */
+function newLine(options) {
+    const line = document.createElement("div");
+    if (options.highlight) {
+        line.className += " highlight";
+    }
+
+    if (options.href) {
+        let link = document.createElement("a");
+        link.href = options.href;
+        link.target = "_blank";
+        link.innerText = options.text;
+        line.append(link);
+    } else {
+        line.innerText = options.text
+            ? options.text.replace("%I", input.innerText)
+            : line.innerText;
+    }
+    lines.append(line);
+    scroll();
+}
+
+/**
+ * [console] check input
+ * @param options todo
+ */
 const checkInput = (event, eventType) => {
     const eventId = (event.data || event.key || event.inputType)?.toUpperCase();
     cursor.value = " "; // hacking input value
@@ -138,27 +170,10 @@ const checkInput = (event, eventType) => {
     }
 };
 
-function newLine(options) {
-    const line = document.createElement("div");
-    if (options.highlight) {
-        line.className += " highlight";
-    }
-
-    if (options.href) {
-        let link = document.createElement("a");
-        link.href = options.href;
-        link.target = "_blank";
-        link.innerText = options.text;
-        line.append(link);
-    } else {
-        line.innerText = options.text
-            ? options.text.replace("%I", input.innerText)
-            : line.innerText;
-    }
-    lines.append(line);
-    scroll();
-}
-
+/**
+ * [console] validate input command
+ * @param inputString input line inner text, if not passed on
+ */
 function inputValidator(inputString = input.innerText) {
     const keyMatch = Object.keys(content).find((command) =>
         inputString.match(new RegExp(`^${command}`, "gi"))
@@ -184,6 +199,10 @@ function inputValidator(inputString = input.innerText) {
     }
 }
 
+/**
+ * [console] scroll up or down
+ * @param top (optional) boolean flag, defaults to scroll to bottom by default
+ */
 function scroll(top = false) {
     window.scrollTo({
         left: 0,
