@@ -179,9 +179,9 @@ class Console {
             this.lines.innerText = "";
         }
         const line = document.createElement("div");
-        line.innerText = options.text
-            ? options.text.replace("%I", this.input.innerText)
-            : line.innerText;
+        // line.innerText = options.text
+        //     ? options.text.replace("%I", this.input.innerText)
+        //     : line.innerText;
 
         if (options.highlight) {
             line.className += " highlight";
@@ -190,8 +190,15 @@ class Console {
             let link = document.createElement("a");
             link.href = options.href;
             link.target = "_blank";
+            link.innerText = options.text
             line.append(link);
+        } else {
+            line.innerText = options.text
+            ? options.text.replace("%I", this.input.innerText)
+            : line.innerText;
         }
+
+
         this.lines.append(line);
 
         window.scrollTo({
