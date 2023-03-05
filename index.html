@@ -74,7 +74,6 @@
             width: 5rem;
             height: 5rem;
             -webkit-animation: spin 1s linear infinite;
-            /* Safari */
             animation: spin 1s linear infinite;
         }
 
@@ -114,7 +113,7 @@
 
         @keyframes blinker {
             50% {
-                opacity: 0;
+                opacity: 0
             }
         }
 
@@ -139,18 +138,12 @@
 <body>
     <div class="container">
         <h1><a href="/">friscic<span class="highlight">com</span></a></h1>
-        <!-- <div id="loading" class="center"></div> -->
         <div id="navigation"></div>
         <div id="lines"></div>
         <div id="cmdl"><span>~$<span id="input"></span><input id="cursor" value="&nbsp;"></span></div>
-        <div id="footer">
-            &nbsp;©2023&nbsp;
-        </div>
+        <div id="footer">&nbsp;©2023&nbsp;</div>
     </div>
     <script type="text/javascript">
-        /**
-         * variable declaration
-         */
         const EventType = Object.freeze({
             KeyDown: "keydown",
             KeyPress: "keypress",
@@ -172,15 +165,11 @@
         let content = {};
         let eCnt = 0;
 
-        /** [app] add event listeners
-         */
         const addEventListener = (eventType) =>
             document.addEventListener(eventType, (event) =>
                 checkInput(event, eventType)
             );
 
-        /** [app] check for url query strings (e.g. lang & page)
-         */
         function getUrlSearchParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const lang = urlParams.get("lang") || Language.En;
@@ -188,8 +177,6 @@
             return [lang, urlParams.get("page")?.toUpperCase()];
         }
 
-        /** [app] translate content json
-         */
         function translate(json) {
             Object.entries(json).forEach((entry) => {
                 content[entry[0]] =
@@ -213,36 +200,31 @@
             });
         }
 
-        /** [ui] add navigation item
-         * @param name command/input
-         */
         const addNavigationItem = (name) => {
             const item = document.createElement("h2");
             const link = document.createElement("a");
             link.href = `?page=${name}&lang=${language}`;
             link.innerText = content[name][0]?.text;
+
             item.appendChild(link);
             navigation.appendChild(item);
         };
 
-        /** [ui] add language switcher
-         * @param lang langauge id (e.g. 'en' or 'de')
-         */
         const addLanguageSwitch = (lang) => {
             const item = document.createElement("a");
             item.href = `?lang=${lang}&page=${command || ""}`;
             item.innerText = lang;
+
             if (lang === language) {
                 item.classList.add("highlight");
             }
+
             footer.append(item);
         };
 
-        /** [console] add new line
-         * @param options todo
-         */
         function newLine(options = {}) {
             const line = document.createElement("div");
+
             if (options.highlight) {
                 line.className += " highlight";
             }
@@ -258,7 +240,9 @@
                     ? options.text.replace("%I", input.innerText)
                     : line.innerText;
             }
+
             lines.append(line);
+
             window.scrollTo({
                 left: 0,
                 top: document.body.scrollHeight,
@@ -266,9 +250,6 @@
             });
         }
 
-        /** [console] check input data
-         * @param options todo
-         */
         const checkInput = (event, eventType) => {
             const eventId = (event.data || event.key || event.inputType)?.toUpperCase();
             cursor.value = " "; // hacking input value
@@ -280,6 +261,7 @@
                 inputValidator();
                 if (input.innerText === "CLS") {
                     lines.innerText = "";
+                    newLine({ text: `٩('-')۶ all clear` });
                 }
                 input.innerText = "";
                 event.preventDefault();
@@ -298,9 +280,6 @@
             }
         };
 
-        /** [console] validate input command
-         * @param inputString input line inner text (if not passed on)
-         */
         function inputValidator(inputString = input.innerText) {
             const keyMatch = Object.keys(content).find((command) =>
                 inputString.match(new RegExp(`^${command}`, "gi"))
@@ -311,33 +290,31 @@
                 newLine({
                     text:
                         eCnt > 2
-                            ? `${eCnt > 10 ? "(ノಠ益ಠ)ノ" : "(╯°□°）╯"}【#${eCnt}】`
+                            ? `${eCnt > 10 ? "(ノಠ益ಠ)ノ" : "(╯°□°）╯"}【#${eCnt}】empty`
                             : `¯\\_(ツ)_/¯ TRY 'HELP'`,
                 });
                 eCnt++;
             } else if (valueMatch?.length) {
                 valueMatch.forEach((line) => newLine(line));
-                eCnt = 0;
             } else {
                 newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
                 eCnt = 0;
             }
         }
 
-        /** run start up tasks
-         */
         (async function start() {
             await fetch("./data.json")
                 .then((response) => response.json())
                 .then((json) => {
                     translate(json);
-                    Object.values(Language).forEach(addLanguageSwitch);
-                    Object.values(Navigation).forEach(addNavigationItem);
-                    Object.values(EventType).forEach(addEventListener);
 
                     if (command) {
                         inputValidator(command);
                     }
+
+                    Object.values(Language).forEach(addLanguageSwitch);
+                    Object.values(Navigation).forEach(addNavigationItem);
+                    Object.values(EventType).forEach(addEventListener);
                 });
         })();
     </script>

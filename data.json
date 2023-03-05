@@ -81,6 +81,14 @@
             "ref": "1"
         }
     ],
+    "AC": [
+        {
+            "text": {
+                "de": "٩('-')۶ all clear",
+                "en": "٩('-')۶ all clear"
+            }
+        }
+    ],
     "CONTACT": [
         {
             "ref": "2"
@@ -94,8 +102,8 @@
     "HELP": [
         {
             "text": {
-                "de": "ⓘ just select a number from 1-3 and press enter",
-                "en": "ⓘ just select a number from 1-3 and press enter"
+                "de": "ⓘ select a number from 1-3 and press enter",
+                "en": "ⓘ select a number from 1-3 and press enter"
             }
         },
         {
@@ -141,6 +149,7 @@
     "TOUCH": [{ "text": { "de": "", "en": "TXTODO" } }],
     "IN": [{ "text": { "de": "", "en": "TXTODO" } }],
     "CAT": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "CLS": [{ "text": { "de": "", "en": "TXTODO" } }],
     "CLEAR": [{ "text": { "de": "", "en": "TXTODO" } }],
     "ECHO": [{ "text": { "de": "", "en": "TXTODO" } }],
     "LESS": [{ "text": { "de": "", "en": "TXTODO" } }],
@@ -235,8 +244,15 @@
     "CHKDSK": [{ "text": { "de": "", "en": "TXTODO" } }],
     "nslookup": [{ "text": { "de": "", "en": "TXTODO" } }],
     "SHUTDOWN": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "NETSTAT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "NET": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "NETSTAT": [{ "text": { "de": "No active Connections", "en": "No active Connections" } }],
+    "NET": [
+        {
+            "text": {
+                "de": "The syntax of this command is...",
+                "en": "The syntax of this command is..."
+            }
+        }
+    ],
     "RND": [
         { "text": { "de": "", "en": "(ლ_－）" }, "highlight": true },
         { "text": { "de": "", "en": "(－_ლ）" } },
