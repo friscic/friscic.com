@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="description" content="manfred friscic's location on the world wide web">
     <title>friscic.com</title>
@@ -140,7 +140,7 @@
         <h1><a href="/">friscic<span class="highlight">com</span></a></h1>
         <div id="navigation"></div>
         <div id="lines"></div>
-        <div id="cmdl"><span>~$<span id="input"></span><input id="cursor" value="&nbsp;"></span></div>
+        <div id="cmdl"><span>~$<span id="input"></span><input type="text" id="cursor" value="&nbsp;"></span></div>
         <div id="footer">&nbsp;©2023&nbsp;</div>
     </div>
     <script type="text/javascript">
@@ -265,6 +265,10 @@
                 if (input.innerText === "CLS" || input.innerText === "CLEAR") {
                     lines.innerText = "";
                     newLine({ text: content[input.innerText][0]?.text });
+                }
+                if (input.innerText === "ALL") {
+                    lines.innerText = "";
+                    newLine({ text: Object.keys(content).map(k => k).join(', ') });
                 }
                 input.innerText = "";
                 event.preventDefault();

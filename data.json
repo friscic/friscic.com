@@ -100,8 +100,8 @@
         },
         {
             "text": {
-                "de": "⚠ any other commands are solely experimental",
-                "en": "⚠ any other commands are solely experimental"
+                "de": "⚠ any other commands are solely experimental (type 'ALL' to list)",
+                "en": "⚠ any other commands are solely experimental (type 'ALL' to list)"
             }
         }
     ],
