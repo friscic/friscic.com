@@ -154,7 +154,10 @@
             Contact: "CONTACT",
             Imprint: "IMPRINT",
         });
-        const Language = Object.freeze({ En: "en", De: "de" });
+        const Language = Object.freeze({
+            English: "en",
+            Deutsch: "de"
+        });
         let loading = document.getElementById("loading");
         let navigation = document.getElementById("navigation");
         let lines = document.getElementById("lines");
@@ -172,7 +175,7 @@
 
         function getUrlSearchParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            const lang = urlParams.get("lang") || Language.En;
+            const lang = urlParams.get("lang") || Language.English;
 
             return [lang, urlParams.get("page")?.toUpperCase()];
         }
@@ -255,13 +258,13 @@
             cursor.value = " "; // hacking input value
 
             if (!eventId) {
-                newLine({ text: `(⊘_⊘）ups...` });
+                newLine({ text: content["UPS"][0]?.text });
             } else if (eventId === "ENTER") {
                 newLine({ text: `~/${input.innerText} ` });
                 inputValidator();
-                if (input.innerText === "CLS") {
+                if (input.innerText === "CLS" || input.innerText === "CLEAR") {
                     lines.innerText = "";
-                    newLine({ text: `٩('-')۶ all clear` });
+                    newLine({ text: content[input.innerText][0]?.text });
                 }
                 input.innerText = "";
                 event.preventDefault();
@@ -290,8 +293,8 @@
                 newLine({
                     text:
                         eCnt > 2
-                            ? `${eCnt > 10 ? "(ノಠ益ಠ)ノ" : "(╯°□°）╯"}【#${eCnt}】empty`
-                            : `¯\\_(ツ)_/¯ TRY 'HELP'`,
+                            ? `${eCnt > 10 ? content["ANGRY"][0]?.text : content["CHEER"][0]?.text}【#${eCnt}】empty`
+                            : content["EMPTY"][0]?.text,
                 });
                 eCnt++;
             } else if (valueMatch?.length) {
@@ -317,6 +320,8 @@
                     Object.values(EventType).forEach(addEventListener);
                 });
         })();
+
+        //# sourceURL=app.js
     </script>
 </body>
 

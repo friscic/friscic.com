@@ -81,14 +81,6 @@
             "ref": "1"
         }
     ],
-    "AC": [
-        {
-            "text": {
-                "de": "٩('-')۶ all clear",
-                "en": "٩('-')۶ all clear"
-            }
-        }
-    ],
     "CONTACT": [
         {
             "ref": "2"
@@ -110,6 +102,14 @@
             "text": {
                 "de": "⚠ any other commands are solely experimental",
                 "en": "⚠ any other commands are solely experimental"
+            }
+        }
+    ],
+    "EMPTY": [
+        {
+            "text": {
+                "de": "¯\\_(ツ)_/¯ TRY 'HELP'",
+                "en": "¯\\_(ツ)_/¯ TRY 'HELP'"
             }
         }
     ],
@@ -140,62 +140,397 @@
     "CP": [
         {
             "text": {
-                "de": "TODO",
+                "de": "cannot stat '%I'",
+                "en": "cannot stat '%I'"
+            }
+        }
+    ],
+    "RM": [
+        {
+            "text": {
+                "de": "cannot '%I': No such file or director",
+                "en": "cannot '%I': No such file or director"
+            }
+        }
+    ],
+    "TOUCH": [
+        {
+            "text": {
+                "de": "no touchy touchy",
+                "en": "no touchy touchy"
+            }
+        }
+    ],
+    "IN": [
+        {
+            "text": {
+                "de": "(‾⌣‾) OUT",
+                "en": "(‾⌣‾) OUT"
+            }
+        }
+    ],
+    "CAT": [
+        {
+            "text": {
+                "de": "=^..^= echo meow",
+                "en": "=^..^= echo meow"
+            }
+        }
+    ],
+    "CLS": [
+        {
+            "text": {
+                "de": "٩('-')۶ all clear",
+                "en": "٩('-')۶ all clear"
+            }
+        }
+    ],
+    "CLEAR": [
+        {
+            "text": {
+                "de": "٩('-')۶ all clear",
+                "en": "٩('-')۶ all clear"
+            }
+        }
+    ],
+    "ECHO": [
+        {
+            "text": {
+                "de": "echo '%I'",
+                "en": "echo '%I'"
+            }
+        }
+    ],
+    "LESS": [
+        {
+            "text": {
+                "de": "MORE OR '%I'",
+                "en": "MORE OR '%I'"
+            }
+        }
+    ],
+    "MAN": [
+        {
+            "text": {
+                "de": "",
                 "en": "TXTODO"
             }
         }
     ],
-    "RM": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "TOUCH": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "IN": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CAT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CLS": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CLEAR": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "ECHO": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "LESS": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "MAN": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "UNAME": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "WHOAMI": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "TAR": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "GREP": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "HEAD": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "TAIL": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "DIFF": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CMP": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "COMM": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "SORT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "EXPORT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "ZIP": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "UNZIP": [{ "text": { "de": "", "en": "TXTODO" } }],
+    "UNAME": [
+        {
+            "text": {
+                "de": "U NAME IS '%I'?",
+                "en": "U NAME IS '%I'?"
+            }
+        }
+    ],
+    "WHOAMI": [
+        {
+            "text": {
+                "de": "d[ o_0 ]b ~/root",
+                "en": "d[ o_0 ]b ~/root"
+            }
+        }
+    ],
+    "TAR": [
+        {
+            "text": {
+                "de": "sorry ran out of disk space",
+                "en": "sorry ran out of disk space"
+            }
+        }
+    ],
+    "GREP": [
+        {
+            "text": {
+                "de": "¯\\_(ツ)_/¯ nope",
+                "en": "¯\\_(ツ)_/¯ nope"
+            }
+        }
+    ],
+    "HEAD": [
+        {
+            "text": {
+                "de": "1㋡ times nothing here, sry",
+                "en": "1㋡ times nothing here, sry"
+            }
+        }
+    ],
+    "TAIL": [
+        {
+            "text": {
+                "de": "1㋡ times nothing",
+                "en": "1㋡ times nothing"
+            }
+        }
+    ],
+    "DIFF": [
+        {
+            "text": {
+                "de": "‹(•_•)› all the same to me",
+                "en": "‹(•_•)› all the same to me"
+            }
+        }
+    ],
+    "CMP": [
+        {
+            "text": {
+                "de": "'%I' differ: char 4, line 1",
+                "en": "'%I' differ: char 4, line 1"
+            }
+        }
+    ],
+    "COMM": [
+        {
+            "text": {
+                "de": "(<(<>(<>.(<>..<>).<>)<>)>)",
+                "en": "(<(<>(<>.(<>..<>).<>)<>)>)"
+            }
+        }
+    ],
+    "SORT": [
+        {
+            "text": {
+                "de": "<(''<)  <(' ')>  (> '')> on it",
+                "en": "<(''<)  <(' ')>  (> '')> on it"
+            }
+        }
+    ],
+    "EXPORT": [
+        {
+            "text": {
+                "de": "(#_#) '%I' failed ",
+                "en": "(#_#) '%I' failed"
+            }
+        }
+    ],
+    "ZIP": [
+        {
+            "text": {
+                "de": "sorry ran out of disk space",
+                "en": "sorry ran out of disk space"
+            }
+        }
+    ],
+    "UNZIP": [
+        {
+            "text": {
+                "de": "sorry ran out of disk space",
+                "en": "sorry ran out of disk space"
+            }
+        }
+    ],
     "SSH": [{ "text": { "de": "", "en": "TXTODO" } }],
     "SERVICE": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "PS": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "KILL": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "KILLALL": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "DF": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "MOUNT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CHMOD": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CHOWN": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "IPCONFIG": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "TRACEROUTE": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "WGET": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "UFW": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "IPTABLES": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "APT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "PACMAN": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "YUM": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "RPM": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "SUDO": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CAL": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "ALIAS": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "DD": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "WHEREIS": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "WHATIS": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "TOP": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "USERADD": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "USERMOD": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "PASSWD": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CD": [{ "text": { "de": "", "en": "cannot find the path specified" } }],
+    "PS": [
+        {
+            "text": {
+                "de": "'%I' `o##o>",
+                "en": "'%I' `o##o>"
+            }
+        }
+    ],
+    "KILL": [
+        {
+            "text": {
+                "de": "̿' ̿'\\̵͇̿̿\\з=(◕_◕)=ε/̵͇̿̿/'̿'̿ ̿",
+                "en": "̿' ̿'\\̵͇̿̿\\з=(◕_◕)=ε/̵͇̿̿/'̿'̿ ̿"
+            }
+        }
+    ],
+    "DF": [
+        {
+            "text": {
+                "de": "Filesystem '%I' not mounted",
+                "en": "Filesystem '%I' not mounted"
+            }
+        }
+    ],
+    "MOUNT": [
+        {
+            "text": {
+                "de": "can't find '%I' in ./",
+                "en": "can't find '%I' in ./"
+            }
+        }
+    ],
+    "CHMOD": [
+        {
+            "text": {
+                "de": "CHMOD: missing operand after '%I'",
+                "en": "CHMOD: missing operand after '%I'"
+            }
+        }
+    ],
+    "CHOWN": [
+        {
+            "text": {
+                "de": "CHOWN: missing operand after '%I'",
+                "en": "CHOWN: missing operand after '%I'"
+            }
+        }
+    ],
+    "IPCONFIG": [
+        {
+            "text": {
+                "de": "<|º감º|> IP Configuration locked",
+                "en": "<|º감º|> IP Configuration locked"
+            }
+        }
+    ],
+    "TRACEROUTE": [
+        {
+            "text": {
+                "de": "tracing '%I' to route failed",
+                "en": "tracing '%I' to route failed"
+            }
+        }
+    ],
+    "WGET": [
+        {
+            "text": {
+                "de": "cannot connect '%I'",
+                "en": "cannot connect '%I'"
+            }
+        }
+    ],
+    "UFW": [
+        {
+            "text": {
+                "de": "%I's disabled, sorry",
+                "en": "%I's disabled, sorry"
+            }
+        }
+    ],
+    "IPTABLES": [
+        {
+            "text": {
+                "de": "num: 0, input: null",
+                "en": "num: 0, input: null"
+            }
+        }
+    ],
+    "APT": [
+        {
+            "text": {
+                "de": "'%I' not found",
+                "en": "'%I' not found"
+            }
+        }
+    ],
+    "PACMAN": [
+        {
+            "text": {
+                "de": "ᗧ···ᗣ···ᗣ··",
+                "en": "ᗧ···ᗣ···ᗣ··"
+            }
+        }
+    ],
+    "YUM": [
+        {
+            "text": {
+                "de": "^⨀ᴥ⨀^ yummy",
+                "en": "^⨀ᴥ⨀^ yummy"
+            }
+        }
+    ],
+    "RPM": [
+        {
+            "text": {
+                "de": "|'L'| can't '%I'",
+                "en": "|'L'| can't '%I'"
+            }
+        }
+    ],
+    "SUDO": [
+        {
+            "text": {
+                "de": "(✖╭╮✖) can't '%I'",
+                "en": "(✖╭╮✖) can't '%I'"
+            }
+        }
+    ],
+    "CAL": [
+        {
+            "text": {
+                "de": "00:00:00 UTC on 1 January 1970",
+                "en": "00:00:00 UTC on 1 January 1970"
+            }
+        }
+    ],
+    "ALIAS": [
+        {
+            "text": {
+                "de": "⊘ Access Denied",
+                "en": "⊘ Access Denied"
+            }
+        }
+    ],
+    "DD": [
+        {
+            "text": {
+                "de": "cannot find the file specified",
+                "en": "cannot find the file specified"
+            }
+        }
+    ],
+    "WHEREIS": [
+        {
+            "text": {
+                "de": "(-(-_(-_-)_-)-)",
+                "en": "(-(-_(-_-)_-)-)"
+            }
+        }
+    ],
+    "WHATIS": [
+        {
+            "text": {
+                "de": "'%I' ...good question...",
+                "en": "'%I' ...good question..."
+            }
+        }
+    ],
+    "TOP": [
+        {
+            "text": {
+                "de": "tasks: 0 total, 0 running",
+                "en": "tasks: 0 total, 0 running"
+            }
+        }
+    ],
+    "USERADD": [
+        {
+            "text": {
+                "de": "⊘ Access Denied",
+                "en": "⊘ Access Denied"
+            }
+        }
+    ],
+    "USERMOD": [
+        {
+            "text": {
+                "de": "⊘ Access Denied",
+                "en": "⊘ Access Denied"
+            }
+        }
+    ],
+    "PASSWD": [
+        {
+            "text": {
+                "de": "⊘ Access Denied",
+                "en": "⊘ Access Denied"
+            }
+        }
+    ],
+    "CD": [
+        {
+            "text": {
+                "de": "cannot find the path specified",
+                "en": "cannot find the path specified"
+            }
+        }
+    ],
     "LS": [
         {
             "text": {
@@ -236,15 +571,78 @@
             }
         }
     ],
-    "COPY": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "DEL": [{ "text": { "de": "", "en": "COULD NOT FIND %I" } }],
-    "PING": [{ "text": { "de": "", "en": "PONG" } }],
-    "TRACERT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "FORMAT": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "CHKDSK": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "nslookup": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "SHUTDOWN": [{ "text": { "de": "", "en": "TXTODO" } }],
-    "NETSTAT": [{ "text": { "de": "No active Connections", "en": "No active Connections" } }],
+    "COPY": [
+        {
+            "text": {
+                "de": "The system cannot find the file specified",
+                "en": "The system cannot find the file specified"
+            }
+        }
+    ],
+    "DEL": [
+        {
+            "text": {
+                "de": "COULD NOT FIND '%I'",
+                "en": "COULD NOT FIND '%I'"
+            }
+        }
+    ],
+    "PING": [
+        {
+            "text": {
+                "de": "'%I' ? PONG",
+                "en": "'%I' ? PONG"
+            }
+        }
+    ],
+    "TRACERT": [
+        {
+            "text": {
+                "de": "Unable to resolve target system name '%I'",
+                "en": "Unable to resolve target system name '%I'"
+            }
+        }
+    ],
+    "FORMAT": [
+        {
+            "text": {
+                "de": "Slow down, young padawan",
+                "en": "Slow down, young padawan"
+            }
+        }
+    ],
+    "CHKDSK": [
+        {
+            "text": {
+                "de": "⊘_⊘ Access Denied",
+                "en": "⊘_⊘ Access Denied"
+            }
+        }
+    ],
+    "nslookup": [
+        {
+            "text": {
+                "de": "Server/Address:  UnKnown",
+                "en": "Server/Address:  UnKnown"
+            }
+        }
+    ],
+    "SHUTDOWN": [
+        {
+            "text": {
+                "de": "(－_ლ） not sleepy",
+                "en": "(－_ლ） not sleepy"
+            }
+        }
+    ],
+    "NETSTAT": [
+        {
+            "text": {
+                "de": "No active Connections",
+                "en": "No active Connections"
+            }
+        }
+    ],
     "NET": [
         {
             "text": {
@@ -254,18 +652,18 @@
         }
     ],
     "RND": [
-        { "text": { "de": "", "en": "(ლ_－）" }, "highlight": true },
-        { "text": { "de": "", "en": "(－_ლ）" } },
-        { "text": { "de": "", "en": "( ๏̯͡๏ ）" } },
-        { "text": { "de": "", "en": "(๏̯͡๏  ）" } },
-        { "text": { "de": "", "en": "(  ๏̯͡๏）" } },
-        { "text": { "de": "", "en": "(◉౪◉）" } },
-        { "text": { "de": "", "en": "(◕౪◕）" } },
-        { "text": { "de": "", "en": "(ಠ_ಠ）" } },
-        { "text": { "de": "", "en": "(●_●）" } },
-        { "text": { "de": "", "en": "(⊘_⊘）" } },
-        { "text": { "de": "", "en": "( •̀ᴗ•́ ）" } },
-        { "text": { "de": "", "en": "(｀∀ ´）" } }
+        { "text": { "de": "(ლ_－）", "en": "(ლ_－）" }, "highlight": true },
+        { "text": { "de": "(－_ლ）", "en": "(－_ლ）" } },
+        { "text": { "de": "( ๏̯͡๏ ）", "en": "( ๏̯͡๏ ）" } },
+        { "text": { "de": "(๏̯͡๏  ）", "en": "(๏̯͡๏  ）" } },
+        { "text": { "de": "(  ๏̯͡๏）", "en": "(  ๏̯͡๏）" } },
+        { "text": { "de": "(◉౪◉）", "en": "(◉౪◉）" } },
+        { "text": { "de": "(◕౪◕）", "en": "(◕౪◕）" } },
+        { "text": { "de": "(ಠ_ಠ）", "en": "(ಠ_ಠ）" } },
+        { "text": { "de": "(●_●）", "en": "(●_●）" } },
+        { "text": { "de": "(⊘_⊘）", "en": "(⊘_⊘）" } },
+        { "text": { "de": "( •̀ᴗ•́ ", "en": "( •̀ᴗ•́ ）" } },
+        { "text": { "de": "(｀∀ ´）", "en": "(｀∀ ´）" } }
     ],
     "SLEEPY": [
         {
@@ -278,6 +676,38 @@
             "text": {
                 "de": "(－_ლ）",
                 "en": "(－_ლ）"
+            }
+        }
+    ],
+    "CHEER": [
+        {
+            "text": {
+                "de": "(╯°□°）╯",
+                "en": "(╯°□°）╯"
+            }
+        }
+    ],
+    "ANGRY": [
+        {
+            "text": {
+                "de": "(ノಠ益ಠ)ノ",
+                "en": "(ノಠ益ಠ)ノ"
+            }
+        }
+    ],
+    "AC": [
+        {
+            "text": {
+                "de": "٩('-')۶ all clear",
+                "en": "٩('-')۶ all clear"
+            }
+        }
+    ],
+    "UPS": [
+        {
+            "text": {
+                "de": "(⊘_⊘）ups...",
+                "en": "(⊘_⊘）ups..."
             }
         }
     ]
