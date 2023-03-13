@@ -8,6 +8,10 @@
     <lastmod>2023-03-03T10:44:06+00:00</lastmod>
 </url>
 <url>
+    <loc>https://friscic.com/?lang=de</loc>
+    <lastmod>2023-03-13T10:44:06+00:00</lastmod>
+</url>
+<url>
     <loc>https://friscic.com/?page=about</loc>
     <lastmod>2023-03-03T10:44:06+00:00</lastmod>
 </url>
@@ -18,5 +22,17 @@
 <url>
     <loc>https://friscic.com/?page=imprint</loc>
     <lastmod>2023-03-03T10:44:06+00:00</lastmod>
+</url>
+<url>
+    <loc>https://friscic.com/?page=about&lang=de</loc>
+    <lastmod>2023-03-13T10:44:06+00:00</lastmod>
+</url>
+<url>
+    <loc>https://friscic.com/?page=contact&lang=de</loc>
+    <lastmod>2023-03-13T10:44:06+00:00</lastmod>
+</url>
+<url>
+    <loc>https://friscic.com/?page=imprint&lang=de</loc>
+    <lastmod>2023-03-13T10:44:06+00:00</lastmod>
 </url>
 </urlset>
