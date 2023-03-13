@@ -316,7 +316,9 @@
                     translate(json);
 
                     if (command) {
-                        document.title = `${command.toLocaleLowerCase()} | friscic | ${language.toLocaleLowerCase()}`;
+                        const text = content[command][0]?.text;
+                        const currentPage = language !== Language.English ? text.substring(3, text.length) : command.toLocaleLowerCase();
+                        document.title = `${currentPage} | friscic | ${language.toLocaleLowerCase()}`;
                         inputValidator(command);
                     }
 
