@@ -316,6 +316,7 @@
                     translate(json);
 
                     if (command) {
+                        document.title = `${command.toLocaleLowerCase()} | friscic | ${language.toLocaleLowerCase()}`;
                         inputValidator(command);
                     }
 
