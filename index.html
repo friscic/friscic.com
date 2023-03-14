@@ -164,7 +164,7 @@
         let input = document.getElementById("input");
         let cursor = document.getElementById("cursor");
         let footer = document.getElementById("footer");
-        let [language, command, is404] = getUrlSearchParams();
+        let [language, command] = getUrlSearchParams();
         let content = {};
         let eCnt = 0;
 
@@ -175,12 +175,10 @@
 
         function getUrlSearchParams() {
             const urlParams = new URLSearchParams(window.location.search);
-
             const lang = urlParams.get("lang") || Language.English;
             const page = urlParams.get("page")?.toUpperCase();
-            const is404 = !!urlParams.get("is404");
 
-            return [lang, page, is404];
+            return [lang, page];
         }
 
         function translate(json) {
@@ -317,22 +315,16 @@
                 .then((json) => {
                     translate(json);
 
-                    if (is404) {
-                        document.title = `4O4 Oops @ friscic | ${language.toLocaleLowerCase()}`;
-                        newCommandLine({ text: content["OOPS"][0]?.text });
+                    if (command) {
+                        const text = content[command][0]?.text;
+                        const currentPage = language !== Language.English ? text.substring(3, text.length) : command.toLocaleLowerCase();
+                        document.title = `${currentPage} @ friscic | ${language.toLocaleLowerCase()}`;
+                        inputValidator(command);
                     }
-                    else {
-                        if (command) {
-                            const text = content[command][0]?.text;
-                            const currentPage = language !== Language.English ? text.substring(3, text.length) : command.toLocaleLowerCase();
-                            document.title = `${currentPage} @ friscic | ${language.toLocaleLowerCase()}`;
-                            inputValidator(command);
-                        }
 
-                        Object.values(Language).forEach(addLanguageSwitch);
-                        Object.values(Navigation).forEach(addNavigationItem);
-                        Object.values(EventType).forEach(addEventListener);
-                    }
+                    Object.values(Language).forEach(addLanguageSwitch);
+                    Object.values(Navigation).forEach(addNavigationItem);
+                    Object.values(EventType).forEach(addEventListener);
                 });
         })();
 
