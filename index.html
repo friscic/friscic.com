@@ -261,7 +261,7 @@
             cursor.value = " "; // hacking input value
 
             if (!eventId) {
-                newLine({ text: content["UPS"][0]?.text });
+                newLine({ text: content["OOPS"][0]?.text });
             } else if (eventId === "ENTER") {
                 newLine({ text: `~/${input.innerText} ` });
                 inputValidator();
@@ -298,10 +298,9 @@
 
             if (!inputString && !keyMatch) {
                 newLine({
-                    text:
-                        eCnt > 2
-                            ? `${eCnt > 10 ? content["ANGRY"][0]?.text : content["CHEER"][0]?.text}【#${eCnt}】empty`
-                            : content["EMPTY"][0]?.text,
+                    text: eCnt > 2
+                        ? `${eCnt > 10 ? content["ANGRY"][0]?.text : content["CHEER"][0]?.text}【#${eCnt}】empty`
+                        : content["EMPTY"][0]?.text,
                 });
                 eCnt++;
             } else if (valueMatch?.length) {
@@ -320,7 +319,7 @@
 
                     if (is404) {
                         document.title = `4O4 Oops @ friscic | ${language.toLocaleLowerCase()}`;
-                        newLine({ text: content["UPS"][0]?.text });
+                        newLine({ text: content["OOPS"][0]?.text });
                     }
                     else {
                         if (command) {
