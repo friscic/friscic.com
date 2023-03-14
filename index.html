@@ -142,7 +142,7 @@
         <div id="cmdl"><span>~$<span id="input"></span><input type="text" id="cursor" value="&nbsp;"></span></div>
         <div id="footer">&nbsp;©2023&nbsp;</div>
     </div>
-    
+
     <script type="text/javascript">
         const EventType = Object.freeze({
             KeyDown: "keydown",
@@ -164,7 +164,7 @@
         let input = document.getElementById("input");
         let cursor = document.getElementById("cursor");
         let footer = document.getElementById("footer");
-        let [language, command] = getUrlSearchParams();
+        let [language, command, is404] = getUrlSearchParams();
         let content = {};
         let eCnt = 0;
 
@@ -175,9 +175,12 @@
 
         function getUrlSearchParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            const lang = urlParams.get("lang") || Language.English;
 
-            return [lang, urlParams.get("page")?.toUpperCase()];
+            const lang = urlParams.get("lang") || Language.English;
+            const page = urlParams.get("page")?.toUpperCase();
+            const is404 = !!urlParams.get("is404");
+
+            return [lang, page, is404];
         }
 
         function translate(json) {
@@ -315,16 +318,22 @@
                 .then((json) => {
                     translate(json);
 
-                    if (command) {
-                        const text = content[command][0]?.text;
-                        const currentPage = language !== Language.English ? text.substring(3, text.length) : command.toLocaleLowerCase();
-                        document.title = `${currentPage} | friscic | ${language.toLocaleLowerCase()}`;
-                        inputValidator(command);
+                    if (is404) {
+                        document.title = `4O4 Oops @ friscic | ${language.toLocaleLowerCase()}`;
+                        newLine({ text: content["UPS"][0]?.text });
                     }
+                    else {
+                        if (command) {
+                            const text = content[command][0]?.text;
+                            const currentPage = language !== Language.English ? text.substring(3, text.length) : command.toLocaleLowerCase();
+                            document.title = `${currentPage} @ friscic | ${language.toLocaleLowerCase()}`;
+                            inputValidator(command);
+                        }
 
-                    Object.values(Language).forEach(addLanguageSwitch);
-                    Object.values(Navigation).forEach(addNavigationItem);
-                    Object.values(EventType).forEach(addEventListener);
+                        Object.values(Language).forEach(addLanguageSwitch);
+                        Object.values(Navigation).forEach(addNavigationItem);
+                        Object.values(EventType).forEach(addEventListener);
+                    }
                 });
         })();
 
