@@ -228,7 +228,7 @@
             footer.append(item);
         };
 
-        function newLine(options = {}) {
+        function newCommandLine(options = {}) {
             const line = document.createElement("div");
 
             if (options.highlight) {
@@ -261,17 +261,17 @@
             cursor.value = " "; // hacking input value
 
             if (!eventId) {
-                newLine({ text: content["OOPS"][0]?.text });
+                newCommandLine({ text: content["OOPS"][0]?.text });
             } else if (eventId === "ENTER") {
-                newLine({ text: `~/${input.innerText} ` });
+                newCommandLine({ text: `~/${input.innerText} ` });
                 inputValidator();
                 if (input.innerText === "CLS" || input.innerText === "CLEAR") {
                     lines.innerText = "";
-                    newLine({ text: content[input.innerText][0]?.text });
+                    newCommandLine({ text: content[input.innerText][0]?.text });
                 }
                 if (input.innerText === "ALL") {
                     lines.innerText = "";
-                    newLine({ text: Object.keys(content).map(k => k).join(', ') });
+                    newCommandLine({ text: Object.keys(content).map(k => k).join(', ') });
                 }
                 input.innerText = "";
                 event.preventDefault();
@@ -297,16 +297,16 @@
             const valueMatch = content[keyMatch];
 
             if (!inputString && !keyMatch) {
-                newLine({
+                newCommandLine({
                     text: eCnt > 2
                         ? `${eCnt > 10 ? content["ANGRY"][0]?.text : content["CHEER"][0]?.text}【#${eCnt}】empty`
                         : content["EMPTY"][0]?.text,
                 });
                 eCnt++;
             } else if (valueMatch?.length) {
-                valueMatch.forEach((line) => newLine(line));
+                valueMatch.forEach((line) => newCommandLine(line));
             } else {
-                newLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
+                newCommandLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
                 eCnt = 0;
             }
         }
@@ -319,7 +319,7 @@
 
                     if (is404) {
                         document.title = `4O4 Oops @ friscic | ${language.toLocaleLowerCase()}`;
-                        newLine({ text: content["OOPS"][0]?.text });
+                        newCommandLine({ text: content["OOPS"][0]?.text });
                     }
                     else {
                         if (command) {
