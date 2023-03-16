@@ -8,7 +8,6 @@
     <meta name="description" content="manfred friscic's location on the world wide web">
     <title>friscic.com</title>
     <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3SrUpEYRSF4VcRi2CZYLbYTGZ17zMImsXiTQgWo96CF2DzGqaZLd6AxSZYBYMGfUWZ4QzDjM75AYNnwWofz4LNB/8qIadfbV+WhZSLFIe9PJfFVuxdWQq5GsNHvT6S5Ub4nqyEDKbg3w252ZfVWnhfeim3s/Cx3hWyVgnflvWQ+znwUR/6sjEXviObIY8VcIfnekrZ+hFPKUKeq+JZjrwUcjAVDzkMea2LZznylnI8iZ+EvDfFs+xHyNmsMzXC+S1/NkDNd92A3Yls/Rd1YSKfORgRAJ68nTAAAAAASUVORK5CYII=" />
-    <link rel="canonical" href="https://friscic.com/" />
     <style type="text/css">
         * {
             font-family: monospace;
@@ -165,6 +164,7 @@
         let input = document.getElementById("input");
         let cursor = document.getElementById("cursor");
         let footer = document.getElementById("footer");
+        let head = document.getElementsByTagName("head");
         let [language, command] = getUrlSearchParams();
         let content = {};
         let eCnt = 0;
@@ -177,9 +177,17 @@
         function getUrlSearchParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const lang = urlParams.get("lang") || Language.English;
-            const page = urlParams.get("page")?.toUpperCase();
+            const command = urlParams.get("command")?.toUpperCase();
 
-            return [lang, page];
+            return [lang, command];
+        }
+
+        function setCanonicalTag() {
+            var link = document.createElement('link');
+            link.rel = 'canonical';
+            link.href = command ? `https://friscic.com/command=${command}&lang=${language}` : "https://friscic.com/";
+
+            head[0].appendChild(link);
         }
 
         function translate(json) {
@@ -208,7 +216,7 @@
         const addNavigationItem = (name) => {
             const item = document.createElement("h2");
             const link = document.createElement("a");
-            link.href = `?page=${name}&lang=${language}`;
+            link.href = `?command=${name}&lang=${language}`;
             link.innerText = content[name][0]?.text;
 
             item.appendChild(link);
@@ -217,7 +225,7 @@
 
         const addLanguageSwitch = (lang) => {
             const item = document.createElement("a");
-            item.href = `?lang=${lang}&page=${command || ""}`;
+            item.href = `?lang=${lang}&command=${command || ""}`;
             item.innerText = lang;
 
             if (lang === language) {
@@ -311,6 +319,8 @@
         }
 
         (async function start() {
+            setCanonicalTag();
+            
             await fetch("./data.json")
                 .then((response) => response.json())
                 .then((json) => {
