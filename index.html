@@ -185,7 +185,7 @@
         function setCanonicalTag() {
             var link = document.createElement('link');
             link.rel = 'canonical';
-            link.href = command ? `https://friscic.com/?lang=${language}${command}` : `https://friscic.com/?lang=${language}`;
+            link.href = command ? `https://friscic.com/?lang=${language}&amp;command=${command}` : `https://friscic.com/?lang=${language}`;
 
             head[0].appendChild(link);
         }
