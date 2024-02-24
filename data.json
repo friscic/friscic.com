@@ -2,22 +2,22 @@
     "1": [
         {
             "text": {
-                "de": "1 » über mich",
-                "en": "1 » about me"
+                "de": "🧑‍💼 über mich",
+                "en": "🧑‍💼 about me"
             },
             "highlight": true
         },
         {
             "text": {
-                "de": "xing",
-                "en": "xing"
+                "de": "🌐 xing",
+                "en": "🌐 xing"
             },
             "href": "https://www.xing.com/profile/Manfred_Friscic"
         },
         {
             "text": {
-                "de": "linkedin",
-                "en": "linkedin"
+                "de": "🌐 linkedin",
+                "en": "🌐 linkedin"
             },
             "href": "https://www.linkedin.com/in/friscic/"
         },
@@ -27,200 +27,207 @@
                 "en": "🚀 travel"
             },
             "highlight": true
+        },        
+        {
+            "text": {
+                "de": "24 ⛵ Malta",
+                "en": "24 ⛵ Malta"
+            },
+            "href": "https://photos.app.goo.gl/3KavK691Cp3Non5s6"
         },
         {
             "text": {
-                "de": "[2023] Brasilien",
-                "en": "[2023] Brazil"
+                "de": "23 🌊 Brasilien",
+                "en": "23 🌊 Brazil"
             },
             "href": "https://photos.app.goo.gl/TRbzSMnQ3q1MdCfG7"
         },
         {
             "text": {
-                "de": "[2022] Napoli/Amalfi",
-                "en": "[2022] Napoli/Amalfi"
+                "de": "22 🍕 Napoli/Amalfi",
+                "en": "22 🍕 Napoli/Amalfi"
             },
             "href": "https://photos.app.goo.gl/8RhX5o7B1GgZpAUL9"
         },
         {
             "text": {
-                "de": "[2022] island",
-                "en": "[2022] iceland"
+                "de": "22 🌋 island",
+                "en": "22 🌋 iceland"
             },
             "href": "https://photos.app.goo.gl/BVScs5sUgo1UthWWA"
         },
         {
             "text": {
-                "de": "[2021] schafberg",
-                "en": "[2021] schafberg"
+                "de": "21 🏔️ schafberg",
+                "en": "21 🏔️ schafberg"
             },
             "href": "https://photos.app.goo.gl/HthUrHELt1bxrGSY8"
         },
         {
             "text": {
-                "de": "[2020] athen",
-                "en": "[2020] athens"
+                "de": "20 🏺 athen",
+                "en": "20 🏺 athens"
             },
             "href": "https://photos.app.goo.gl/pC9vxQm18GkP9gvF6"
         },
         {
             "text": {
-                "de": "[2019] süd korea",
-                "en": "[2019] south korea"
+                "de": "19 📱 süd korea",
+                "en": "19 📱 south korea"
             },
             "href": "https://photos.app.goo.gl/tVyKvGKY68AN3B6g7"
         },
         {
             "text": {
-                "de": "[2019] Australien/Bali",
-                "en": "[2019] Australia/Bali"
+                "de": "19 🦘 Australien/Bali",
+                "en": "19 🦘 Australia/Bali"
             },
             "href": "https://photos.app.goo.gl/MVar4SFPZ67a6v3dA"
         },
         {
             "text": {
-                "de": "[2018] US/Vancouver",
-                "en": "[2018] US/Vancouver"
+                "de": "18 ☕ US/Vancouver",
+                "en": "18 ☕ US/Vancouver"
             },
             "href": "https://photos.app.goo.gl/4JKe2JMhTKkPU1tw9"
         },
         {
             "text": {
-                "de": "[2018] Neuseeland",
-                "en": "[2018] New Zealand"
+                "de": "18 🥝 Neuseeland",
+                "en": "18 🥝 New Zealand"
             },
             "href": "https://photos.app.goo.gl/4JKe2JMhTKkPU1tw9"
         },
         {
             "text": {
-                "de": "[2017] Süd Afrika",
-                "en": "[2017] South Africa"
+                "de": "17 🦁 Süd Afrika",
+                "en": "17 🦁 South Africa"
             },
             "href": "https://goo.gl/photos/41gJyfFXTD9hX5P77"
         },
         {
             "text": {
-                "de": "[2016] DXB/TH/KL/SG",
-                "en": "[2016] DXB/TH/KL/SG"
+                "de": "16 🏙️ DXB/TH/KL/SG",
+                "en": "16 🏙️ DXB/TH/KL/SG"
             },
             "href": "https://photos.app.goo.gl/sfz9Cu7pJWU6TkTp7"
         },
         {
             "text": {
-                "de": "[2015] NE/CA/NY",
-                "en": "[2015] NE/CA/NY"
+                "de": "15 🍁 NE/CA/NY",
+                "en": "15 🍁 NE/CA/NY"
             },
             "href": "https://photos.app.goo.gl/eLm6yTqocNrXBQy36"
         },
         {
             "text": {
-                "de": "[2014] florida",
-                "en": "[2014] florida"
+                "de": "14 🌴 florida",
+                "en": "14 🌴 florida"
             },
             "href": "https://photos.app.goo.gl/jwY18vmnmnt9Ty6X7"
         },
         {
             "text": {
-                "de": "[2013] CA/Hawaii",
-                "en": "[2013] CA/Hawaii"
+                "de": "13 🌺 CA/Hawaii",
+                "en": "13 🌺 CA/Hawaii"
             },
             "href": "https://photos.app.goo.gl/XPDN4bx2cdPyG8mq6"
         },
         {
             "text": {
-                "de": "[2012] Istanbul",
-                "en": "[2012] Istanbul"
+                "de": "12 🕌 Istanbul",
+                "en": "12 🕌 Istanbul"
             },
             "href": "https://photos.app.goo.gl/GZdykWQpAuef5GtY9"
         },
         {
             "text": {
-                "de": "[2011] China",
-                "en": "[2011] China"
+                "de": "11 🐉 China",
+                "en": "11 🐉 China"
             },
             "href": "https://photos.app.goo.gl/GtuPtrbs15XBVKbS7"
         },
         {
             "text": {
-                "de": "[2010] Tokyo",
-                "en": "[2010] Tokyo"
+                "de": "10 🍣 Tokyo",
+                "en": "10 🍣 Tokyo"
             },
             "href": "https://photos.app.goo.gl/KFrQpRpPYzepJwSy6"
         },
         {
             "text": {
-                "de": "[2009] USA",
-                "en": "[2009] USA"
+                "de": "09 🚗 USA",
+                "en": "09 🚗 USA"
             },
             "href": "https://photos.app.goo.gl/wCWsLE63xkPHBCLbA"
         },
         {
             "text": {
-                "de": "[2008] Venedig",
-                "en": "[2008] Venice"
+                "de": "08 🛶 Venedig",
+                "en": "08 🛶 Venice"
             },
             "href": "https://photos.app.goo.gl/H1smVA9Y8XTXdZnz6"
         },
         {
             "text": {
-                "de": "[2008] Lissabon",
-                "en": "[2008] Lisbon"
+                "de": "08 🌉 Lissabon",
+                "en": "08 🌉 Lisbon"
             },
             "href": "https://photos.app.goo.gl/KXVNefKWp1DQxfDN7"
         },
         {
             "text": {
-                "de": "[2007] Barcelona",
-                "en": "[2007] Barcelona"
+                "de": "07 🌆 Barcelona",
+                "en": "07 🌆 Barcelona"
             },
             "href": "https://photos.app.goo.gl/zLLGwXKZqPcuifb16"
         },
         {
             "text": {
-                "de": "[2007] Rom",
-                "en": "[2007] Rome"
+                "de": "07 🏟️ Rom",
+                "en": "07 🏟️ Rome"
             },
             "href": "https://photos.app.goo.gl/xmQMgsYjkWPEbAjLA"
         },
         {
             "text": {
-                "de": "[2006] Paris",
-                "en": "[2006] Paris"
+                "de": "06 🗼 Paris",
+                "en": "06 🗼 Paris"
             },
             "href": "https://photos.app.goo.gl/8wNfycVKcMhr3ipo9"
         },
         {
             "text": {
-                "de": "[2005] Amsterdam",
-                "en": "[2005] Amsterdam"
+                "de": "05 🚲 Amsterdam",
+                "en": "05 🚲 Amsterdam"
             },
             "href": "https://photos.app.goo.gl/3LVbjHoGr8fBaka4A"
         },
         {
             "text": {
-                "de": "[2005] Hamburg",
-                "en": "[2005] Hamburg"
+                "de": "05 ⚓ Hamburg",
+                "en": "05 ⚓ Hamburg"
             },
             "href": "https://photos.app.goo.gl/cBuofXeGU9HkTFVx8"
         },
         {
             "text": {
-                "de": "[2004] Bratislava",
-                "en": "[2004] Bratislava"
+                "de": "04 🏰 Bratislava",
+                "en": "04 🏰 Bratislava"
             },
             "href": "https://photos.app.goo.gl/yE98HHDwKc56BbJC9"
         },
         {
             "text": {
-                "de": "[2004] Berlin",
-                "en": "[2004] Berlin"
+                "de": "04 🐻 Berlin",
+                "en": "04 🐻 Berlin"
             },
             "href": "https://photos.app.goo.gl/ECFXxxCZZePG4s4K9"
         },
         {
             "text": {
-                "de": "[2004] Zürich",
-                "en": "[2004] Zürich"
+                "de": "04 ⌚ Zürich",
+                "en": "04 ⌚ Zürich"
             },
             "href": "https://photos.app.goo.gl/eCBcFuJqoAQkKkcL9"
         }
@@ -228,15 +235,15 @@
     "2": [
         {
             "text": {
-                "de": "2 » kontakt",
-                "en": "2 » contact"
+                "de": "💬 kontakt",
+                "en": "💬 contact"
             },
             "highlight": true
         },
         {
             "text": {
-                "de": "manfred@friscic.com",
-                "en": "manfred@friscic.com"
+                "de": "✉️ manfred@friscic.com",
+                "en": "✉️ manfred@friscic.com"
             },
             "href": "mailto:manfred@friscic.com"
         }
@@ -244,8 +251,8 @@
     "3": [
         {
             "text": {
-                "de": "3 » impressum",
-                "en": "3 » imprint"
+                "de": "🏛️ impressum",
+                "en": "🏛️ imprint"
             },
             "highlight": true
         },
