@@ -1,0 +1,122 @@
+* {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #41ff00;
+    background-color: black;
+    border-color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    word-break: break-all;
+    margin: 0.4rem 0.2rem;
+}
+
+body {
+    width: 100vw;
+    overflow-x: hidden;
+    width: 100%;
+    min-width: 10rem;
+}
+
+body::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: rgba(18, 16, 16, 0.15);
+    opacity: 0;
+    animation: flicker 0.15s infinite;
+}
+
+body::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg,
+            rgba(255, 0, 0, 0.06),
+            rgba(0, 255, 0, 0.02),
+            rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+}
+
+h1 {
+    text-align: right;
+}
+
+#loading {
+    border: 2rem solid black;
+    border-radius: 50%;
+    border-top: 2rem solid #41ff00;
+    width: 5rem;
+    height: 5rem;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+#cursor {
+    width: 1.5rem;
+    height: 2rem;
+    margin-left: -2rem;
+    animation: blinker 1s linear infinite;
+    background-color: #41ff00;
+}
+
+#input {
+    margin-right: 2.5rem;
+}
+
+#navigation {
+    margin: 1rem 0;
+}
+
+#footer {
+    margin-top: 1.5rem;
+    text-align: right;
+}
+
+.container {
+    max-width: 15rem;
+    margin: 0 auto;
+    border-right: 0.2rem solid #41ff00;
+}
+
+.highlight {
+    background-color: #41ff00;
+    color: black;
+    padding: 0 0.4rem 0 0.2rem;
+    line-height: 1.4rem;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0
+    }
+}
+
+@keyframes flicker {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
