@@ -194,5 +194,8 @@ function inputValidator(inputString = input.innerText) {
             Object.values(Language).forEach(addLanguageSwitch);
             Object.values(Navigation).forEach(addNavigationItem);
             Object.values(EventType).forEach(addEventListener);
+        })
+        .finally(() => {
+            window.scrollTo(0, document.body.scrollHeight);
         });
 })();
