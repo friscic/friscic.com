@@ -5,7 +5,6 @@ const EventType = Object.freeze({
 });
 const Navigation = Object.freeze({
     About: "ABOUT",
-    Contact: "CONTACT",
     Imprint: "IMPRINT",
 });
 const Language = Object.freeze({

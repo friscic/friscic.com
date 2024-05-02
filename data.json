@@ -269,22 +269,6 @@
     "2": [
         {
             "text": {
-                "de": "💬 kontakt",
-                "en": "💬 contact"
-            },
-            "highlight": true
-        },
-        {
-            "text": {
-                "de": "manfred@friscic.com",
-                "en": "manfred@friscic.com"
-            },
-            "href": "mailto:manfred@friscic.com"
-        }
-    ],
-    "3": [
-        {
-            "text": {
                 "de": "🏛️ impressum",
                 "en": "🏛️ imprint"
             },
@@ -319,14 +303,9 @@
             "ref": "1"
         }
     ],
-    "CONTACT": [
-        {
-            "ref": "2"
-        }
-    ],
     "IMPRINT": [
         {
-            "ref": "3"
+            "ref": "2"
         }
     ],
     "HELP": [
