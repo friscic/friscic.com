@@ -209,4 +209,4 @@ async function typeText(text, delay) {
     }
 }
 
-typeText("Hello", {min: 200, max: 500});
+typeText("Hello", {min: 500, max: 1000});
