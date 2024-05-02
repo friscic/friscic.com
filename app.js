@@ -209,4 +209,14 @@ async function typeText(text, delay) {
     }
 }
 
-typeText("Hello", {min: 500, max: 1000});
+function runOncePerDay() {
+    const lastRun = localStorage.getItem('lastRun');
+    const currentDate = new Date().toDateString();
+
+    if (lastRun !== currentDate) {
+        typeText("Hello", { min: 500, max: 1000 });
+        localStorage.setItem('lastRun', currentDate);
+    }
+}
+
+runOncePerDay();
