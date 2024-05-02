@@ -198,3 +198,15 @@ function inputValidator(inputString = input.innerText) {
             window.scrollTo(0, document.body.scrollHeight);
         });
 })();
+
+/* hello */
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function typeText(text, delay) {
+    for (const char of text) {
+        input.innerText += char;
+        await sleep(Math.random() * (delay.max - delay.min) + delay.min);
+    }
+}
+
+typeText("Hello", {min: 200, max: 500});
