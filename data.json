@@ -318,6 +318,13 @@
                 "en": "manfred@friscic.com"
             },
              "href": "mailto:manfred@friscic.com"
+        },
+        {
+            "text": {
+                "de": "+43 (0)123 4567890",
+                "en": "+43 (0)123 4567890"
+            },
+             "href": "tel:01234567890"
         }
     ],
     "ABOUT": [
