@@ -20,7 +20,9 @@
                 "en": "🌐 linkedin"
             },
             "href": "https://www.linkedin.com/in/friscic/"
-        },
+        }
+    ],
+    "3": [
         {
             "text": {
                 "de": "🚀 reisen",
@@ -335,6 +337,11 @@
     "ABOUT ME": [
         {
             "ref": "1"
+        }
+    ],
+    "TRAVEL": [
+        {
+            "ref": "3"
         }
     ],
     "IMPRINT": [
