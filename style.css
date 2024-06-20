@@ -86,6 +86,10 @@ h1 {
     text-align: right;
 }
 
+#stats {
+    text-align: right; 
+}
+
 .container {
     max-width: 15rem;
     margin: 0 auto;
