@@ -1,44 +1,106 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Friscic">
-
-    <!-- Enable fullscreen/web-app mode -->
-    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
-
     <meta name="description" content="manfred friščić's location on the world wide web">
     <title>friščić.com</title>
-    <link rel="shortcut icon"
-        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3SrUpEYRSF4VcRi2CZYLbYTGZ17zMImsXiTQgWo96CF2DzGqaZLd6AxSZYBYMGfUWZ4QzDjM75AYNnwWofz4LNB/8qIadfbV+WhZSLFIe9PJfFVuxdWQq5GsNHvT6S5Ub4nqyEDKbg3w252ZfVWnhfeim3s/Cx3hWyVgnflvWQ+znwUR/6sjEXviObIY8VcIfnekrZ+hFPKUKeq+JZjrwUcjAVDzkMea2LZznylnI8iZ+EvDfFs+xHyNmsMzXC+S1/NkDNd92A3Yls/Rd1YSKfORgRAJ68nTAAAAAASUVORK5CYII=" />
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3SrUpEYRSF4VcRi2CZYLbYTGZ17zMImsXiTQgWo96CF2DzGqaZLd6AxSZYBYMGfUWZ4QzDjM75AYNnwWofz4LNB/8qIadfbV+WhZSLFIe9PJfFVuxdWQq5GsNHvT6S5Ub4nqyEDKbg3w252ZfVWnhfeim3s/Cx3hWyVgnflvWQ+znwUR/6sjEXviObIY8VcIfnekrZ+hFPKUKeq+JZjrwUcjAVDzkMea2LZznylnI8iZ+EvDfFs+xHyNmsMzXC+S1/NkDNd92A3Yls/Rd1YSKfORgRAJ68nTAAAAAASUVORK5CYII=">
+
+    <!-- Inline critical CSS -->
+    <style>
+        * {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #41ff00;
+            background-color: black;
+            border-color: black;
+            text-transform: uppercase;
+            text-decoration: none;
+            word-break: break-all;
+            margin: 0.4rem 0.2rem;
+        }
+
+        body {
+            width: 100vw;
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 10rem;
+        }
+
+        body::after {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: rgba(18, 16, 16, 0.15);
+            opacity: 0;
+            animation: flicker 0.15s infinite;
+        }
+
+        body::before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+            linear-gradient(90deg,
+                    rgba(255, 0, 0, 0.06),
+                    rgba(0, 255, 0, 0.02),
+                    rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+        }
+    </style>
+
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 
 <body>
-    <div class="container">
-        <h1><a href="/">friščić<span class="highlight">.com</span></a></h1>
-        <div id="navigation"></div>
-        <div id="lines"></div>
-        <div id="cmdl"><span>~$<span id="input"></span><input type="text" value="&nbsp;" id="cursor" name="cursor" aria-label="Cursor"></span></div>
-        <div id="footer">&nbsp;©2024&nbsp;</div>
-        <div id="stats"><a href="./lighthouse.html" target="_blank">🚀100%</a></div>
-    </div>
+<div class="container">
+    <h1><a href="/">friščić<span class="highlight">.com</span></a></h1>
+    <div id="navigation"></div>
+    <div id="lines"></div>
+    <div id="cmdl"><span>~$<span id="input"></span><input type="text" value="&nbsp;" id="cursor" name="cursor" aria-label="Cursor"></span></div>
+    <div id="footer">&nbsp;©2024&nbsp;</div>
+    <div id="stats"><a href="./lighthouse.html" target="_blank">🚀100%</a></div>
+</div>
 
-    <script type="text/javascript" src="app.js"></script>
+<!-- Defer app logic -->
+<script defer src="app.js"></script>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H0BGZY34Y7"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+<!-- Lazy-load Google Analytics -->
+<script>
+    window.addEventListener('load', () => {
+        const gtagScript = document.createElement('script');
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-H0BGZY34Y7';
+        gtagScript.async = true;
+        document.head.appendChild(gtagScript);
 
-        gtag('config', 'G-H0BGZY34Y7');
-    </script>
+        gtagScript.onload = () => {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-H0BGZY34Y7');
+        };
+    });
+</script>
 </body>
-
 </html>
