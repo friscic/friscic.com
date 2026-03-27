@@ -21,6 +21,11 @@ async function initAI() {
 
 // Only load model on demand — do NOT call initAI() here
 
+function sanitizeInput(text) {
+    // Limit input length to prevent prompt injection attempts
+    return text.substring(0, 30).replace(/[^\w\s\-./]/g, "");
+}
+
 self.onmessage = async (e) => {
     const { userInput, id } = e.data;
     try {
@@ -30,12 +35,14 @@ self.onmessage = async (e) => {
             return;
         }
 
+        const safeInput = sanitizeInput(userInput);
+
         const messages = [
             {
                 role: "system",
-                content: "You are a funny retro terminal. User typed a command. Reply with a short, witty console error. Rules: 1) Max 30 chars. 2) No quotes around your reply. 3) No explanation. Just the error text. Style guide: Use kaomoji faces like (ಠ_ಠ), ¯\\_(ツ)_/¯, (╯°□°)╯ as prefix/suffix. Make puns on the command name when possible (e.g. CAT=meow, PING=PONG, TOUCH=no touchy). Mix fake CLI errors with humor (e.g. 'permission denied', 'not found', 'disk full'). Keep it uppercase terminal style."
+                content: "You are a funny retro terminal. User typed a command. Reply with a short, witty console error. Rules: 1) Max 40 chars. 2) No quotes around your reply. 3) No explanation. Just the error text. 4) Keep it family-friendly and inoffensive. 5) Never discuss politics, religion, or adult content. 6) ALWAYS include at least one emoji related to the response. Style guide: Use kaomoji faces like (ಠ_ಠ), ¯\\_(ツ)_/¯, (╯°□°)╯ as prefix/suffix. Make puns on the command name when possible (e.g. CAT=🐱meow, PING=🏓PONG, TOUCH=🚫no touchy). Mix fake CLI errors with humor (e.g. '🔒permission denied', '🔍not found', '💾disk full'). Keep it uppercase terminal style."
             },
-            { role: "user", content: userInput }
+            { role: "user", content: safeInput }
         ];
 
         const output = await generator(messages, {
@@ -50,8 +57,14 @@ self.onmessage = async (e) => {
             ? raw.filter(m => m.role === "assistant").pop()?.content || ""
             : String(raw || "");
 
-        const cleaned = reply.trim().substring(0, 30);
-        self.postMessage({ id, result: cleaned || null });
+        let cleaned = reply.trim();
+        const wasTruncated = cleaned.length > 40;
+        cleaned = cleaned.substring(0, wasTruncated ? 38 : 40);
+        if (wasTruncated) cleaned += "..";
+        // Ensure at least one emoji is present
+        const hasEmoji = /\p{Emoji_Presentation}/u.test(cleaned);
+        const result = hasEmoji ? cleaned : `⚠ ${cleaned}`;
+        self.postMessage({ id, result: result.substring(0, 40) || null });
     } catch (err) {
         self.postMessage({ id, error: err.message });
     }

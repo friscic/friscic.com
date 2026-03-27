@@ -43,6 +43,10 @@ h1 {
     border-right: 0.2rem solid #41ff00;
 }
 
+.ai-response {
+    color: #1a6600;
+}
+
 .highlight {
     background-color: #41ff00;
     color: black;

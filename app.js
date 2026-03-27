@@ -205,6 +205,7 @@ function inputValidator(inputString = input.textContent) {
     } else {
         // No match in data.json — show loading immediately, then ask AI
         const placeholder = newCommandLine({ text: "░░░░░░░░░░" });
+        placeholder.classList.add("ai-response");
         const totalBlocks = 10;
         let filled = 0;
         const loadingInterval = setInterval(() => {
