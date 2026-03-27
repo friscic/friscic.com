@@ -1,3 +1,5 @@
+import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js";
+
 const EventType = Object.freeze({
     KeyDown: "keydown",
     KeyPress: "keypress",
@@ -111,7 +113,11 @@ function newCommandLine(options = {}) {
         top: document.body.scrollHeight,
         behavior: "smooth",
     });
+
+    return line;
 }
+
+let enterHandled = false;
 
 function checkInput(event, eventType) {
     const eventId = (event.data || event.key || event.inputType)?.toUpperCase();
@@ -123,22 +129,33 @@ function checkInput(event, eventType) {
     }
 
     if (eventId === "ENTER") {
-        newCommandLine({ text: `~/${input.textContent} ` });
-        inputValidator();
-        const commandText = input.textContent.toUpperCase();
+        // Guard against multiple event types firing for the same Enter press
+        if (enterHandled) return;
+        enterHandled = true;
+        setTimeout(() => { enterHandled = false; }, 50);
+
+        const currentInput = input.textContent;
+        input.textContent = "";
+        event.preventDefault();
+
+        newCommandLine({ text: `~/${currentInput} ` });
+
+        const commandText = currentInput.toUpperCase();
 
         if (commandText === "CLS" || commandText === "CLEAR") {
             lines.innerText = "";
             newCommandLine({ text: content[commandText]?.[0]?.text });
+            return;
         }
 
         if (commandText === "ALL") {
             lines.innerText = "";
             newCommandLine({ text: Object.keys(content).join(', ') });
+            return;
         }
 
-        input.textContent = "";
-        event.preventDefault();
+        inputValidator(currentInput);
+        return;
     } else if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
         input.textContent = input.textContent.slice(0, -1);
         event.preventDefault();
@@ -146,6 +163,28 @@ function checkInput(event, eventType) {
         input.textContent += event.key || event.data;
         event.preventDefault();
     }
+}
+
+// AI worker for off-main-thread inference
+const aiWorker = new Worker("./ai-worker.js", { type: "module" });
+let aiRequestId = 0;
+const aiCallbacks = new Map();
+
+aiWorker.onmessage = (e) => {
+    const { id, result, error } = e.data;
+    const cb = aiCallbacks.get(id);
+    if (cb) {
+        aiCallbacks.delete(id);
+        cb(error ? null : result);
+    }
+};
+
+function getAIResponse(userInput) {
+    return new Promise((resolve) => {
+        const id = ++aiRequestId;
+        aiCallbacks.set(id, resolve);
+        aiWorker.postMessage({ userInput, id });
+    });
 }
 
 function inputValidator(inputString = input.textContent) {
@@ -164,7 +203,23 @@ function inputValidator(inputString = input.textContent) {
     } else if (valueMatch?.length) {
         valueMatch.forEach((line) => newCommandLine(line));
     } else {
-        newCommandLine({ text: `'${inputString}' IS NOT RECOGNIZED` });
+        // No match in data.json — show loading immediately, then ask AI
+        const placeholder = newCommandLine({ text: "░░░░░░░░░░░░░░░░░░░░" });
+        const totalBlocks = 20;
+        let filled = 0;
+        const loadingInterval = setInterval(() => {
+            filled = (filled + 1) % (totalBlocks + 1);
+            placeholder.innerText = "█".repeat(filled) + "░".repeat(totalBlocks - filled);
+        }, 100);
+
+        getAIResponse(inputString).then((aiText) => {
+            clearInterval(loadingInterval);
+            if (aiText) {
+                placeholder.innerText = aiText;
+            } else {
+                placeholder.innerText = `'${inputString}' ¯\\_(ツ)_/¯`;
+            }
+        });
         eCnt = 0;
     }
 }
