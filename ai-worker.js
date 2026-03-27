@@ -1,8 +1,90 @@
-import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js";
+let pipeline = null;
 
-// Use browser cache to avoid re-downloading the model
-env.useBrowserCache = true;
-env.allowLocalModels = false;
+const MODEL_CACHE = "ai-model-cache-v1";
+
+// IndexedDB helpers for caching large model files
+function openDB() {
+    return new Promise((resolve, reject) => {
+        const req = indexedDB.open(MODEL_CACHE, 1);
+        req.onupgradeneeded = () => req.result.createObjectStore("models");
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+    });
+}
+
+async function getFromDB(key) {
+    const db = await openDB();
+    return new Promise((resolve) => {
+        const tx = db.transaction("models", "readonly");
+        const req = tx.objectStore("models").get(key);
+        req.onsuccess = () => resolve(req.result || null);
+        req.onerror = () => resolve(null);
+    });
+}
+
+async function putInDB(key, data) {
+    const db = await openDB();
+    return new Promise((resolve) => {
+        const tx = db.transaction("models", "readwrite");
+        tx.objectStore("models").put(data, key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+    });
+}
+
+// Override fetch to cache model files by stable key (strip signed params)
+const originalFetch = self.fetch.bind(self);
+self.fetch = async function(input, init) {
+    const url = typeof input === "string" ? input : input.url;
+
+    const isModelFile = url.includes("onnx") || url.includes("xethub") || url.includes("cdn-lfs") || url.includes("resolve/main");
+    if (isModelFile) {
+        let stableKey;
+        try {
+            const u = new URL(url);
+            stableKey = u.origin + u.pathname;
+        } catch (e) {
+            return originalFetch(input, init);
+        }
+
+        try {
+            // Check IndexedDB cache
+            const cached = await getFromDB(stableKey);
+            if (cached) {
+                return new Response(cached.blob, {
+                    status: 200,
+                    headers: { "Content-Type": cached.type }
+                });
+            }
+
+            const response = await originalFetch(input, { ...init, redirect: "follow" });
+            if (response.ok) {
+                const blob = await response.blob();
+                // Store in IndexedDB (handles large files)
+                await putInDB(stableKey, { blob, type: blob.type || "application/octet-stream" });
+                return new Response(blob, {
+                    status: 200,
+                    headers: { "Content-Type": blob.type || "application/octet-stream" }
+                });
+            }
+            return response;
+        } catch (e) {
+            return originalFetch(input, init);
+        }
+    }
+
+    return originalFetch(input, init);
+};
+
+async function loadLibrary() {
+    if (pipeline) return;
+    const module = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js");
+    pipeline = module.pipeline;
+    // Enable persistent browser caching for model weights via Cache API
+    module.env.useBrowserCache = true;
+    module.env.allowLocalModels = false;
+    module.env.cacheKey = "transformers-cache";
+}
 
 let generator = null;
 let isMobile = false;
@@ -16,9 +98,8 @@ function sanitizeInput(text) {
 
 async function initAI() {
     if (generator) return;
+    await loadLibrary();
 
-    // Mobile: use SmolLM2-135M (lighter, ~134MB q4f16)
-    // Desktop: use Qwen2.5-0.5B (better quality, ~300MB q4)
     const model = isMobile
         ? "HuggingFaceTB/SmolLM2-135M-Instruct"
         : "onnx-community/Qwen2.5-0.5B-Instruct";

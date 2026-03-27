@@ -1,3 +1,10 @@
+// Unregister any stale service workers
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(r => r.unregister());
+    });
+}
+
 const EventType = Object.freeze({
     KeyDown: "keydown",
     KeyPress: "keypress",
@@ -167,29 +174,31 @@ function checkInput(event, eventType) {
 // Detect mobile devices to pick the right model size
 const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 
-// AI worker for off-main-thread inference
+// AI worker — spawned lazily on first AI request
 let aiWorker = null;
 let aiRequestId = 0;
 const aiCallbacks = new Map();
 
-aiWorker = new Worker("./ai-worker.js", { type: "module" });
-aiWorker.onmessage = (e) => {
-    const { id, result, error } = e.data;
-    const cb = aiCallbacks.get(id);
-    if (cb) {
-        aiCallbacks.delete(id);
-        cb(error ? null : result);
-    }
-};
-
-// Tell the worker which device we're on
-aiWorker.postMessage({ type: "init", isMobile });
+function ensureWorker() {
+    if (aiWorker) return;
+    aiWorker = new Worker("./ai-worker.js", { type: "module" });
+    aiWorker.onmessage = (e) => {
+        const { id, result, error } = e.data;
+        const cb = aiCallbacks.get(id);
+        if (cb) {
+            aiCallbacks.delete(id);
+            cb(error ? null : result);
+        }
+    };
+    aiWorker.postMessage({ type: "init", isMobile });
+}
 
 let aiInProgress = false;
 
 function getAIResponse(userInput) {
     if (aiInProgress) return Promise.resolve(null);
     aiInProgress = true;
+    ensureWorker();
     return new Promise((resolve) => {
         const id = ++aiRequestId;
         aiCallbacks.set(id, (result) => {
