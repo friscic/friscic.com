@@ -1,5 +1,3 @@
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js";
-
 const EventType = Object.freeze({
     KeyDown: "keydown",
     KeyPress: "keypress",
@@ -47,6 +45,7 @@ function setCanonicalTag() {
     link.rel = 'canonical';
     link.href = `https://friscic.com/?lang=${language}${command ? `&command=${command}` : ""}`;
     head[0].appendChild(link);
+    document.documentElement.lang = language;
 }
 
 function translate(json) {

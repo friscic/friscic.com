@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Friscic">
     <meta name="theme-color" content="#000000">
-    <meta name="description" content="manfred friščić's location on the world wide web">
+    <meta name="description" content="manfred friščić's retro terminal on the web — powered by in-browser AI">
     <title>friščić.com</title>
 
     <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3SrUpEYRSF4VcRi2CZYLbYTGZ17zMImsXiTQgWo96CF2DzGqaZLd6AxSZYBYMGfUWZ4QzDjM75AYNnwWofz4LNB/8qIadfbV+WhZSLFIe9PJfFVuxdWQq5GsNHvT6S5Ub4nqyEDKbg3w252ZfVWnhfeim3s/Cx3hWyVgnflvWQ+znwUR/6sjEXviObIY8VcIfnekrZ+hFPKUKeq+JZjrwUcjAVDzkMea2LZznylnI8iZ+EvDfFs+xHyNmsMzXC+S1/NkDNd92A3Yls/Rd1YSKfORgRAJ68nTAAAAAASUVORK5CYII=">
@@ -33,6 +33,8 @@
             width: 100%;
             min-width: 10rem;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
             background: radial-gradient(ellipse at top left, #1a1a1a 0%, #0d0d0d 45%, #000000 100%);
             background-attachment: fixed;
         }
@@ -81,12 +83,12 @@
     <div id="navigation"></div>
     <div id="lines"></div>
     <div id="cmdl"><span>~$<span id="input"></span><input type="text" value="&nbsp;" id="cursor" name="cursor" aria-label="Cursor"></span></div>
-    <div id="footer">&nbsp;©2024&nbsp;</div>
+    <div id="footer">&nbsp;©<script>document.write(new Date().getFullYear())</script>&nbsp;</div>
     <div id="stats"><a href="./lighthouse.html" target="_blank">🚀100%</a>&nbsp;<a href="https://huggingface.co/" target="_blank">🤖AI</a></div>
 </div>
 
 <!-- HuggingFace Transformers for in-browser LLM -->
-<script type="module" src="app.js"></script>
+<script defer src="app.js"></script>
 
 <!-- Lazy-load Google Analytics -->
 <script>
