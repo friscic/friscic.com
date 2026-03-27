@@ -1,6 +1,6 @@
 {
     "1": [
-        { "text": { "de": "🤖  über mich", "en": "🤖  about me" }, "highlight": true },
+        { "text": { "de": "👤 über mich", "en": "👤  about me" }, "highlight": true },
         { "text": { "de": "🌐 xing", "en": "🌐 xing" }, "href": "https://www.xing.com/profile/Manfred_Friscic" },
         { "text": { "de": "🌐 linkedin", "en": "🌐 linkedin" }, "href": "https://www.linkedin.com/in/friscic/" }
     ],
