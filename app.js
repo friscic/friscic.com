@@ -186,10 +186,17 @@ aiWorker.onmessage = (e) => {
 // Tell the worker which device we're on
 aiWorker.postMessage({ type: "init", isMobile });
 
+let aiInProgress = false;
+
 function getAIResponse(userInput) {
+    if (aiInProgress) return Promise.resolve(null);
+    aiInProgress = true;
     return new Promise((resolve) => {
         const id = ++aiRequestId;
-        aiCallbacks.set(id, resolve);
+        aiCallbacks.set(id, (result) => {
+            aiInProgress = false;
+            resolve(result);
+        });
         aiWorker.postMessage({ userInput, id });
     });
 }
