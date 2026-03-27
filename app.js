@@ -114,12 +114,14 @@ function newCommandLine(options = {}) {
 
     lines.append(line);
 
-    document.getElementById("cmdl").scrollIntoView({ behavior: "smooth", block: "end" });
+    const warning = document.getElementById("ai-warning");
+    const scrollTarget = warning && warning.style.display !== "none"
+        ? warning
+        : document.getElementById("stats") || document.getElementById("cmdl");
+    scrollTarget.scrollIntoView({ behavior: "smooth", block: "end" });
 
     return line;
-}
-
-let enterHandled = false;
+}let enterHandled = false;
 let warningShown = false;
 
 function checkInput(event, eventType) {
