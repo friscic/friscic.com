@@ -124,6 +124,7 @@ function newCommandLine(options = {}) {
 }
 
 let enterHandled = false;
+let warningShown = false;
 
 function checkInput(event, eventType) {
     const eventId = (event.data || event.key || event.inputType)?.toUpperCase();
@@ -226,6 +227,10 @@ function inputValidator(inputString = input.textContent) {
         valueMatch.forEach((line) => newCommandLine(line));
     } else {
         // No match in data.json — show loading immediately, then ask AI
+        if (!warningShown) {
+            warningShown = true;
+            document.getElementById("ai-warning").style.display = "block";
+        }
         const placeholder = newCommandLine({ text: "░░░░░░░░░░" });
         placeholder.classList.add("ai-response");
         const totalBlocks = 10;
