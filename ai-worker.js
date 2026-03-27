@@ -1,28 +1,25 @@
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js";
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js";
+
+// Use browser cache to avoid re-downloading the model
+env.useBrowserCache = true;
+env.allowLocalModels = false;
 
 let generator = null;
 
 async function initAI() {
     if (generator) return;
-    // Try WebGPU first for faster inference, fall back to WASM
-    try {
-        generator = await pipeline(
-            "text-generation",
-            "onnx-community/Qwen2.5-0.5B-Instruct",
-            { dtype: "q4", device: "webgpu" }
-        );
-    } catch (e) {
-        console.warn("WebGPU unavailable, falling back to WASM:", e);
-        generator = await pipeline(
-            "text-generation",
-            "onnx-community/Qwen2.5-0.5B-Instruct",
-            { dtype: "q4" }
-        );
-    }
+    generator = await pipeline(
+        "text-generation",
+        "onnx-community/Qwen2.5-0.5B-Instruct",
+        { dtype: "q4", device: "webgpu" }
+    ).catch(() => pipeline(
+        "text-generation",
+        "onnx-community/Qwen2.5-0.5B-Instruct",
+        { dtype: "q4" }
+    ));
 }
 
-// Start loading immediately when worker spawns
-initAI().catch(e => console.error("Worker: model load failed", e));
+// Only load model on demand — do NOT call initAI() here
 
 self.onmessage = async (e) => {
     const { userInput, id } = e.data;

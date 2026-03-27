@@ -204,8 +204,8 @@ function inputValidator(inputString = input.textContent) {
         valueMatch.forEach((line) => newCommandLine(line));
     } else {
         // No match in data.json — show loading immediately, then ask AI
-        const placeholder = newCommandLine({ text: "░░░░░░░░░░░░░░░░░░░░" });
-        const totalBlocks = 20;
+        const placeholder = newCommandLine({ text: "░░░░░░░░░░" });
+        const totalBlocks = 10;
         let filled = 0;
         const loadingInterval = setInterval(() => {
             filled = (filled + 1) % (totalBlocks + 1);
