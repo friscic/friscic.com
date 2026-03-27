@@ -114,11 +114,7 @@ function newCommandLine(options = {}) {
 
     lines.append(line);
 
-    window.scrollTo({
-        left: 0,
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-    });
+    document.getElementById("cmdl").scrollIntoView({ behavior: "smooth", block: "end" });
 
     return line;
 }
@@ -293,8 +289,20 @@ function runOncePerDay() {
             Object.values(Navigation).forEach(addNavigationItem);
         })
         .finally(() => {
-            window.scrollTo(0, document.body.scrollHeight);
+            document.getElementById("cmdl").scrollIntoView({ behavior: "smooth", block: "end" });
         });
 })();
 
 runOncePerDay();
+
+// Copy name to clipboard with visual feedback
+document.getElementById("copy-name").addEventListener("click", function() {
+    const el = this;
+    navigator.clipboard.writeText("Friščić").then(() => {
+        const original = el.textContent;
+        el.textContent = "✓ copied";
+        el.style.color = "#41ff00";
+        el.style.fontSize = "0.7rem";
+        setTimeout(() => { el.textContent = original; el.style.fontSize = ""; }, 1200);
+    });
+});

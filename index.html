@@ -32,7 +32,6 @@
             overflow-x: hidden;
             width: 100%;
             min-width: 10rem;
-            min-height: 100vh;
             margin: 0;
             padding: 0;
             background: radial-gradient(ellipse at top left, #1a1a1a 0%, #0d0d0d 45%, #000000 100%);
@@ -81,13 +80,13 @@
 
 <body>
 <div class="container">
-    <h1><span onclick="navigator.clipboard.writeText('Friščić')" style="cursor:pointer" title="Copy to clipboard">friščić</span><a href="/"><span class="highlight">.com</span></a></h1>
+    <h1><span id="copy-name" style="cursor:pointer" title="Copy to clipboard">friščić</span><a href="/"><span class="highlight">.com</span></a></h1>
     <div id="navigation"></div>
     <div id="lines"></div>
     <div id="cmdl"><span>~$<span id="input"></span><input type="text" value="&nbsp;" id="cursor" name="cursor" aria-label="Cursor"></span></div>
     <div id="footer">&nbsp;©<script>document.write(new Date().getFullYear())</script>&nbsp;</div>
     <div id="stats"><a href="./lighthouse.html" target="_blank">🚀100%</a>&nbsp;<a href="https://huggingface.co/" target="_blank">🤖AI</a></div>
-    <div id="ai-warning" style="display:none;color:red;font-size:0.8rem;margin-top:1rem;text-align:right;">⚠ AI = experimental</div>
+    <div id="ai-warning" style="display:none;color:red;font-size:0.8rem;margin-top:1rem;text-align:right;">AI ⚠ experimental</div>
 </div>
 
 <!-- HuggingFace Transformers for in-browser LLM -->
