@@ -165,11 +165,15 @@ function checkInput(event, eventType) {
     }
 }
 
+// Detect mobile devices to pick the right model size
+const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
 // AI worker for off-main-thread inference
-const aiWorker = new Worker("./ai-worker.js", { type: "module" });
+let aiWorker = null;
 let aiRequestId = 0;
 const aiCallbacks = new Map();
 
+aiWorker = new Worker("./ai-worker.js", { type: "module" });
 aiWorker.onmessage = (e) => {
     const { id, result, error } = e.data;
     const cb = aiCallbacks.get(id);
@@ -178,6 +182,9 @@ aiWorker.onmessage = (e) => {
         cb(error ? null : result);
     }
 };
+
+// Tell the worker which device we're on
+aiWorker.postMessage({ type: "init", isMobile });
 
 function getAIResponse(userInput) {
     return new Promise((resolve) => {
