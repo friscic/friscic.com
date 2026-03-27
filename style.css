@@ -41,6 +41,11 @@ h1 {
     max-width: 15rem;
     margin: 0 auto;
     border-right: 0.2rem solid #41ff00;
+    background-color: transparent;
+}
+
+.container, .container * {
+    background-color: transparent;
 }
 
 .ai-response {

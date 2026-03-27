@@ -20,7 +20,6 @@
             font-size: 1.1rem;
             font-weight: bold;
             color: #41ff00;
-            background-color: black;
             border-color: black;
             text-transform: uppercase;
             text-decoration: none;
@@ -28,11 +27,14 @@
             margin: 0.4rem 0.2rem;
         }
 
-        body {
+        html, body {
             width: 100vw;
             overflow-x: hidden;
             width: 100%;
             min-width: 10rem;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at top left, #1a1a1a 0%, #0d0d0d 45%, #000000 100%);
+            background-attachment: fixed;
         }
 
         body::after {
