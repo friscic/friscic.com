@@ -137,13 +137,13 @@ self.onmessage = async (e) => {
         const messages = [
             {
                 role: "system",
-                content: "You are a funny retro terminal. User typed a command. Reply with a short, witty console error. Rules: 1) Max 40 chars. 2) No quotes around your reply. 3) No explanation. Just the error text. 4) Keep it family-friendly and inoffensive. 5) Never discuss politics, religion, or adult content. 6) ALWAYS include at least one emoji related to the response. Style guide: Use kaomoji faces like (ಠ_ಠ), ¯\\_(ツ)_/¯, (╯°□°)╯ as prefix/suffix. Make puns on the command name when possible (e.g. CAT=🐱meow, PING=🏓PONG, TOUCH=🚫no touchy). Mix fake CLI errors with humor (e.g. '🔒permission denied', '🔍not found', '💾disk full'). Keep it uppercase terminal style."
+                content: "You output ONLY a short funny terminal error. 3-6 words max. Include one emoji. No sentences. No explanations. Examples: '🐱 MEOW NOT FOUND', '🔒 PERMISSION DENIED LOL', '💾 DISK FULL SORRY', '🏓 PONG ERROR'. Just the error, nothing else."
             },
             { role: "user", content: safeInput }
         ];
 
         const output = await generator(messages, {
-            max_new_tokens: 20,
+            max_new_tokens: 10,
             temperature: 0.8,
             top_p: 0.9,
             do_sample: true,
@@ -154,14 +154,12 @@ self.onmessage = async (e) => {
             ? raw.filter(m => m.role === "assistant").pop()?.content || ""
             : String(raw || "");
 
-        let cleaned = reply.trim();
-        const wasTruncated = cleaned.length > 40;
-        cleaned = cleaned.substring(0, wasTruncated ? 38 : 40);
-        if (wasTruncated) cleaned += "..";
-        // Ensure at least one emoji is present
-        const hasEmoji = /\p{Emoji_Presentation}/u.test(cleaned);
-        const result = hasEmoji ? cleaned : `⚠ ${cleaned}`;
-        self.postMessage({ id, result: result.substring(0, 40) || null });
+        const terminalEmojis = "💀🔥💾🐛⚡🚫🔒💣🤖👾🔍⛔🧨🪲🦠😵🙈🙃🥴💩🎲🧊🌀🪤📛🛑🔧🪛🔌📡🧲🔋📟💿📀📦🐙🦑🐍🦇🐞🦊🐸🐧🦆🦉🐝🎯🧪🧬🔬🔭☄🌋🌊❄🎪🎭🎰🃏🧩🛸🚀⚓🔮💎🔔📢📣🏷✂📌📍🔑⛏🗡🛡🏹⚔💊🩹🩺🧫🔗⛓🪝🎃👻🧟🦾🦿🧠🫀🦷👁🗣🫂👤🤡🎩🧳🌂☂🧵🧶👓🥽🦺👑💍🎒👝👛🧤🧣🧢👒🎓⛑🪖📿💄👠👢👞👟🩴🥿".match(/./gu);
+        const trimmed = reply.trim();
+        const hasEmoji = /\p{Emoji_Presentation}/u.test(trimmed);
+        const emoji = hasEmoji ? "" : terminalEmojis[Math.floor(Math.random() * terminalEmojis.length)];
+        let cleaned = trimmed.substring(0, 36) + ".." + emoji;
+        self.postMessage({ id, result: cleaned || null });
     } catch (err) {
         self.postMessage({ id, error: err.message });
     }
