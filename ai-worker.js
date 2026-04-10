@@ -1,81 +1,5 @@
 let pipeline = null;
 
-const MODEL_CACHE = "ai-model-cache-v1";
-
-// IndexedDB helpers for caching large model files
-function openDB() {
-    return new Promise((resolve, reject) => {
-        const req = indexedDB.open(MODEL_CACHE, 1);
-        req.onupgradeneeded = () => req.result.createObjectStore("models");
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
-}
-
-async function getFromDB(key) {
-    const db = await openDB();
-    return new Promise((resolve) => {
-        const tx = db.transaction("models", "readonly");
-        const req = tx.objectStore("models").get(key);
-        req.onsuccess = () => resolve(req.result || null);
-        req.onerror = () => resolve(null);
-    });
-}
-
-async function putInDB(key, data) {
-    const db = await openDB();
-    return new Promise((resolve) => {
-        const tx = db.transaction("models", "readwrite");
-        tx.objectStore("models").put(data, key);
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => resolve();
-    });
-}
-
-// Override fetch to cache model files by stable key (strip signed params)
-const originalFetch = self.fetch.bind(self);
-self.fetch = async function(input, init) {
-    const url = typeof input === "string" ? input : input.url;
-
-    const isModelFile = url.includes("onnx") || url.includes("xethub") || url.includes("cdn-lfs") || url.includes("resolve/main");
-    if (isModelFile) {
-        let stableKey;
-        try {
-            const u = new URL(url);
-            stableKey = u.origin + u.pathname;
-        } catch (e) {
-            return originalFetch(input, init);
-        }
-
-        try {
-            // Check IndexedDB cache
-            const cached = await getFromDB(stableKey);
-            if (cached) {
-                return new Response(cached.blob, {
-                    status: 200,
-                    headers: { "Content-Type": cached.type }
-                });
-            }
-
-            const response = await originalFetch(input, { ...init, redirect: "follow" });
-            if (response.ok) {
-                const blob = await response.blob();
-                // Store in IndexedDB (handles large files)
-                await putInDB(stableKey, { blob, type: blob.type || "application/octet-stream" });
-                return new Response(blob, {
-                    status: 200,
-                    headers: { "Content-Type": blob.type || "application/octet-stream" }
-                });
-            }
-            return response;
-        } catch (e) {
-            return originalFetch(input, init);
-        }
-    }
-
-    return originalFetch(input, init);
-};
-
 async function loadLibrary() {
     if (pipeline) return;
     const module = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js");
@@ -137,7 +61,7 @@ self.onmessage = async (e) => {
         const messages = [
             {
                 role: "system",
-                content: "You output ONLY a short funny terminal error. 3-6 words max. Include one emoji. No sentences. No explanations. Examples: '🐱 MEOW NOT FOUND', '🔒 PERMISSION DENIED LOL', '💾 DISK FULL SORRY', '🏓 PONG ERROR'. Just the error, nothing else."
+                content: "You are a funny, broken retro terminal. Reply ONLY with a 3-6 word error message in ALL CAPS related to the user's input. Include exactly one emoji. NO conversational text, NO explanations, NO quotes. Format strictly like: 🗑️ TRASH COMMAND BRO, 💩 CRAPPED OUT LOL, 👻 GHOST IN MACHINE, 🛸 ABDUCTED BY ALIENS, 📉 STONKS DOWN BRUH, 💻 BRICKED MYSELF RIP"
             },
             { role: "user", content: safeInput }
         ];
@@ -154,10 +78,15 @@ self.onmessage = async (e) => {
             ? raw.filter(m => m.role === "assistant").pop()?.content || ""
             : String(raw || "");
 
-        const terminalEmojis = "💀🔥💾🐛⚡🚫🔒💣🤖👾🔍⛔🧨🪲🦠😵🙈🙃🥴💩🎲🧊🌀🪤📛🛑🔧🪛🔌📡🧲🔋📟💿📀📦🐙🦑🐍🦇🐞🦊🐸🐧🦆🦉🐝🎯🧪🧬🔬🔭☄🌋🌊❄🎪🎭🎰🃏🧩🛸🚀⚓🔮💎🔔📢📣🏷✂📌📍🔑⛏🗡🛡🏹⚔💊🩹🩺🧫🔗⛓🪝🎃👻🧟🦾🦿🧠🫀🦷👁🗣🫂👤🤡🎩🧳🌂☂🧵🧶👓🥽🦺👑💍🎒👝👛🧤🧣🧢👒🎓⛑🪖📿💄👠👢👞👟🩴🥿".match(/./gu);
+        const getRandomEmoji = () => {
+            // Picking from major valid emoji Unicode blocks (Smileys, Symbols, Transport, Suppl.)
+            const blocks = [[0x1F600, 0x1F64F], [0x1F300, 0x1F5FF], [0x1F680, 0x1F6FF], [0x1F900, 0x1F9FF]];
+            const [min, max] = blocks[Math.floor(Math.random() * blocks.length)];
+            return String.fromCodePoint(Math.floor(Math.random() * (max - min + 1)) + min);
+        };
         const trimmed = reply.trim();
         const hasEmoji = /\p{Emoji_Presentation}/u.test(trimmed);
-        const emoji = hasEmoji ? "" : terminalEmojis[Math.floor(Math.random() * terminalEmojis.length)];
+        const emoji = hasEmoji ? "" : getRandomEmoji();
         let cleaned = trimmed.substring(0, 36) + ".." + emoji;
         self.postMessage({ id, result: cleaned || null });
     } catch (err) {

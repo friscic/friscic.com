@@ -5,12 +5,6 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-const EventType = Object.freeze({
-    KeyDown: "keydown",
-    KeyPress: "keypress",
-    Input: "input",
-});
-
 const Navigation = Object.freeze({
     About: "ABOUT",
     Travel: "TRAVEL",
@@ -28,15 +22,51 @@ const lines = document.getElementById("lines");
 const input = document.getElementById("input");
 const cursor = document.getElementById("cursor");
 const footer = document.getElementById("footer");
-const head = document.getElementsByTagName("head");
+
+// Set current year dynamically for footer
+document.getElementById("footer-year").textContent = new Date().getFullYear();
 
 const { language, command } = getUrlSearchParams();
 const content = {};
 let eCnt = 0;
 
 // Add event listeners
-Object.values(EventType).forEach((eventType) => {
-    document.addEventListener(eventType, (event) => checkInput(event, eventType));
+document.addEventListener("keydown", checkInput);
+document.addEventListener("paste", (event) => {
+    const paste = (event.clipboardData || window.clipboardData).getData("text");
+    if (paste) {
+        event.preventDefault();
+        // Remove linebreaks to keep it on one command line
+        input.textContent += paste.replace(/[\r\n]+/g, ' ');
+    }
+});
+
+// Putty-style: Left drag to auto-copy
+document.addEventListener("mouseup", () => {
+    const selectedText = window.getSelection().toString();
+    if (selectedText) {
+        navigator.clipboard.writeText(selectedText).catch(err => console.error("Auto-copy failed", err));
+    }
+});
+
+// Putty-style: Right-click to paste
+document.addEventListener("contextmenu", async (event) => {
+    // Allow context menu if right-clicking a link
+    if (event.target.closest("a")) return;
+
+    const selectedText = window.getSelection().toString();
+    // Allow standard context menu if there's text selected (so they can manually copy if preferred)
+    if (!selectedText) {
+        event.preventDefault();
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+                input.textContent += text.replace(/[\r\n]+/g, ' ');
+            }
+        } catch (err) {
+            console.error("Right-click paste failed", err);
+        }
+    }
 });
 
 function getUrlSearchParams() {
@@ -51,7 +81,7 @@ function setCanonicalTag() {
     const link = document.createElement('link');
     link.rel = 'canonical';
     link.href = `https://friscic.com/?lang=${language}${command ? `&command=${command}` : ""}`;
-    head[0].appendChild(link);
+    document.head.appendChild(link);
     document.documentElement.lang = language;
 }
 
@@ -121,24 +151,20 @@ function newCommandLine(options = {}) {
     scrollTarget.scrollIntoView({ behavior: "smooth", block: "end" });
 
     return line;
-}let enterHandled = false;
-let warningShown = false;
+}let warningShown = false;
 
-function checkInput(event, eventType) {
-    const eventId = (event.data || event.key || event.inputType)?.toUpperCase();
+function checkInput(event) {
+    const key = event.key;
+    
+    // allow standard browser shortcuts (ctrl+r, ctrl+c, etc)
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    
+    // Ignore function keys, shift, caps lock etc.
+    if (key.length > 1 && !["Enter", "Backspace"].includes(key)) return;
+
     cursor.value = " "; // reset cursor for visual effect
 
-    if (!eventId) {
-        newCommandLine({ text: content["OOPS"]?.[0]?.text });
-        return;
-    }
-
-    if (eventId === "ENTER") {
-        // Guard against multiple event types firing for the same Enter press
-        if (enterHandled) return;
-        enterHandled = true;
-        setTimeout(() => { enterHandled = false; }, 50);
-
+    if (key === "Enter") {
         const currentInput = input.textContent;
         input.textContent = "";
         event.preventDefault();
@@ -161,11 +187,11 @@ function checkInput(event, eventType) {
 
         inputValidator(currentInput);
         return;
-    } else if (eventId === "DELETECONTENTBACKWARD" || eventId === "BACKSPACE") {
+    } else if (key === "Backspace") {
         input.textContent = input.textContent.slice(0, -1);
         event.preventDefault();
-    } else if (eventType === EventType.KeyPress || (eventType === EventType.Input && event.data)) {
-        input.textContent += event.key || event.data;
+    } else if (key.length === 1) { // Standard character input
+        input.textContent += key;
         event.preventDefault();
     }
 }
@@ -271,28 +297,28 @@ function runOncePerDay() {
 }
 
 (async function start() {
-    setCanonicalTag();
+    try {
+        setCanonicalTag();
 
-    await fetch("./data.json")
-        .then(response => response.json())
-        .then(json => {
-            translate(json);
+        const response = await fetch("./data.json");
+        const json = await response.json();
+        
+        translate(json);
 
-            if (command && content[command]) {
-                const text = content[command][0]?.text;
-                const currentPage = language !== Language.English
-                    ? text?.substring(3)
-                    : command.toLowerCase();
-                document.title = `${currentPage} @ friscic | ${language.toLowerCase()}`;
-                inputValidator(command);
-            }
+        if (command && content[command]) {
+            const text = content[command][0]?.text;
+            const currentPage = language !== Language.English
+                ? text?.substring(3)
+                : command.toLowerCase();
+            document.title = `${currentPage} @ friscic | ${language.toLowerCase()}`;
+            inputValidator(command);
+        }
 
-            Object.values(Language).forEach(addLanguageSwitch);
-            Object.values(Navigation).forEach(addNavigationItem);
-        })
-        .finally(() => {
-            document.getElementById("cmdl").scrollIntoView({ behavior: "smooth", block: "end" });
-        });
+        Object.values(Language).forEach(addLanguageSwitch);
+        Object.values(Navigation).forEach(addNavigationItem);
+    } finally {
+        document.getElementById("cmdl").scrollIntoView({ behavior: "smooth", block: "end" });
+    }
 })();
 
 runOncePerDay();

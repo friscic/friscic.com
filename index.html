@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -11,7 +12,8 @@
     <meta name="description" content="manfred friščić's retro terminal on the web — powered by in-browser AI">
     <title>friščić.com</title>
 
-    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3SrUpEYRSF4VcRi2CZYLbYTGZ17zMImsXiTQgWo96CF2DzGqaZLd6AxSZYBYMGfUWZ4QzDjM75AYNnwWofz4LNB/8qIadfbV+WhZSLFIe9PJfFVuxdWQq5GsNHvT6S5Ub4nqyEDKbg3w252ZfVWnhfeim3s/Cx3hWyVgnflvWQ+znwUR/6sjEXviObIY8VcIfnekrZ+hFPKUKeq+JZjrwUcjAVDzkMea2LZznylnI8iZ+EvDfFs+xHyNmsMzXC+S1/NkDNd92A3Yls/Rd1YSKfORgRAJ68nTAAAAAASUVORK5CYII=">
+    <link rel="shortcut icon"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3SrUpEYRSF4VcRi2CZYLbYTGZ17zMImsXiTQgWo96CF2DzGqaZLd6AxSZYBYMGfUWZ4QzDjM75AYNnwWofz4LNB/8qIadfbV+WhZSLFIe9PJfFVuxdWQq5GsNHvT6S5Ub4nqyEDKbg3w252ZfVWnhfeim3s/Cx3hWyVgnflvWQ+znwUR/6sjEXviObIY8VcIfnekrZ+hFPKUKeq+JZjrwUcjAVDzkMea2LZznylnI8iZ+EvDfFs+xHyNmsMzXC+S1/NkDNd92A3Yls/Rd1YSKfORgRAJ68nTAAAAAASUVORK5CYII=">
 
     <!-- Inline critical CSS -->
     <style>
@@ -27,7 +29,8 @@
             margin: 0.4rem 0.2rem;
         }
 
-        html, body {
+        html,
+        body {
             width: 100vw;
             overflow-x: hidden;
             width: 100%;
@@ -63,10 +66,10 @@
             right: 0;
             z-index: 2;
             pointer-events: none;
-            background: 
-            linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-            linear-gradient(90deg,
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg,
                     rgba(255, 0, 0, 0.06),
                     rgba(0, 255, 0, 0.02),
                     rgba(0, 0, 255, 0.06));
@@ -75,38 +78,46 @@
     </style>
 
     <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    <noscript>
+        <link rel="stylesheet" href="style.css">
+    </noscript>
 </head>
 
 <body>
-<div class="container">
-    <h1><span id="copy-name" style="cursor:pointer" title="Copy to clipboard">friščić</span><a href="/"><span class="highlight">.com</span></a></h1>
-    <div id="navigation"></div>
-    <div id="lines"></div>
-    <div id="cmdl"><span>~$<span id="input"></span><input type="text" value="&nbsp;" id="cursor" name="cursor" aria-label="Cursor"></span></div>
-    <div id="footer">&nbsp;©<script>document.write(new Date().getFullYear())</script>&nbsp;</div>
-    <div id="stats"><a href="./lighthouse.html" target="_blank">🚀100%</a>&nbsp;<a href="https://huggingface.co/" target="_blank">🤖AI</a></div>
-    <div id="ai-warning" style="display:none;color:red;font-size:0.8rem;margin-top:1rem;text-align:right;">AI ⚠ experimental</div>
-</div>
+    <div class="container">
+        <h1><span id="copy-name" style="cursor:pointer" title="Copy to clipboard">friščić</span><a href="/"><span
+                    class="highlight">.com</span></a></h1>
+        <div id="navigation"></div>
+        <div id="lines"></div>
+        <div id="cmdl"><span>~$<span id="input"></span><input type="text" value="&nbsp;" id="cursor" name="cursor"
+                    aria-label="Cursor"></span></div>
+        <div id="footer">&nbsp;©<span id="footer-year"></span>&nbsp;</div>
+        <div id="stats"><a href="./lighthouse.html" target="_blank">🚀100%</a>&nbsp;<a href="https://huggingface.co/"
+                target="_blank">🤖AI</a></div>
+        <div id="ai-warning" style="display:none;color:red;font-size:0.8rem;margin-top:1rem;text-align:right;">AI ⚠
+            experimental</div>
+    </div>
 
-<!-- HuggingFace Transformers for in-browser LLM -->
-<script defer src="app.js"></script>
+    <!-- HuggingFace Transformers for in-browser LLM -->
+    <script defer type="module" src="app.js"></script>
 
-<!-- Lazy-load Google Analytics -->
-<script>
-    window.addEventListener('load', () => {
-        const gtagScript = document.createElement('script');
-        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-H0BGZY34Y7';
-        gtagScript.async = true;
-        document.head.appendChild(gtagScript);
+    <!-- Lazy-load Google Analytics -->
+    <script>
+        window.addEventListener('load', () => {
+            const gtagScript = document.createElement('script');
+            gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-H0BGZY34Y7';
 
-        gtagScript.onload = () => {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', 'G-H0BGZY34Y7');
-        };
-    });
-</script>
+            gtagScript.async = true;
+            document.head.appendChild(gtagScript);
+
+            gtagScript.onload = () => {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-H0BGZY34Y7');
+            };
+        });
+    </script>
 </body>
+
 </html>
